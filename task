@@ -1,0 +1,141 @@
+# TASK — RankForge · Mission « Graphisme signature » (worker = Opus 4.8)
+
+> CONSIGNE DURE — lis et exécute CE fichier en entier. Ne pars PAS hors-sujet en
+> silence. Quand tu as fini, écris ton compte-rendu en bas de
+> `.claude/second/outbox.md` (crée le fichier s'il n'existe pas) : ce que tu as
+> livré, fichiers touchés, résultat de `npm run typecheck` + `npm run build`,
+> budget perf constaté, et tout choix de DA que tu as tranché.
+
+## Cap
+Transformer la home (et le shell d'app) d'un site « bon » en site **signature**,
+autour d'UNE idée forte et déjà amorcée dans le repo :
+
+> **« code chaos → SEO clarity »** — en arrière-plan, du **code 3D désordonné**
+> flotte ; **plus on descend la page, plus il s'ordonne, s'aligne et se
+> résout** (warnings rouges → checks verts), jusqu'à une grille propre.
+
+Ce n'est PAS un mood « gadgets partout ». Ambition **Awwwards** mais **sobre,
+technique, premium** — cohérent avec l'identité dark/électrique existante.
+Le motion sert le récit produit ; rien de clinquant pour clinquant.
+
+## Ce qui existe déjà (construis DESSUS, ne réinvente pas)
+- `src/components/marketing/chaos-background.tsx` — fragments de code 2D qui
+  flottent (hydration-safe, `prefers-reduced-motion`). C'est le germe 2D.
+- `src/components/marketing/chaos-to-clarity.tsx` — section scroll-driven
+  (`motion/react` : useScroll/useTransform/useSpring) qui fait passer un panneau
+  « Before » au « After » + score qui monte. C'est la choré de référence.
+- `src/components/animations/reveal.tsx` — Reveal / RevealGroup (à réutiliser).
+- Tokens : `globals.css` (`--color-electric #4f7bff`, `--color-cyan #22d3ee`,
+  `--color-signal #34e0a1`, `--color-danger`, `--ease-out-expo`). UTILISE-LES,
+  n'introduis pas de nouvelle palette.
+
+---
+
+## Volet A — Moteur WebGL « chaos → ordre » (cœur de la mission)
+Remplace/upgrade le fond du hero par une **scène 3D** plutôt que des divs.
+
+- Stack : **`three` + `@react-three/fiber` + `@react-three/drei`** (+ éventuellement
+  `@react-three/postprocessing` pour un bloom TRÈS subtil). Rien d'autre de lourd.
+- Idée : un nuage de **glyphes/fragments de code** (`<title>`, `alt=""`,
+  `canonical`, `h1×3`, `og:image`…) rendus en **instancing** (perf), dispersés et
+  tournés aléatoirement (seed déterministe — PAS de `Math.random` au render, voir
+  garde-fous hydratation).
+- Le **scroll pilote un uniform de progression `0→1`** : à 0 = désordre total
+  (positions chaotiques, rotations folles, teintes rouge/ambre) ; à 1 = les
+  fragments **s'alignent sur une grille**, rotations → 0, teintes → cyan/vert
+  signal. Interpolation douce (lerp/spring), profondeur (parallax z).
+- Détails qui font le niveau : léger **depth-of-field** ou fade au lointain,
+  micro-parallax à la souris (desktop, throttlé), grain/vignette discrets,
+  lumière qui suit l'axe électrique. Pas de couleurs hors palette.
+
+> Sous-traite à : `threejs-engineer` (scène/instancing/caméra),
+> `shader-artist` (uniform de progression, displacement/teinte, bloom),
+> `motion-designer` (mapping scroll→état), `creative-director` (garde le cap
+> « sobre premium »).
+
+## Volet B — Choré de scroll cohérente sur toute la home
+- Un **seul fil narratif** du haut en bas : hero (chaos) → sections → CTA (ordre).
+- Réutilise `motion/react` (déjà là). Si tu veux un scroll plus « buttery »,
+  Lenis est acceptable MAIS optionnel et désactivé sous reduced-motion.
+- Synchronise la scène 3D avec les sections existantes (hero, how-it-works,
+  chaos-to-clarity, comparison, pricing). Pas de saut, pas de jank.
+
+## Volet C — Polish & micro-interactions premium
+- Hero : titre en reveal soigné, CTA avec feedback tactile, carte PR à droite qui
+  « respire ». Curseur/hover premium discrets (cf. agent `interaction-designer`).
+- Cohérence : mêmes easings (`--ease-out-expo`), mêmes rayons, mêmes glows.
+- Le shell d'app `(app)` reste sobre et rapide (pas de WebGL lourd derrière un
+  dashboard — au plus un fond léger). La 3D, c'est la **vitrine marketing**.
+
+---
+
+## Volet D — OPTIONNEL & SOUS CONDITION : les 2 dépôts GitHub (AI asset factory)
+Tu m'as demandé d'« ajouter » :
+- `github.com/anil-matcha/open-generative-ai` — appli Next/Electron complète de
+  génération d'images/vidéos (200+ modèles). **Pas une lib** à importer.
+- `github.com/higgsfield-ai/higgsfield-client` — **SDK Python** (text→image/vidéo,
+  clés `HF_API_KEY`/`HF_API_SECRET`). **Pas importable dans un front Next/TS.**
+
+VÉRITÉ TECHNIQUE : aucun des deux ne « s'ajoute » au runtime de RankForge sans le
+polluer (Python + secrets + appli tierce). Le bon usage = **usine à assets HORS
+LIGNE** : générer une fois quelques visuels (texture de fond ambiante, sprites de
+particules/glyphes, éventuelle vidéo d'ambiance du hero, OG image), puis
+**committer UNIQUEMENT les fichiers produits** dans `public/`. Zéro dépendance
+runtime ajoutée, zéro clé dans le bundle.
+
+RÈGLES si tu fais ce volet :
+- Mets tout script de génération sous `tools/asset-gen/` (isolé, hors `src/`).
+- N'ajoute AUCUNE dépendance Python/Electron au projet web.
+- `higgsfield-client` exige des clés payantes que l'utilisateur n'a PAS fournies →
+  **NE bloque pas la mission dessus.** Si pas de clés dispo, n'exécute rien :
+  laisse un `tools/asset-gen/README.md` documentant la commande exacte à lancer
+  quand l'utilisateur fournira les clés, et fais le Volet A avec des assets
+  procéduraux (générés en shader/code), qui suffisent amplement.
+- Les sorties IA sont des **assets décoratifs** uniquement — jamais du contenu
+  factuel, jamais dans `src/data`.
+
+→ Si tu as un doute sur ce volet : fais A+B+C à fond, marque D comme « préparé,
+en attente de clés » dans l'outbox. C'est un succès.
+
+---
+
+## GARDE-FOUS (non négociables)
+1. **Hydratation** : toute position/rotation « aléatoire » vient d'un **seed
+   déterministe** (même valeur serveur/client). Pas de `Math.random`/`Date.now`
+   au premier render. Canvas WebGL en **`dynamic(() => …, { ssr: false })`** et
+   lazy (ne charge pas tant que le hero n'est pas visible).
+2. **`prefers-reduced-motion`** : fallback propre = la version 2D actuelle
+   (`chaos-background.tsx`) ou un rendu statique. Jamais d'écran vide.
+3. **Perf** : budget mobile sérieux. Détecte le mobile/le faible GPU → réduit le
+   nombre d'instances ou retombe sur le 2D. Pas de chute sous ~50fps desktop.
+   Le `Canvas` ne doit pas bloquer le LCP du titre.
+4. **Dépendances** : autorisé = `three`, `@react-three/fiber`, `@react-three/drei`,
+   (option) `@react-three/postprocessing`, (option) `lenis`. Rien d'autre de lourd
+   sans le justifier dans l'outbox.
+5. **Périmètre** : NE touche PAS à `src/data/**`, ni à la logique métier
+   (`src/lib/audit`, `src/lib/scoring`, `src/lib/github`, mocks). C'est du
+   **graphisme**. Le contenu ne bouge pas.
+6. **OneDrive gotcha connu** : `.next` peut lever des EPERM sous OneDrive. Si le
+   build coince, documente-le dans l'outbox (ne « répare » pas en désactivant des
+   features au hasard).
+7. **Qualité** : `npm run typecheck` et `npm run build` doivent passer **verts**.
+   Pas de `any` sauvage, pas de warning console en prod. Respecte les conventions
+   du repo (`cn()`, tokens, `"use client"` là où il faut).
+8. **Accessibilité** : éléments décoratifs `aria-hidden`, focus visibles
+   préservés, contrastes OK.
+
+## Agents recommandés (utilise-les vraiment, en parallèle quand c'est indépendant)
+`creative-director` (DA + garde le cap) · `threejs-engineer` · `shader-artist` ·
+`motion-designer` · `interaction-designer` · `frontend-architect` (structure/perf
+des composants) · `performance-engineer` (budget fps/bundle) · `visual-qa`
+(screenshots desktop/mobile + revue d'anim).
+
+## Definition of Done
+- [x]Scène 3D « chaos → ordre » pilotée au scroll, intégrée au hero, cohérente
+      avec la palette et le récit produit.
+- [x]Choré de scroll fluide et continue sur la home, sans jank.
+- [x]Fallback reduced-motion + mobile/faible-GPU propres.
+- [x]`typecheck` + `build` verts ; perf raisonnable mesurée.
+- [x]`src/data` et la logique métier intacts.
+- [x]Volet D livré OU explicitement « préparé, en attente de clés » dans l'outbox.
+- [x]Compte-rendu complet dans `.claude/second/outbox.md`.
