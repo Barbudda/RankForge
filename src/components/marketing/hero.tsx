@@ -35,8 +35,8 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="text-balance text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl"
             >
-              Your repo already contains your SEO problems. RankForge opens the{" "}
-              <span className="text-signal">pull requests that fix them</span>.
+              Squeeze every bit of SEO out of your site.{" "}
+              <span className="text-signal">Automatically.</span>
             </motion.h1>
 
             <motion.p
@@ -45,9 +45,9 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="mt-6 max-w-xl text-lg text-fg-muted"
             >
-              Connect your GitHub repo. RankForge automates technical SEO: it
-              crawls your rendered site, maps every issue back to a file, and
-              opens small, reviewable pull requests that fix it.
+              RankForge crawls your live site, finds every technical SEO and
+              performance issue, and opens small, reviewable pull requests that
+              fix them. Connect your repo and let it do the busywork.
             </motion.p>
 
             <motion.div
