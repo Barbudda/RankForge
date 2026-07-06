@@ -35,8 +35,8 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="text-balance text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl"
             >
-              Squeeze every bit of SEO out of your site.{" "}
-              <span className="text-signal">Automatically.</span>
+              Forge your codebase into a{" "}
+              <span className="text-signal">search-ranking machine</span>.
             </motion.h1>
 
             <motion.p
