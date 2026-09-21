@@ -372,6 +372,9 @@ const BUILDERS: Record<string, Builder> = {
   "meta-og-image-missing": buildOgImage,
 };
 
+/** Rule ids that have a deterministic (no-LLM) patch template. */
+export const FIXABLE_RULE_IDS: readonly string[] = Object.keys(BUILDERS);
+
 /**
  * Try to generate a deterministic fix for an issue. Returns null when the
  * issue class needs judgment (content, links) — the caller then falls back to

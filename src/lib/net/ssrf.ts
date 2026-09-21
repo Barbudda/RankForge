@@ -15,8 +15,15 @@ import { lookup } from "node:dns/promises";
  * 3xx-redirects to an internal host is caught too.
  */
 
-/** Fail closed: only an explicit "development" env opens the network. */
+/**
+ * Fail closed: enforced everywhere except (a) explicit local development and
+ * (b) a trusted local runtime that opts out — the CLI sets
+ * RANKFORGE_ALLOW_LOCAL=1 because it runs on the user's own machine, where
+ * auditing http://localhost is the whole point and there's no server to
+ * protect. A hosted deployment must never set this variable.
+ */
 export function ssrfEnforced(): boolean {
+  if (process.env.RANKFORGE_ALLOW_LOCAL === "1") return false;
   return process.env.NODE_ENV !== "development";
 }
 

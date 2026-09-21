@@ -1,0 +1,35 @@
+name: "RankForge SEO audit"
+description: "Deterministic technical-SEO audit of a URL. Fails the job if the score drops below a threshold. No AI, no API keys."
+author: "Barbudda"
+branding:
+  icon: "search"
+  color: "green"
+
+inputs:
+  url:
+    description: "The URL to audit (a deployed or staging site — CI runners can't reach your localhost)."
+    required: true
+  pages:
+    description: "Pages to crawl, breadth-first (1–24)."
+    required: false
+    default: "8"
+  framework:
+    description: "nextjs | nuxt | astro | sveltekit | remix | vite-react | mdx | static"
+    required: false
+    default: "nextjs"
+  fail-under:
+    description: "Fail the job if the overall score is below this number (0 = never fail)."
+    required: false
+    default: "0"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Audit with RankForge
+      shell: bash
+      run: |
+        npx --yes rankforge-cli audit "${{ inputs.url }}" \
+          --pages "${{ inputs.pages }}" \
+          --framework "${{ inputs.framework }}" \
+          --fail-under "${{ inputs['fail-under'] }}" \
+          --no-color

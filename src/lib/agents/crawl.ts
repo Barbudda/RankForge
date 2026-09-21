@@ -366,5 +366,22 @@ export async function crawl(
       /* skip pages that fail to fetch */
     }
   }
-  return pages;
+
+  // Dedupe by FINAL pathname: two requested paths can land on the same page
+  // via a redirect (e.g. /dashboard → /login?next=/dashboard while /login is
+  // also linked directly). The BFS already treats pathname as page identity
+  // (query ignored), so the final dedupe follows the same rule — otherwise the
+  // same page is reported twice in every finding.
+  const seenFinal = new Set<string>();
+  return pages.filter((p) => {
+    let key = p.url;
+    try {
+      key = new URL(p.url).pathname.replace(/\/+$/, "") || "/";
+    } catch {
+      /* keep raw url as key */
+    }
+    if (seenFinal.has(key)) return false;
+    seenFinal.add(key);
+    return true;
+  });
 }

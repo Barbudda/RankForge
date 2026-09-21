@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../src/*"]
+    },
+    "lib": ["es2022", "dom"],
+    "types": ["node"],
+    "jsx": "preserve",
+    "incremental": false,
+    "plugins": []
+  },
+  "include": ["src/**/*.ts", "tsup.config.ts"]
+}
