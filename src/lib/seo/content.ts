@@ -123,6 +123,10 @@ export const FAQS = [
     a: "Every issue carries a risk score. Low-risk fixes arrive as ready-to-review PRs; higher-risk ones are opened as draft PRs or kept as suggestions. Either way, nothing merges without your approval.",
   },
   {
+    q: "Can I try RankForge without an account?",
+    a: "Yes. The free audit at /audit crawls 3 pages of any public URL and shows every measured issue with evidence, no signup. For unlimited audits (including localhost) use the open-source CLI: npx rankforge-cli audit <url>.",
+  },
+  {
     q: "Can I use RankForge from my editor?",
     a: "Yes. RankForge ships as an MCP server: connect it to Claude Code, Cursor, VS Code or any MCP-capable assistant and your coding agent can run the full deterministic audit against localhost or production, pull fix templates, and patch the repository it already has open. See the guide at /docs/agent.",
   },
@@ -156,6 +160,15 @@ export type ChangelogEntry = { date: string; title: string; notes: string[] };
 
 /** Newest first. Dates also drive sitemap lastModified for content routes. */
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    date: "2026-09-21",
+    title: "Open-source CLI + free audit page",
+    notes: [
+      "npx rankforge-cli audit <url> — the deterministic engine as a zero-dependency terminal CLI, MIT licensed, with a GitHub Action for CI gates (--fail-under).",
+      "A free, no-signup audit at /audit: 3 pages, every issue measured with evidence, nothing stored.",
+      "Engine: crawled pages are deduplicated by final URL so a redirect target is never reported twice.",
+    ],
+  },
   {
     date: "2026-07-06",
     title: "The RankForge agent in your editor (MCP)",

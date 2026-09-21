@@ -26,6 +26,7 @@ const COLUMNS = [
   {
     title: "Resources",
     links: [
+      { href: "/audit", label: "Free SEO audit" },
       { href: "/docs", label: "Docs" },
       { href: "/docs/agent", label: "Agent in your editor" },
       { href: "/changelog", label: "Changelog" },

@@ -8,6 +8,7 @@ import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
+  { href: "/audit", label: "Free audit" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#features", label: "Features" },
   { href: "/#editor", label: "In your editor" },

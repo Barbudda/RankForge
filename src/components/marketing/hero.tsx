@@ -65,10 +65,10 @@ export function Hero() {
                 <ArrowRight className="size-4" />
               </Link>
               <Link
-                href="#how-it-works"
+                href="/audit"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border px-6 font-medium text-fg transition-all hover:border-electric/50 hover:bg-surface/60"
               >
-                See how it works
+                Audit a URL free — no signup
               </Link>
             </motion.div>
 
