@@ -1,5 +1,7 @@
 # RankForge
 
+[![npm](https://img.shields.io/npm/v/rankforge-cli?label=rankforge-cli&color=34e0a1)](https://www.npmjs.com/package/rankforge-cli) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A518-green)](https://nodejs.org) [![MCP](https://img.shields.io/badge/MCP-server-708cff)](https://rank-forge-blue.vercel.app/docs/agent)
+
 **Deterministic technical-SEO audit for your site — from the terminal, your CI, or your editor. No AI required, no API keys, no telemetry.**
 
 ```bash
