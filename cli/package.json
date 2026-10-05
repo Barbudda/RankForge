@@ -4,7 +4,7 @@
   "description": "Technical SEO + AI-search (GEO) readiness audit: CLI, local MCP agent for Claude Code / Cursor / VS Code, GitHub Action. Measured, not guessed. No AI, no API keys.",
   "type": "module",
   "bin": {
-    "rankforge": "./dist/index.js"
+    "rankforge": "dist/index.js"
   },
   "files": [
     "dist",
