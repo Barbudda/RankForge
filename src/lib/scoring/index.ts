@@ -6,7 +6,9 @@ import type {
   Severity,
 } from "@/types";
 import { CATEGORY_WEIGHTS, SEVERITY_META } from "@/lib/seo/constants";
-import { clamp } from "@/lib/utils";
+
+/** Local clamp keeps the scoring (and the CLI that bundles it) free of UI deps. */
+const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
 /**
  * Pure scoring helpers. Deliberately simple but credible: a weighted

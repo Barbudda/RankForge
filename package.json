@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "cli:build": "tsup --config cli/tsup.config.ts"
+    "cli:build": "tsup --config cli/tsup.config.ts",
+    "cli:test": "npm run cli:build && node --test cli/test/cli.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

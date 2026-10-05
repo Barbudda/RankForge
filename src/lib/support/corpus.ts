@@ -9,7 +9,7 @@
  * local vectorizer (no API, no model download) and retrieved by cosine
  * similarity. Server-only: never import from client components.
  */
-import { embed, cosine } from "@/lib/brain";
+import { embed, cosine } from "@/lib/brain/embed";
 import { SEO_RULES } from "@/lib/audit/rules";
 import { AUTONOMY_LEVELS } from "@/lib/agent";
 import { PRICING_TIERS } from "@/lib/pricing";

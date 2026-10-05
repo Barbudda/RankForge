@@ -31,6 +31,11 @@ type Report = {
   categoryScores: { category: string; score: number }[];
   issues: Issue[];
   signals: { orphanPages: number; maxDepth: number; brokenInternalLinks: number; linkSuggestions: number };
+  geo?: {
+    score: number;
+    checks: { id: string; title: string; status: "pass" | "warn" | "fail"; detail: string }[];
+    blockedBots: { bot: string; purpose: string }[];
+  };
 };
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -220,6 +225,38 @@ export function PublicAudit() {
               Site signals: {report.signals.orphanPages} orphan page{report.signals.orphanPages === 1 ? "" : "s"} · max click depth {report.signals.maxDepth} · {report.signals.brokenInternalLinks} broken internal links · {report.signals.linkSuggestions} internal-link suggestions
             </p>
           </div>
+
+          {report.geo && (
+            <div>
+              <h2 className="text-lg font-semibold text-fg">
+                AI search readiness{" "}
+                <span className={cn("font-mono tabular-nums", scoreTone(report.geo.score))}>
+                  {report.geo.score}/100
+                </span>
+                <span className="ml-2 text-sm font-normal text-fg-subtle">
+                  can ChatGPT, Claude, Perplexity & Gemini reach, read and cite you?
+                </span>
+              </h2>
+              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                {report.geo.checks.map((g) => (
+                  <li key={g.id} className="rounded-lg border border-border bg-surface/60 p-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-fg">
+                      <span
+                        className={cn(
+                          "font-mono text-xs",
+                          g.status === "pass" ? "text-signal" : g.status === "warn" ? "text-amber" : "text-danger",
+                        )}
+                      >
+                        {g.status === "pass" ? "✓" : g.status === "warn" ? "!" : "✗"}
+                      </span>
+                      {g.title}
+                    </div>
+                    <p className="mt-1 text-xs text-fg-muted">{g.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Deeper paths */}
           <div className="grid gap-4 md:grid-cols-3">

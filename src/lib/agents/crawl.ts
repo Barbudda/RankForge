@@ -20,7 +20,18 @@ function decode(s: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ")
+    // Numeric entities (&#x27; &#39; &#8217;…) — common in React/Next output.
+    .replace(/&#x([0-9a-f]+);/gi, (_, h: string) => safeChar(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d: string) => safeChar(parseInt(d, 10)))
     .trim();
+}
+
+function safeChar(code: number): string {
+  try {
+    return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : "";
+  } catch {
+    return "";
+  }
 }
 
 function stripTags(s: string): string {
@@ -271,6 +282,10 @@ export interface SiteFiles {
   hasRobots: boolean;
   /** robots.txt contains a Sitemap: directive. */
   robotsDeclaresSitemap: boolean;
+  /** Raw robots.txt body (≤ 8 KB), "" when absent — used by the GEO audit. */
+  robotsTxt?: string;
+  /** /llms.txt returns 2xx with non-HTML content. */
+  hasLlmsTxt?: boolean;
 }
 
 /** Probe the two well-known SEO files directly (cheap, deterministic). */
@@ -282,7 +297,7 @@ export async function probeSiteFiles(startUrl: string): Promise<SiteFiles> {
       return "";
     }
   })();
-  if (!origin) return { hasSitemap: false, hasRobots: false, robotsDeclaresSitemap: false };
+  if (!origin) return { hasSitemap: false, hasRobots: false, robotsDeclaresSitemap: false, robotsTxt: "", hasLlmsTxt: false };
 
   const get = async (path: string) => {
     const ctrl = new AbortController();
@@ -293,19 +308,27 @@ export async function probeSiteFiles(startUrl: string): Promise<SiteFiles> {
         headers: { "user-agent": "RankForgeBot/1.0 (+https://rankforge.dev)" },
       });
       const body = res.ok ? (await res.text()).slice(0, 8000) : "";
-      return { ok: res.ok, body };
+      const html = (res.headers.get("content-type") ?? "").includes("text/html");
+      return { ok: res.ok, body, html };
     } catch {
-      return { ok: false, body: "" };
+      return { ok: false, body: "", html: false };
     } finally {
       clearTimeout(timer);
     }
   };
 
-  const [sitemap, robots] = await Promise.all([get("/sitemap.xml"), get("/robots.txt")]);
+  const [sitemap, robots, llms] = await Promise.all([
+    get("/sitemap.xml"),
+    get("/robots.txt"),
+    get("/llms.txt"),
+  ]);
   return {
     hasSitemap: sitemap.ok,
     hasRobots: robots.ok,
     robotsDeclaresSitemap: /(^|\n)\s*sitemap\s*:/i.test(robots.body),
+    robotsTxt: robots.ok ? robots.body : "",
+    // SPAs often answer every path with index.html — that's not an llms.txt.
+    hasLlmsTxt: llms.ok && !llms.html && llms.body.trim().length > 0,
   };
 }
 

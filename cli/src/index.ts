@@ -3,24 +3,34 @@
 // at call time (not import time), so setting it here is enough.
 process.env.RANKFORGE_ALLOW_LOCAL = "1";
 
-import type { Framework, Repository, SeoIssue, Severity } from "@/types";
+import type { CategoryScore, Framework, Repository, SeoCategory, SeoIssue, Severity } from "@/types";
 import { crawl, probeSiteFiles } from "@/lib/agents/crawl";
 import { runDeterministicAudit, type EngineIssue } from "@/lib/audit/engine";
 import { probeResources } from "@/lib/audit/resource-probe";
 import { FIXABLE_RULE_IDS, generateDeterministicFix } from "@/lib/audit/deterministic-fix";
 import { SEO_RULES } from "@/lib/audit/rules";
+import { runGeoAudit, buildLlmsTxt, type GeoReport } from "@/lib/audit/geo";
+import { computeOverallScore } from "@/lib/scoring";
+import { CATEGORY_WEIGHTS } from "@/lib/seo/constants";
+import { writeFileSync } from "node:fs";
+import { renderHtmlReport } from "./html-report";
+import { runStdioServer } from "./mcp-stdio";
 
 /**
  * rankforge — deterministic technical-SEO audit, from the terminal.
  *
  *   rankforge audit <url> [--pages N] [--framework nextjs] [--json] [--fail-under N] [--no-probe]
  *   rankforge fix <ruleId> [--framework nextjs] [--url https://…]
+ *   rankforge geo <url>            AI-search (GEO) readiness
+ *   rankforge llms <url>           generate llms.txt
+ *   rankforge links <url>          internal-link suggestions
+ *   rankforge mcp                  local MCP server (stdio) for Claude Code / Cursor
  *   rankforge rules
  *
  * No AI, no API keys, no telemetry. The same engine that powers rankforge.dev.
  */
 
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 const APP_URL = "https://rank-forge-blue.vercel.app";
 
 const FRAMEWORKS: Framework[] = ["nextjs", "nuxt", "astro", "sveltekit", "remix", "vite-react", "mdx", "static"];
@@ -125,10 +135,8 @@ async function cmdAudit(args: Args) {
   const engine = runDeterministicAudit(repo, pages, siteFiles, resources);
 
   const scores = engine.categoryScores as Record<string, number>;
-  const scoreValues = Object.values(scores);
-  const overall = scoreValues.length
-    ? Math.round(scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length)
-    : 0;
+  const overall = weightedOverall(engine.categoryScores);
+  const geo = runGeoAudit(pages, siteFiles);
   const elapsed = ((Date.now() - started) / 1000).toFixed(1);
 
   const issues = [...engine.issues].sort(
@@ -147,6 +155,7 @@ async function cmdAudit(args: Args) {
           overall,
           categoryScores: scores,
           issues: issues.map(compactIssue),
+          geo,
           siteSignals: engine.siteSignals,
         },
         null,
@@ -154,12 +163,25 @@ async function cmdAudit(args: Args) {
       ) + "\n",
     );
   } else {
-    printReport({ url, pages: pages.length, elapsed, overall, scores, issues, engine });
+    printReport({ url, pages: pages.length, elapsed, overall, scores, issues, engine, geo });
+  }
+
+  if (typeof args.flags.html === "string") {
+    writeFileSync(
+      args.flags.html,
+      renderHtmlReport({
+        url, pages: pages.length, elapsed, overall, scores, issues, geo,
+        fixable: [...FIXABLE_RULE_IDS], version: VERSION,
+      }),
+    );
+    process.stderr.write(`${c.green("✓")} HTML report written to ${args.flags.html}\n`);
   }
 
   if (failUnder !== null && overall < failUnder) {
     if (!json) process.stderr.write(`\n${c.red("✗")} score ${overall} is below --fail-under ${failUnder}\n`);
-    process.exit(1);
+    // exitCode, not exit(): on Windows, process.exit() with HTTP sockets still
+    // open can abort Node (0xC0000409) — CI would see a crash instead of a 1.
+    process.exitCode = 1;
   }
 }
 
@@ -191,6 +213,7 @@ function printReport(r: {
   scores: Record<string, number>;
   issues: EngineIssue[];
   engine: ReturnType<typeof runDeterministicAudit>;
+  geo: GeoReport;
 }) {
   const out: string[] = [];
   const w = (s = "") => out.push(s);
@@ -236,6 +259,11 @@ function printReport(r: {
     w(`${c.bold("Site signals")}  ${c.dim(signals.join(" · "))}`);
     w("");
   }
+
+  const gTone = r.geo.score >= 80 ? c.green : r.geo.score >= 60 ? c.yellow : c.red;
+  const geoFails = r.geo.checks.filter((x) => x.status !== "pass").length;
+  w(`${c.bold("AI search readiness")}  ${gTone(c.bold(`${r.geo.score}/100`))}  ${c.dim(geoFails ? `${geoFails} thing${geoFails > 1 ? "s" : ""} to improve, run: rankforge geo ${r.url}` : "all checks pass")}`);
+  w("");
 
   const fixable = r.issues.filter((i) => i.ruleId && FIXABLE_RULE_IDS.includes(i.ruleId));
   if (fixable.length) {
@@ -332,27 +360,158 @@ function cmdRules(args: Args) {
   process.stdout.write(out.join("\n"));
 }
 
+// ── shared ────────────────────────────────────────────────────────────
+function weightedOverall(cats: Record<string, number>): number {
+  const list: CategoryScore[] = (Object.entries(cats) as [SeoCategory, number][]).map(
+    ([category, score]) => ({ category, score, issues: 0, weight: CATEGORY_WEIGHTS[category] }),
+  );
+  return computeOverallScore(list);
+}
+
+function pagesFlag(args: Args, def: number): number {
+  return Math.max(1, Math.min(Number(args.flags.pages) || def, 24));
+}
+
+// ── geo ───────────────────────────────────────────────────────────────
+async function cmdGeo(args: Args) {
+  const url = asUrl(args._[1]);
+  const json = args.flags.json === true;
+  if (!json) process.stderr.write(`${c.dim(`checking AI-search readiness of ${url}…`)}\n`);
+  const [pages, siteFiles] = await Promise.all([
+    crawl(url, { maxPages: pagesFlag(args, 8), deadlineMs: 90_000 }),
+    probeSiteFiles(url),
+  ]);
+  const geo = runGeoAudit(pages, siteFiles);
+  if (json) {
+    process.stdout.write(JSON.stringify({ url, pagesCrawled: pages.length, ...geo }, null, 2) + "\n");
+  } else {
+    const out: string[] = [""];
+    const tone = geo.score >= 80 ? c.green : geo.score >= 60 ? c.yellow : c.red;
+    out.push(`${c.bold("AI search readiness (GEO)")}  ${c.cyan(url)}`);
+    out.push(c.dim(`${pages.length} pages · can ChatGPT, Claude, Perplexity & Gemini reach, read and cite you?`));
+    out.push("");
+    out.push(`${c.bold("Score")}  ${tone(c.bold(`${geo.score}/100`))}`);
+    out.push("");
+    out.push(c.bold("AI crawler access (robots.txt)"));
+    for (const b of geo.bots) {
+      const label = b.allowed ? "allowed" : "blocked";
+      const st = b.allowed ? c.green(label) : b.purpose === "training" ? c.yellow(label) : c.red(label);
+      out.push(`  ${b.bot.padEnd(18)} ${st}  ${c.dim(`${b.purpose} · ${b.owner}`)}`);
+    }
+    out.push("");
+    const groups: [GeoCheckGroup, string][] = [
+      ["access", "Access"],
+      ["readable", "Readable"],
+      ["citable", "Citable"],
+    ];
+    for (const [g, label] of groups) {
+      out.push(c.bold(label));
+      for (const ch of geo.checks.filter((x) => x.group === g)) {
+        const mark = ch.status === "pass" ? c.green("✓") : ch.status === "warn" ? c.yellow("!") : c.red("✗");
+        out.push(`  ${mark} ${ch.title}`);
+        out.push(`    ${c.dim(ch.detail)}`);
+        if (ch.pages?.length) out.push(`    ${c.gray("→")} ${ch.pages.slice(0, 5).join(c.gray(", "))}`);
+        if (ch.fix) for (const l of ch.fix.split("\n")) out.push(`    ${c.cyan(l)}`);
+      }
+      out.push("");
+    }
+    out.push(c.dim("Measures what you control: access, readability, citability. Nobody outside the engines can honestly promise a citation."));
+    out.push("");
+    process.stdout.write(out.join("\n"));
+  }
+  if (args.flags["fail-under"] !== undefined && geo.score < Number(args.flags["fail-under"])) {
+    process.exitCode = 1; // see cmdAudit: never process.exit() with sockets open
+  }
+}
+
+type GeoCheckGroup = GeoReport["checks"][number]["group"];
+
+// ── llms.txt ──────────────────────────────────────────────────────────
+async function cmdLlms(args: Args) {
+  const url = asUrl(args._[1]);
+  process.stderr.write(`${c.dim(`crawling ${url} to build llms.txt…`)}\n`);
+  const pages = await crawl(url, { maxPages: pagesFlag(args, 12), deadlineMs: 90_000 });
+  const txt = buildLlmsTxt(pages, url);
+  if (typeof args.flags.out === "string") {
+    writeFileSync(args.flags.out, txt);
+    process.stderr.write(`${c.green("✓")} wrote ${args.flags.out} (${pages.length} pages)\n`);
+  } else {
+    process.stdout.write(txt);
+  }
+}
+
+// ── internal links ────────────────────────────────────────────────────
+async function cmdLinks(args: Args) {
+  const url = asUrl(args._[1]);
+  const json = args.flags.json === true;
+  if (!json) process.stderr.write(`${c.dim(`mapping internal links of ${url}…`)}\n`);
+  const repo = synthRepo(url, "nextjs");
+  const [pages, siteFiles] = await Promise.all([
+    crawl(url, { maxPages: pagesFlag(args, 16), deadlineMs: 90_000 }),
+    probeSiteFiles(url),
+  ]);
+  const s = runDeterministicAudit(repo, pages, siteFiles).siteSignals;
+  if (json) {
+    process.stdout.write(
+      JSON.stringify(
+        { url, pagesCrawled: pages.length, suggestions: s.linkSuggestions, orphanPages: s.orphanPages, authority: s.authorityRanking },
+        null,
+        2,
+      ) + "\n",
+    );
+    return;
+  }
+  const out: string[] = ["", `${c.bold("Internal linking")}  ${c.cyan(url)}  ${c.dim(`${pages.length} pages`)}`, ""];
+  out.push(c.bold("Link these related pages"));
+  if (!s.linkSuggestions.length) out.push(c.dim("  No missing links between related pages found."));
+  for (const l of s.linkSuggestions.slice(0, 20)) {
+    out.push(`  ${l.from} ${c.gray("→")} ${l.to}  ${c.dim(`${Math.round(l.similarity * 100)}% related · anchor: "${l.anchorHint}"`)}`);
+  }
+  out.push("");
+  if (s.orphanPages.length) {
+    out.push(c.bold("Orphan pages (nothing links to them)"));
+    for (const o of s.orphanPages) out.push(`  ${c.red("•")} ${o}`);
+    out.push("");
+  }
+  if (s.authorityRanking.length) {
+    out.push(c.bold("Strongest pages (internal PageRank)"));
+    for (const a of s.authorityRanking.slice(0, 8)) out.push(`  ${a.path.padEnd(40)} ${c.dim(a.pageRank.toFixed(3))}`);
+    out.push("");
+  }
+  process.stdout.write(out.join("\n"));
+}
+
 // ── help / main ───────────────────────────────────────────────────────
 function help() {
   process.stdout.write(`
 ${c.bold("rankforge")} ${c.dim(`v${VERSION}`)} — deterministic technical-SEO audit. No AI, no API keys.
 
-${c.bold("Usage")}
-  rankforge audit <url> [--pages N] [--framework nextjs] [--json] [--fail-under N] [--no-probe]
-  rankforge fix <ruleId> [--framework nextjs] [--url https://…] [--json]
-  rankforge rules [--json]
+${c.bold("Commands")}
+  audit <url>    full technical-SEO audit + AI-search readiness summary
+  geo <url>      AI-search (GEO) readiness: AI crawler access, llms.txt, citability
+  llms <url>     generate an llms.txt for your site            [--out public/llms.txt]
+  links <url>    internal-link suggestions, orphans, strongest pages
+  fix <ruleId>   print a ready-to-apply patch                  [--framework] [--url]
+  rules          the rule catalog
+  mcp            run as a local MCP server for Claude Code / Cursor / VS Code
 
 ${c.bold("Examples")}
   rankforge audit http://localhost:3000
   rankforge audit https://example.com --pages 12 --framework astro
   rankforge audit https://example.com --json --fail-under 80     ${c.dim("# CI gate")}
+  rankforge audit https://example.com --html report.html         ${c.dim("# shareable report")}
+  rankforge geo https://example.com
+  rankforge llms https://example.com --out public/llms.txt
   rankforge fix framework-robots-missing --framework nextjs
+  claude mcp add rankforge -- npx -y rankforge-cli mcp           ${c.dim("# the agent, in your editor")}
 
 ${c.bold("Flags")}
   --pages N        pages to crawl, breadth-first (default 8, max 24)
   --framework fw   ${FRAMEWORKS.join(" | ")}
   --json           machine-readable output
-  --fail-under N   exit 1 if the overall score is below N (for CI)
+  --fail-under N   exit 1 if the score is below N (for CI): audit & geo
+  --html file      write a self-contained HTML report (audit)
+  --out file       write llms.txt to a file (llms)
   --no-probe       skip real image/link probing (faster)
   --no-color       plain output (also: NO_COLOR=1)
 
@@ -372,6 +531,10 @@ async function main() {
     if (cmd === "audit") await cmdAudit(args);
     else if (cmd === "fix") cmdFix(args);
     else if (cmd === "rules") cmdRules(args);
+    else if (cmd === "geo") await cmdGeo(args);
+    else if (cmd === "llms") await cmdLlms(args);
+    else if (cmd === "links") await cmdLinks(args);
+    else if (cmd === "mcp") await runStdioServer();
     else fail(`Unknown command "${cmd}". Try: rankforge --help`);
   } catch (e) {
     fail(e instanceof Error ? e.message : String(e));

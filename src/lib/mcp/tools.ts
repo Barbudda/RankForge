@@ -6,6 +6,7 @@ import { generateDeterministicFix } from "@/lib/audit/deterministic-fix";
 import { SEO_RULES } from "@/lib/audit/rules";
 import { searchCorpus } from "@/lib/support/corpus";
 import { ruleSlug } from "@/lib/seo/content";
+import { runGeoAudit, buildLlmsTxt } from "@/lib/audit/geo";
 import { config } from "@/lib/config";
 
 /**
@@ -85,7 +86,7 @@ async function runEngine(url: string, framework: Framework, maxPages: number) {
   ]);
   const resources =
     maxPages > 1 ? await probeResources(pages, url).catch(() => undefined) : undefined;
-  return { engine: runDeterministicAudit(repo, pages, siteFiles, resources), pages };
+  return { engine: runDeterministicAudit(repo, pages, siteFiles, resources), pages, siteFiles };
 }
 
 /** Compact issue view — bounded so responses stay editor-friendly. */
@@ -238,6 +239,47 @@ export const MCP_TOOLS: McpTool[] = [
         null,
         1,
       );
+    },
+  },
+  {
+    name: "geo_audit",
+    description:
+      "AI-search (GEO) readiness audit: which AI crawlers robots.txt lets in (OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended…, split search vs. training), whether an llms.txt exists, whether page text is server-rendered (AI crawlers mostly don't run JS), and citability signals (answer-shaped schema, entity identity with sameAs, authorship, dates, question headings, concrete facts). Deterministic; measures readiness, not whether an engine will cite you.",
+    inputSchema: {
+      type: "object",
+      required: ["url"],
+      properties: {
+        url: { type: "string", description: "Site URL, e.g. http://localhost:3000/ or https://example.com/" },
+        maxPages: { type: "integer", minimum: 1, maximum: 24, description: "Pages to crawl (default 8)." },
+      },
+    },
+    async handler(args) {
+      const url = asUrl(args.url);
+      const maxPages = Math.max(1, Math.min(Number(args.maxPages) || 8, 24));
+      const [pages, siteFiles] = await Promise.all([
+        crawl(url, { maxPages, deadlineMs: 80_000 }),
+        probeSiteFiles(url),
+      ]);
+      return JSON.stringify(runGeoAudit(pages, siteFiles), null, 1);
+    },
+  },
+  {
+    name: "generate_llms_txt",
+    description:
+      "Generate an llms.txt file (llmstxt.org) for a site from a crawl: site name, one-line summary, and a link list of its pages with descriptions. Write the result to public/llms.txt (or the framework's static folder).",
+    inputSchema: {
+      type: "object",
+      required: ["url"],
+      properties: {
+        url: { type: "string", description: "Site URL." },
+        maxPages: { type: "integer", minimum: 1, maximum: 24, description: "Pages to include (default 12)." },
+      },
+    },
+    async handler(args) {
+      const url = asUrl(args.url);
+      const maxPages = Math.max(1, Math.min(Number(args.maxPages) || 12, 24));
+      const pages = await crawl(url, { maxPages, deadlineMs: 80_000 });
+      return buildLlmsTxt(pages, url);
     },
   },
   {

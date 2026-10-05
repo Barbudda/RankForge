@@ -5,6 +5,7 @@ import { runDeterministicAudit } from "@/lib/audit/engine";
 import { probeResources } from "@/lib/audit/resource-probe";
 import { FIXABLE_RULE_IDS } from "@/lib/audit/deterministic-fix";
 import { computeOverallScore } from "@/lib/scoring";
+import { runGeoAudit } from "@/lib/audit/geo";
 import { CATEGORY_WEIGHTS } from "@/lib/seo/constants";
 
 export const runtime = "nodejs";
@@ -110,6 +111,7 @@ export async function POST(req: Request) {
     }).catch(() => undefined);
 
     const engine = runDeterministicAudit(repo, pages, siteFiles, resources);
+    const geo = runGeoAudit(pages, siteFiles);
 
     const categoryScores: CategoryScore[] = (
       Object.entries(engine.categoryScores) as [SeoCategory, number][]
@@ -152,6 +154,11 @@ export async function POST(req: Request) {
         maxDepth: s.maxDepth ?? 0,
         brokenInternalLinks: s.brokenInternalLinks?.length ?? 0,
         linkSuggestions: s.linkSuggestions?.length ?? 0,
+      },
+      geo: {
+        score: geo.score,
+        checks: geo.checks.map(({ id, title, status, detail }) => ({ id, title, status, detail })),
+        blockedBots: geo.bots.filter((b) => !b.allowed).map((b) => ({ bot: b.bot, purpose: b.purpose })),
       },
       limited: true,
     });
