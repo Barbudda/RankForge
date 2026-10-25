@@ -7,7 +7,8 @@ import next from "eslint-config-next";
 const eslintConfig = [
   ...next,
   {
-    ignores: [".next/**", "node_modules/**", "cli/dist/**"],
+    // .claude/ holds third-party skills installed by BONDS: not our code.
+    ignores: [".next/**", "node_modules/**", "cli/dist/**", ".claude/**"],
   },
 ];
 

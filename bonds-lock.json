@@ -1,0 +1,661 @@
+{
+  "version": 1,
+  "bondsHome": "C:\\Users\\hugo8\\OneDrive\\Desktop\\BONDS",
+  "bondsCommit": "4f5e781afbd8688a76064ee4c35127e5571fcade",
+  "loadout": "vitrine-premium",
+  "equipeLe": "2026-10-25T15:04:04.097Z",
+  "misAJourLe": "2026-10-25T15:04:04.097Z",
+  "assets": {
+    "skill:taste-skill": {
+      "type": "skill",
+      "source": "https://github.com/Leonxlnx/taste-skill/tree/main/skills/taste-skill",
+      "hash": "9fe563b8fd0b211a126b58ef7291bdc521bb4148",
+      "cible": ".claude/skills/taste-skill",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:impeccable": {
+      "type": "skill",
+      "source": "https://github.com/pbakaus/impeccable",
+      "hash": "ba931b2ae5a11a473ebeafc506b21648fbfae8b4",
+      "cible": ".claude/skills/impeccable",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:signaux-vibecodes": {
+      "type": "skill",
+      "source": "local",
+      "hash": "d7d267a352de973965823ec714105b44c53c406b",
+      "cible": ".claude/skills/signaux-vibecodes",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:react-design-craft": {
+      "type": "skill",
+      "source": "second:~/.second/skills/react-design-craft",
+      "hash": "46938dc54406f4e935814b18b6df6f2247389120",
+      "cible": ".claude/skills/react-design-craft",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ui-ux-pro-max": {
+      "type": "skill",
+      "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "hash": "3e3e9ca4467e2f0c789af0eb94178fc6eda6af74",
+      "cible": ".claude/skills/ui-ux-pro-max",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:creative-direction": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/creative-direction",
+      "hash": "5305ee0c0c2aa86801ce09f15b5fb960f2da0fd4",
+      "cible": ".claude/skills/creative-direction",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:luxury-design-system": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/luxury-design-system",
+      "hash": "7c180df0ce5a0ecf58a304f1989fc40c925962c6",
+      "cible": ".claude/skills/luxury-design-system",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:immersive-landing-page": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/immersive-landing-page",
+      "hash": "3053896c65d8362211f99f0334b410e85891762b",
+      "cible": ".claude/skills/immersive-landing-page",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:scroll-storytelling": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/scroll-storytelling",
+      "hash": "4beabdb7ae849fe88aceefb5fa64fd95fb90c348",
+      "cible": ".claude/skills/scroll-storytelling",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:scroll-cinema": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/scroll-cinema",
+      "hash": "ed13d9c7b4ee995e3d3903a77564a816da8c4242",
+      "cible": ".claude/skills/scroll-cinema",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:webgl-hero": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/webgl-hero",
+      "hash": "e08eb5ceed5df4dab22ea45b8cb7bf4fdd67b61e",
+      "cible": ".claude/skills/webgl-hero",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:threejs-r3f-scene": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/threejs-r3f-scene",
+      "hash": "5e042acfd5ec52ec1b021531b2a022292bb622f5",
+      "cible": ".claude/skills/threejs-r3f-scene",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:interaction-lab": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/interaction-lab",
+      "hash": "38324207ad02f649a9387713480e43fe0ae80f2b",
+      "cible": ".claude/skills/interaction-lab",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:image-transformation-lab": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/image-transformation-lab",
+      "hash": "fce7896278fe6cdf53602f6723865676e3167ac2",
+      "cible": ".claude/skills/image-transformation-lab",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:motion-audit": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/motion-audit",
+      "hash": "3cb935c74b96c42e0f141d5bee1a5fca80899444",
+      "cible": ".claude/skills/motion-audit",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:visual-performance-optimizer": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/visual-performance-optimizer",
+      "hash": "4bb1f02df364cefdbd7de59cd297ec7cf68754bb",
+      "cible": ".claude/skills/visual-performance-optimizer",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:awwwards-redesign": {
+      "type": "skill",
+      "source": "second:Second/.claude/skills/creative-web/awwwards-redesign",
+      "hash": "f93a60a392626c9de608aca7dfa9c0ac319a6175",
+      "cible": ".claude/skills/awwwards-redesign",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:img2threejs": {
+      "type": "skill",
+      "source": "https://github.com/img2threejs/img2threejs",
+      "hash": "4e184381c857e213732d05a78682e140f36c497a",
+      "cible": ".claude/skills/img2threejs",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "cli:playwright-cli": {
+      "type": "skill",
+      "source": "https://www.npmjs.com/package/@playwright/cli",
+      "hash": "b5b069ff0c256860a05291cc891875f0a9929cb9",
+      "cible": ".claude/skills/playwright-cli",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:frontend-design": {
+      "type": "skill",
+      "source": "https://github.com/anthropics/skills/tree/HEAD/skills/frontend-design",
+      "hash": "2ab682d98973311ccf7dd3d301941cc799833b70",
+      "cible": ".claude/skills/frontend-design",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:scroll-craft": {
+      "type": "skill",
+      "source": "https://github.com/nateherkai/scroll-craft/tree/HEAD/plugins/nateherk-design/skills/scroll-craft",
+      "hash": "d0ece4e1a638a35e867d30954e451f57765a8563",
+      "cible": ".claude/skills/scroll-craft",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:emil-animate": {
+      "type": "skill",
+      "source": "https://github.com/emilkowalski/skills/tree/HEAD/skills",
+      "hash": "ee91d856fb5157c4c37eab386dd5d993eb34ed25",
+      "cible": ".claude/skills/emil-animate",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:emil-review-animations": {
+      "type": "skill",
+      "source": "https://github.com/emilkowalski/skills/tree/HEAD/skills",
+      "hash": "a2c8daeba736eb5f05639dbfc545246c835e7a04",
+      "cible": ".claude/skills/emil-review-animations",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:emil-animation-vocabulary": {
+      "type": "skill",
+      "source": "https://github.com/emilkowalski/skills/tree/HEAD/skills",
+      "hash": "a901081d5d6f1f11e15b1fdcdbf091ae0be89bf5",
+      "cible": ".claude/skills/emil-animation-vocabulary",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:gsap-core": {
+      "type": "skill",
+      "source": "https://github.com/greensock/gsap-skills/tree/HEAD/skills",
+      "hash": "eda3dae96492935853e5ff0c7dab8fa7d143891a",
+      "cible": ".claude/skills/gsap-core",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:gsap-scrolltrigger": {
+      "type": "skill",
+      "source": "https://github.com/greensock/gsap-skills/tree/HEAD/skills",
+      "hash": "cdef2c9b018bf512d77f63bfe409607527a9fbf8",
+      "cible": ".claude/skills/gsap-scrolltrigger",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:gsap-react": {
+      "type": "skill",
+      "source": "https://github.com/greensock/gsap-skills/tree/HEAD/skills",
+      "hash": "a30cd60863e20399dc2916ec4a5593e762b3f27c",
+      "cible": ".claude/skills/gsap-react",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:gsap-performance": {
+      "type": "skill",
+      "source": "https://github.com/greensock/gsap-skills/tree/HEAD/skills",
+      "hash": "661f10d5b224348f7b5f2ad7e611c2694f6e5aa5",
+      "cible": ".claude/skills/gsap-performance",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:seo-aeo-best-practices": {
+      "type": "skill",
+      "source": "https://github.com/sanity-io/agent-toolkit/tree/HEAD/skills/seo-aeo-best-practices",
+      "hash": "95f0942f72e470b4b39464f6583df0dfc66ef334",
+      "cible": ".claude/skills/seo-aeo-best-practices",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:sheleg-design": {
+      "type": "skill",
+      "source": "https://github.com/ssheleg/sheleg-design-skill/tree/HEAD/.cursor/skills/sheleg-design",
+      "hash": "a95027c27c50b725b9d8d37317a63e2b887fdfca",
+      "cible": ".claude/skills/sheleg-design",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:seo-landing": {
+      "type": "skill",
+      "source": "https://github.com/aleksandr-alhoff/seo-landing",
+      "hash": "ceb19f2c64b714a743822cd75510fcc157cdb7f7",
+      "cible": ".claude/skills/seo-landing",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:seo-audit-canaux": {
+      "type": "skill",
+      "source": "https://github.com/leopard627/fire-your-seo-agency",
+      "hash": "5e1d671dcf911260d99b555cfef044738420b9a0",
+      "cible": ".claude/skills/seo-audit-canaux",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:seo-technique": {
+      "type": "skill",
+      "source": "https://github.com/rampstackco/claude-skills/tree/HEAD/skills/seo-technical",
+      "hash": "5bb1e74f75d909afb5b6688e50e6f0bf0d4bb6b4",
+      "cible": ".claude/skills/seo-technique",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:seo-vagues-sourcees": {
+      "type": "skill",
+      "source": "local:RushPilot",
+      "hash": "ba61329e001bf1581ebadac0078af0317640c2d2",
+      "cible": ".claude/skills/seo-vagues-sourcees",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:recherche-mots-cles": {
+      "type": "skill",
+      "source": "local:BONDS",
+      "hash": "2d9ccfdd8d82b37c532ea800e3fb12a6695826bb",
+      "cible": ".claude/skills/recherche-mots-cles",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ecart-concurrentiel": {
+      "type": "skill",
+      "source": "local:BONDS",
+      "hash": "4af4dfe9b6b8930e5f359a2a388d6f61e5f271b3",
+      "cible": ".claude/skills/ecart-concurrentiel",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:metriques-seo": {
+      "type": "skill",
+      "source": "local:BONDS",
+      "hash": "92e4d06f6f2ad403c6aef4250cf07d9e1162e9eb",
+      "cible": ".claude/skills/metriques-seo",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:semrush-mcp": {
+      "type": "skill",
+      "source": "local:BONDS",
+      "hash": "3a93302ba01bcae66eea884fe2599500bab6c74c",
+      "cible": ".claude/skills/semrush-mcp",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:web-performance": {
+      "type": "skill",
+      "source": "https://github.com/rampstackco/claude-skills/tree/HEAD/skills/performance-optimization",
+      "hash": "290b4baea2d541333889ed482e9676b7e21499c6",
+      "cible": ".claude/skills/web-performance",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ai-seo": {
+      "type": "skill",
+      "source": "https://github.com/coreyhaines31/marketingskills/tree/HEAD/skills/ai-seo",
+      "hash": "5ce626973cc67007eb9db55fb616c97e0a254016",
+      "cible": ".claude/skills/ai-seo",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:modern-web-guidance": {
+      "type": "skill",
+      "source": "https://github.com/GoogleChrome/modern-web-guidance",
+      "hash": "46386c702744287155efd23d560620c0d2edc00d",
+      "cible": ".claude/skills/modern-web-guidance",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:copywriting": {
+      "type": "skill",
+      "source": "https://github.com/coreyhaines31/marketingskills/tree/HEAD/skills/copywriting",
+      "hash": "8b9d809a507f358c2fc330271970abd1ab707b63",
+      "cible": ".claude/skills/copywriting",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ux-writing": {
+      "type": "skill",
+      "source": "https://github.com/ch4570/lutriva/tree/HEAD/skills",
+      "hash": "8c97e014982db63f1f412b5c5150d06835238c48",
+      "cible": ".claude/skills/ux-writing",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ui-slop-audit": {
+      "type": "skill",
+      "source": "https://github.com/ch4570/lutriva/tree/HEAD/skills",
+      "hash": "d4e105cbaf0cade35171d2c65c2836040c21862d",
+      "cible": ".claude/skills/ui-slop-audit",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:anti-ui-slop": {
+      "type": "skill",
+      "source": "https://github.com/uizze/gemini-extension/tree/HEAD/skills/anti-ui-slop",
+      "hash": "a974644e887a2f08ec1b6a5e32e9905ae59b8962",
+      "cible": ".claude/skills/anti-ui-slop",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:verif-site-en-ligne": {
+      "type": "skill",
+      "source": "local",
+      "hash": "f7d65880f3ce74641b09bcb45f22245eeb7c8b5d",
+      "cible": ".claude/skills/verif-site-en-ligne",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:writing-plans": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "ccdab11033ce252d9184c5c4d483bc24fde72aa3",
+      "cible": ".claude/skills/writing-plans",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:executing-plans": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "07eac2f814631af39c8a5ae1013f05a50ef600d9",
+      "cible": ".claude/skills/executing-plans",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:brainstorming": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "53d43a16f244d7df5f21229b8163b74cec8a5b37",
+      "cible": ".claude/skills/brainstorming",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:systematic-debugging": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "8e64d77f2c762bac427cebb96f476807da28cdda",
+      "cible": ".claude/skills/systematic-debugging",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:test-driven-development": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "ea93ed2a692b0225efd1fdb51dc35d714bf02e7d",
+      "cible": ".claude/skills/test-driven-development",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:verification-before-completion": {
+      "type": "skill",
+      "source": "https://github.com/obra/superpowers",
+      "hash": "4559b63bd33b9c32157c4241236cc91c0e100644",
+      "cible": ".claude/skills/verification-before-completion",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:ecc-coding-standards": {
+      "type": "skill",
+      "source": "https://github.com/affaan-m/ECC",
+      "hash": "a68fafa345be580cea0dfb6c08cf95421e48e9e7",
+      "cible": ".claude/skills/ecc-coding-standards",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:token-economy": {
+      "type": "skill",
+      "source": "local:Poliguide/.claude/skills/token-economy",
+      "hash": "36f6e93278f205018f39f06b35d39c85347f41d2",
+      "cible": ".claude/skills/token-economy",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:hermes-humanizer": {
+      "type": "skill",
+      "source": "https://github.com/NousResearch/hermes-agent",
+      "hash": "e8fe7dc0eece1da17f5f78d77f148bd4f62b571c",
+      "cible": ".claude/skills/hermes-humanizer",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:grill-me": {
+      "type": "skill",
+      "source": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/grill-me",
+      "hash": "ea336dab64be61cc38435288f5d32b1ada1bdb2a",
+      "cible": ".claude/skills/grill-me",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:zero-slop": {
+      "type": "skill",
+      "source": "https://github.com/manavmishra/ZeroSlop",
+      "hash": "2dbb31853baaad6f755aee6a3784a51754c7c8ad",
+      "cible": ".claude/skills/zero-slop",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:clear-writing": {
+      "type": "skill",
+      "source": "https://github.com/pinkpixel-dev/clear-writing-skill/tree/HEAD/.claude/skills/clear-writing",
+      "hash": "0513f0b5677770ed1c627bd271f2d84b1c42124c",
+      "cible": ".claude/skills/clear-writing",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:no-ai-slop": {
+      "type": "skill",
+      "source": "https://github.com/petergyang/no-ai-slop/tree/HEAD/skills/no-ai-slop",
+      "hash": "269eb81f7a1a5a8a48bfefd4785b4947ecc8af15",
+      "cible": ".claude/skills/no-ai-slop",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:sepia": {
+      "type": "skill",
+      "source": "https://github.com/Nanako0129/sepia/tree/HEAD/skills/sepia",
+      "hash": "71ddf34a8223d125d6a16d787b56790291626ac0",
+      "cible": ".claude/skills/sepia",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "skill:avoid-ai-writing": {
+      "type": "skill",
+      "source": "https://github.com/conorbronsdon/avoid-ai-writing",
+      "hash": "a4a42aac08c5553fb0726ff331787dad87907c06",
+      "cible": ".claude/skills/avoid-ai-writing",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "agent:design-craft-expert": {
+      "type": "agent",
+      "source": "second:Second/.claude/agents/design-craft-expert.md",
+      "hash": "ccb27af3553c80db666caf6c514ec1d00fa0441a",
+      "cible": ".claude/agents/design-craft-expert.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "agent:creative-director": {
+      "type": "agent",
+      "source": "second:Second/.claude/agents/creative-director.md",
+      "hash": "5eb2ae32fddea4eecc5c2b77f786f17bddb1bfdf",
+      "cible": ".claude/agents/creative-director.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "agent:motion-designer": {
+      "type": "agent",
+      "source": "second:Second/.claude/agents/motion-designer.md",
+      "hash": "637d3bcdf72b6c32da14fc1609b7bf49c0216b5b",
+      "cible": ".claude/agents/motion-designer.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "agent:threejs-engineer": {
+      "type": "agent",
+      "source": "second:Second/.claude/agents/threejs-engineer.md",
+      "hash": "0013572958d33be336c1e3c9bbf14560bd56d869",
+      "cible": ".claude/agents/threejs-engineer.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "agent:visual-qa": {
+      "type": "agent",
+      "source": "second:Second/.claude/agents/visual-qa.md",
+      "hash": "70422e92f091363b7bcb84237860a079b7e27a40",
+      "cible": ".claude/agents/visual-qa.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:playwright": {
+      "type": "mcp",
+      "source": "npm:@playwright/mcp@latest",
+      "hash": "18f7e37825784ccc3ded9c6035d3aece75fa8983",
+      "cible": ".mcp.json#playwright",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:chrome-devtools": {
+      "type": "mcp",
+      "source": "npm:chrome-devtools-mcp@latest",
+      "hash": "4165285935bbc8dfdc7c2fbc6016b7d27f76d352",
+      "cible": ".mcp.json#chrome-devtools",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:figma": {
+      "type": "mcp",
+      "source": "core/mcp/servers.json#figma",
+      "hash": "e563f187649e3ec00ad6d3aca845328280ebe580",
+      "cible": ".mcp.json#figma",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:prodcheck": {
+      "type": "mcp",
+      "source": "npm:prodcheck-mcp",
+      "hash": "ffa70c9b846b0aac12a46cdf2d584196afacb071",
+      "cible": ".mcp.json#prodcheck",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:semrush": {
+      "type": "mcp",
+      "source": "core/mcp/servers.json#semrush",
+      "hash": "6eaa38d19233de090d7f811fac97cc7551ca50bd",
+      "cible": ".mcp.json#semrush",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:context7": {
+      "type": "mcp",
+      "source": "npm:@upstash/context7-mcp",
+      "hash": "a3086d456353e969d1961b4c0ed137880af29f70",
+      "cible": ".mcp.json#context7",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:sequential-thinking": {
+      "type": "mcp",
+      "source": "npm:@modelcontextprotocol/server-sequential-thinking",
+      "hash": "fa5f37756d600dca3938c134312cf6b764187620",
+      "cible": ".mcp.json#sequential-thinking",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:memory": {
+      "type": "mcp",
+      "source": "npm:@modelcontextprotocol/server-memory",
+      "hash": "2d7732dd449326b056a27227a54d734d4c19c845",
+      "cible": ".mcp.json#memory",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "mcp:git": {
+      "type": "mcp",
+      "source": "npm:@cyanheads/git-mcp-server",
+      "hash": "fd84973d0ae78f9f47a666348dbffa3651d6db8d",
+      "cible": ".mcp.json#git",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:airbnb": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/airbnb/DESIGN.md",
+      "hash": "043f25c50d5bae6b7354ea629c5c06547af96311",
+      "cible": ".claude/design-md/airbnb.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:apple": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/apple/DESIGN.md",
+      "hash": "8ecefef431290bc5b215b336d8ca62bfde26c2d2",
+      "cible": ".claude/design-md/apple.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:cursor": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/cursor/DESIGN.md",
+      "hash": "93463edd2be3dfb59ef58ee68844d25cf205e3c3",
+      "cible": ".claude/design-md/cursor.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:figma": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/figma/DESIGN.md",
+      "hash": "6a85ee7bb0321b0a29f32815d72c5ab3fd781cc7",
+      "cible": ".claude/design-md/figma.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:framer": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/framer/DESIGN.md",
+      "hash": "4c6ef0290dad3d53d878c34984fce18e8de64c41",
+      "cible": ".claude/design-md/framer.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:linear": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md",
+      "hash": "3f69761874f88cdcfceeb6ead048462649ba4616",
+      "cible": ".claude/design-md/linear.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:lovable": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/lovable/DESIGN.md",
+      "hash": "00c082e61312b0a2d250bfc207cfadda11b27178",
+      "cible": ".claude/design-md/lovable.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:notion": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/notion/DESIGN.md",
+      "hash": "74ec1d70c11bb2ffd3f72a0982495f4990ff8728",
+      "cible": ".claude/design-md/notion.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:posthog": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/posthog/DESIGN.md",
+      "hash": "57498215c08cb6aa166b5b0ff3c61856ab2fe783",
+      "cible": ".claude/design-md/posthog.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:resend": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/resend/DESIGN.md",
+      "hash": "c6b89a5f38e94ebb459b6a2d7cc2bd88776be5d4",
+      "cible": ".claude/design-md/resend.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:shopify": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/shopify/DESIGN.md",
+      "hash": "53d133e72e447dc00999ac55e38e6ea760d0917d",
+      "cible": ".claude/design-md/shopify.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:spotify": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/spotify/DESIGN.md",
+      "hash": "67012d6b0cf0b5077466cea835defaf44dd12d46",
+      "cible": ".claude/design-md/spotify.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:stripe": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/stripe/DESIGN.md",
+      "hash": "5037cb36c1cf8b75efc506642325ecd99287a6cb",
+      "cible": ".claude/design-md/stripe.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:superhuman": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/superhuman/DESIGN.md",
+      "hash": "68e23a0307ac7ed4f7730d4c9562ba66bba2e0aa",
+      "cible": ".claude/design-md/superhuman.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:vercel": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/vercel/DESIGN.md",
+      "hash": "1cc780878645ffe76bbdb477e645e119049c7d5f",
+      "cible": ".claude/design-md/vercel.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    },
+    "design-md:warp": {
+      "type": "design-md",
+      "source": "https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/warp/DESIGN.md",
+      "hash": "1b11123628561ae03dad9a21967354c0db84874f",
+      "cible": ".claude/design-md/warp.md",
+      "installeLe": "2026-10-25T15:04:04.097Z"
+    }
+  },
+  "derogations": [
+    {
+      "critere": "mcp/figma retiré du .mcp.json",
+      "raison": "FIGMA_API_KEY absente de l'environnement : pas de secret en clair (règle BONDS).",
+      "par": "Claude, règle BONDS",
+      "le": "2026-10-25T15:04:59.541Z"
+    },
+    {
+      "critere": "mcp/semrush retiré du .mcp.json",
+      "raison": "Déjà installé et authentifié au scope user avec la même URL (https://mcp.semrush.com/v2/mcp) ; un doublon projet risquerait une seconde authentification OAuth.",
+      "par": "Claude, règle BONDS",
+      "le": "2026-10-25T15:04:59.541Z"
+    }
+  ]
+}
