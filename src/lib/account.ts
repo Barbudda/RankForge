@@ -12,7 +12,7 @@ const DEFAULT_AVATAR = "https://avatars.githubusercontent.com/u/0?v=4";
 const FALLBACK_USER: User = {
   id: "owner",
   name: process.env.NEXT_PUBLIC_OWNER_NAME || "You",
-  email: process.env.NEXT_PUBLIC_OWNER_EMAIL || "you@rankforge.dev",
+  email: process.env.NEXT_PUBLIC_OWNER_EMAIL || "you@example.com",
   avatarUrl: process.env.NEXT_PUBLIC_OWNER_AVATAR || DEFAULT_AVATAR,
   githubLogin: process.env.NEXT_PUBLIC_OWNER_GITHUB || "you",
 };
