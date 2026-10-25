@@ -17,7 +17,7 @@ const KIND_LABEL: Record<string, string> = {
 };
 
 /**
- * Shows RankForge's brain at a glance — how many memories it holds and their
+ * Shows Septune's brain at a glance — how many memories it holds and their
  * breakdown. The memory grows as audits run and fixes are generated, and is
  * recalled to ground every audit, fix, and chatbot answer.
  */
@@ -32,7 +32,7 @@ export async function BrainCard() {
           Brain
         </CardTitle>
         <CardDescription>
-          Semantic memory RankForge learns from, recalled to ground every
+          Semantic memory Septune learns from, recalled to ground every
           audit, fix and chat. Works offline, no API key needed.
         </CardDescription>
       </CardHeader>

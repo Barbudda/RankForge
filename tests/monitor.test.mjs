@@ -19,7 +19,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // The fixture is local, so the SSRF guard must allow 127.0.0.1 here.
 process.env.RANKFORGE_ALLOW_LOCAL = "1";
 process.env.RESEND_API_KEY = "re_test_key";
-process.env.RANKFORGE_ALERT_FROM = "RankForge <alerts@example.test>";
+process.env.RANKFORGE_ALERT_FROM = "Septune <alerts@example.test>";
 delete process.env.CRUX_API_KEY;
 
 let processMonitor;

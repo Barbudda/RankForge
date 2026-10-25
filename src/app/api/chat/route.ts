@@ -100,10 +100,10 @@ export async function POST(req: Request) {
 
       let system = SUPPORT_SYSTEM;
       if (docsBlock) {
-        system += `\n\nRETRIEVED PRODUCT DOCS (ground your answer in these; they are authoritative and current — prefer them over your general knowledge of RankForge):\n${docsBlock}`;
+        system += `\n\nRETRIEVED PRODUCT DOCS (ground your answer in these; they are authoritative and current — prefer them over your general knowledge of Septune):\n${docsBlock}`;
       }
       if (memoryBlock) {
-        system += `\n\nWORKSPACE MEMORY (the signed-in user's own RankForge data — cite it when relevant, never invent beyond it):\n${memoryBlock}`;
+        system += `\n\nWORKSPACE MEMORY (the signed-in user's own Septune data — cite it when relevant, never invent beyond it):\n${memoryBlock}`;
       }
 
       const resp = await client.messages.create({

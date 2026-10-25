@@ -1,4 +1,4 @@
-# RankForge: offline AI asset factory (Volet D)
+# Septune: offline AI asset factory (Volet D)
 
 > **Status: prepared, awaiting API keys. Nothing here runs at build or runtime.**
 

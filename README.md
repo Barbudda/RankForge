@@ -1,19 +1,19 @@
-# RankForge
+# Septune
 
-[![npm](https://img.shields.io/npm/v/rankforge-cli?label=rankforge-cli&color=34e0a1)](https://www.npmjs.com/package/rankforge-cli) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A518-green)](https://nodejs.org) [![MCP](https://img.shields.io/badge/MCP-server-708cff)](https://www.rank-forge.dev/docs/agent)
+[![npm](https://img.shields.io/npm/v/septune?label=septune&color=34e0a1)](https://www.npmjs.com/package/septune) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A518-green)](https://nodejs.org) [![MCP](https://img.shields.io/badge/MCP-server-708cff)](https://www.rank-forge.dev/docs/agent)
 
-> **The CLI, the editor agent and the GitHub Action now live in their own public repo: [Barbudda/rankforge-cli](https://github.com/Barbudda/rankforge-cli)**, with the full guide. This repo is the hosted web app.
+> **The CLI, the editor agent and the GitHub Action now live in their own public repo: [Barbudda/septune](https://github.com/Barbudda/septune)**, with the full guide. This repo is the hosted web app.
 
 **Deterministic technical-SEO audit for your site, from the terminal, your CI, or your editor, plus hosted monitoring that tells you when a deploy breaks SEO. No AI required, no API keys, no telemetry in the CLI.**
 
 ```bash
-npx rankforge-cli audit https://your-site.com
+npx septune audit https://your-site.com
 ```
 
-RankForge crawls a site the way a search engine sees it, **measures** every technical-SEO issue (it doesn't guess), and prints a scored report with the exact affected URLs, plus ready-to-apply patches for the mechanical ones.
+Septune crawls a site the way a search engine sees it, **measures** every technical-SEO issue (it doesn't guess), and prints a scored report with the exact affected URLs, plus ready-to-apply patches for the mechanical ones.
 
 ```
-RankForge audit  https://your-site.com/
+Septune audit  https://your-site.com/
 25 pages · 6.2s · deterministic, no AI, no external API
 every linked page crawled · 31 sitemap URLs
 
@@ -41,12 +41,12 @@ Issues (8)
 
 Site signals  1 orphan page · max click depth 2 · 8 internal-link suggestions
 
-✚ 2 issues have a ready patch: rankforge fix <ruleId> --framework <fw>
+✚ 2 issues have a ready patch: septune fix <ruleId> --framework <fw>
 ```
 
 ## Why deterministic
 
-Most of technical SEO is something your **code controls** and something a machine can **check by measuring**, so RankForge does exactly that. Every finding comes with evidence from the page. Nothing is hallucinated, nothing needs a model, nothing phones home. It runs in seconds, for free, forever.
+Most of technical SEO is something your **code controls** and something a machine can **check by measuring**, so Septune does exactly that. Every finding comes with evidence from the page. Nothing is hallucinated, nothing needs a model, nothing phones home. It runs in seconds, for free, forever.
 
 What it measures on every crawl:
 
@@ -65,15 +65,15 @@ Node 18+. Zero dependencies.
 
 ```bash
 # one-off
-npx rankforge-cli audit https://your-site.com
+npx septune audit https://your-site.com
 
 # or install globally
-npm i -g rankforge-cli
-rankforge audit http://localhost:3000        # your dev server, before you deploy
-rankforge audit https://your-site.com --pages 12 --framework astro
-rankforge audit https://your-site.com --json  # machine-readable
-rankforge diff https://your-site.com http://localhost:3000   # what your change breaks
-rankforge watch https://your-site.com         # compare with a saved baseline
+npm i -g septune
+septune audit http://localhost:3000        # your dev server, before you deploy
+septune audit https://your-site.com --pages 12 --framework astro
+septune audit https://your-site.com --json  # machine-readable
+septune diff https://your-site.com http://localhost:3000   # what your change breaks
+septune watch https://your-site.com         # compare with a saved baseline
 ```
 
 ### Gate your CI
@@ -81,49 +81,49 @@ rankforge watch https://your-site.com         # compare with a saved baseline
 Comment on every pull request with what changed compared with production, and fail it when the preview would drop pages from search (new `noindex`, pages that start failing, robots.txt blocking Google):
 
 ```yaml
-- uses: Barbudda/rankforge-cli@v0.3.0
+- uses: Barbudda/septune@v0.3.0
   with:
     url: ${{ steps.deploy.outputs.preview-url }}
     baseline-url: https://your-site.com
 ```
 
-Or gate on the score alone: `rankforge audit https://staging.your-site.com --fail-under 80`.
+Or gate on the score alone: `septune audit https://staging.your-site.com --fail-under 80`.
 
 ### Ready-to-apply patches
 
 Mechanical issues get a real, framework-idiomatic diff, with no model involved:
 
 ```bash
-rankforge fix framework-robots-missing --framework nextjs
-rankforge fix indexing-canonical-missing --framework astro --url https://your-site.com
-rankforge rules   # the full catalog
+septune fix framework-robots-missing --framework nextjs
+septune fix indexing-canonical-missing --framework astro --url https://your-site.com
+septune rules   # the full catalog
 ```
 
 ## In your editor (MCP)
 
-RankForge also ships as an **MCP server**, so Claude Code, Cursor, VS Code or Windsurf can run the audit, compare your local version with production, get fix templates, then patch the repo they already have open. RankForge does the measuring; your assistant does the reasoning.
+Septune also ships as an **MCP server**, so Claude Code, Cursor, VS Code or Windsurf can run the audit, compare your local version with production, get fix templates, then patch the repo they already have open. Septune does the measuring; your assistant does the reasoning.
 
 ```bash
-# Claude Code plugin (MCP tools + /rankforge:seo and /rankforge:check)
-/plugin marketplace add Barbudda/rankforge-cli
-/plugin install rankforge@rankforge
+# Claude Code plugin (MCP tools + /septune:seo and /septune:check)
+/plugin marketplace add Barbudda/septune
+/plugin install septune@septune
 
 # or the bare MCP server, in any client
-claude mcp add rankforge -- npx -y rankforge-cli mcp
+claude mcp add septune -- npx -y septune mcp
 ```
 
-Then: *"Use rankforge to audit http://localhost:3000 and fix what you find."*
+Then: *"Use septune to audit http://localhost:3000 and fix what you find."*
 Setup for every client → [www.rank-forge.dev/docs/agent](https://www.rank-forge.dev/docs/agent)
 
 ## The hosted app
 
-[www.rank-forge.dev](https://www.rank-forge.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: RankForge checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) are free during the beta, since billing isn't open yet. The hosted app audits public URLs; run the CLI to audit `localhost`.
+[www.rank-forge.dev](https://www.rank-forge.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: Septune checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) are free during the beta, since billing isn't open yet. The hosted app audits public URLs; run the CLI to audit `localhost`.
 
 ## Run it yourself
 
 ```bash
 git clone https://github.com/Barbudda/RankForge
-cd RankForge && npm install
+cd Septune && npm install
 npm run cli:build && node cli/dist/index.js audit https://example.com   # the CLI
 npm run dev                                                               # the app on :3000
 ```
@@ -150,7 +150,7 @@ A single Next.js 16 / TypeScript app. The audit engine is plain TypeScript with 
 
 ## Honest notes
 
-- RankForge never promises search rankings. It fixes the technical layer your repository controls, which is the part that's checkable.
+- Septune never promises search rankings. It fixes the technical layer your repository controls, which is the part that's checkable.
 - Green in reports means *measured*. A finding always cites evidence from the page.
 - It's an early project by one person. Issues and PRs are welcome.
 

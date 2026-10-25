@@ -7,7 +7,7 @@ import { CHANGELOG } from "@/lib/seo/content";
 export const metadata: Metadata = {
   title: "Changelog",
   description:
-    "What shipped in RankForge, release by release. Audits, fixes, agents and the site itself.",
+    "What shipped in Septune, release by release. Audits, fixes, agents and the site itself.",
   alternates: { canonical: "/changelog" },
 };
 
@@ -22,7 +22,7 @@ export default function ChangelogPage() {
       />
       <ProsePage
         title="Changelog"
-        intro="What shipped, newest first. RankForge is built in public by a solo founder."
+        intro="What shipped, newest first. Septune is built in public by a solo founder."
       >
         <ol className="space-y-8">
           {CHANGELOG.map((entry) => (

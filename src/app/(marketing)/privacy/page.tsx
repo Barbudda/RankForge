@@ -7,7 +7,7 @@ import { PLAN_LIMITS } from "@/lib/pricing";
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "What RankForge stores, why, who processes it and how to get it deleted. Written in plain language.",
+    "What Septune stores, why, who processes it and how to get it deleted. Written in plain language.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -24,14 +24,14 @@ export default function PrivacyPage() {
       />
       <ProsePage
         title="Privacy policy"
-        intro="RankForge is an early-stage product run by a solo founder. This page says exactly what is stored, why, and who processes it, in plain language. Last updated: October 2026."
+        intro="Septune is an early-stage product run by a solo founder. This page says exactly what is stored, why, and who processes it, in plain language. Last updated: October 2026."
       >
         <ProseBlock heading="What we store">
           <p>
             When you create an account: your email address and a password hash,
             both handled by Supabase Auth (we never see your plain password).
             When you connect a repository: its name, the production URL you
-            provide, and the audits, issues and pull-request metadata RankForge
+            provide, and the audits, issues and pull-request metadata Septune
             generates for it.
           </p>
           <p className="mt-3">
@@ -54,13 +54,13 @@ export default function PrivacyPage() {
           <p>
             No advertising trackers, no analytics resale, no selling of your
             data. It goes only to the services listed below, and only for what
-            they do to run RankForge. RankForge reads your site&apos;s rendered
+            they do to run Septune. Septune reads your site&apos;s rendered
             HTML and your repository structure; it never reads your environment
             secrets.
           </p>
           <p className="mt-3">
             The open-source CLI and the editor agent (MCP) run on your machine.
-            They send nothing to RankForge.
+            They send nothing to Septune.
           </p>
         </ProseBlock>
         <ProseBlock heading="Who processes it">
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong>Stripe</strong> processes payments for Pro and Studio. It
-              holds your card and billing details; RankForge only keeps your
+              holds your card and billing details; Septune only keeps your
               Stripe customer id, the subscription&apos;s status and its renewal
               date, and never sees your card.
             </li>

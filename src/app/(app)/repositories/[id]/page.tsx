@@ -144,7 +144,7 @@ export default async function RepositoryDetailPage({
             <CardHeader>
               <CardTitle>Framework signals</CardTitle>
               <CardDescription>
-                What RankForge detected in your {repo.framework} setup.
+                What Septune detected in your {repo.framework} setup.
               </CardDescription>
             </CardHeader>
             <div className="space-y-3 px-5 pb-5">

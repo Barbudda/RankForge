@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Export the PUBLIC repo (github.com/Barbudda/rankforge-cli) from this
+ * Export the PUBLIC repo (github.com/Barbudda/septune) from this
  * private monorepo: only the audit engine + CLI + tests + docs — no app, no
  * tooling config, no secrets.
  *
@@ -16,7 +16,7 @@ import { dirname, join, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const target = resolve(process.argv[2] ?? join(ROOT, "..", "rankforge-cli-public"));
+const target = resolve(process.argv[2] ?? join(ROOT, "..", "septune-public"));
 const TEMPLATES = join(ROOT, "scripts", "public");
 
 // ── 1. dependency closure ────────────────────────────────────────────
@@ -96,9 +96,9 @@ const devVersion = (name) => {
 const pkg = {
   ...cliPkg,
   files: ["dist", "README.md", "LICENSE"],
-  repository: { type: "git", url: "git+https://github.com/Barbudda/rankforge-cli.git" },
-  homepage: "https://github.com/Barbudda/rankforge-cli#readme",
-  bugs: { url: "https://github.com/Barbudda/rankforge-cli/issues" },
+  repository: { type: "git", url: "git+https://github.com/Barbudda/septune.git" },
+  homepage: "https://github.com/Barbudda/septune#readme",
+  bugs: { url: "https://github.com/Barbudda/septune/issues" },
   scripts: {
     build: "tsup",
     typecheck: "tsc --noEmit",

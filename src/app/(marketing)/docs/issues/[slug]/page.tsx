@@ -21,7 +21,7 @@ export async function generateMetadata({
   if (!rule) return {};
   return {
     title: `${rule.title}: how to fix it`,
-    description: `${rule.description} What it means for technical SEO, how RankForge detects it and how to fix it.`,
+    description: `${rule.description} What it means for technical SEO, how Septune detects it and how to fix it.`,
     alternates: { canonical: `/docs/issues/${slug}` },
   };
 }
@@ -82,7 +82,7 @@ export default async function IssueDocPage({
           </p>
         </ProseBlock>
 
-        <ProseBlock heading="How RankForge fixes it">
+        <ProseBlock heading="How Septune fixes it">
           <p>
             An audit detects this issue on your rendered pages and points it
             at the template or source file most likely behind it

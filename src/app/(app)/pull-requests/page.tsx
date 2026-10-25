@@ -25,7 +25,7 @@ export default async function PullRequestsPage() {
     <>
       <PageHeader
         title="Pull requests"
-        description="Every fix RankForge has generated across your workspace."
+        description="Every fix Septune has generated across your workspace."
       />
 
       {prs.length === 0 ? (

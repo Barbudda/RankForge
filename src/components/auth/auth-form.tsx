@@ -153,7 +153,7 @@ export function AuthForm({
         {resetMode
           ? "Enter your account email and we'll send a reset link."
           : isLogin
-            ? "Sign in to your RankForge workspace."
+            ? "Sign in to your Septune workspace."
             : "Start opening technical-SEO pull requests."}
       </p>
 
@@ -258,7 +258,7 @@ export function AuthForm({
           </button>
         ) : (
           <>
-            {isLogin ? "New to RankForge? " : "Already have an account? "}
+            {isLogin ? "New to Septune? " : "Already have an account? "}
             <Link
               href={isLogin ? "/signup" : "/login"}
               className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"

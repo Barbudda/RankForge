@@ -3,7 +3,7 @@ import { cliAgentsEnabled } from "./cli-driver";
 import { localAgentsEnabled } from "./local-driver";
 
 /**
- * LLM client for RankForge's generative agents (fix generation + optional
+ * LLM client for Septune's generative agents (fix generation + optional
  * audit enrichment + chatbot). Server-only. A generative model can come from:
  *  - the Anthropic SDK (ANTHROPIC_API_KEY) — production path,
  *  - the local `claude` CLI on the founder's subscription (RANKFORGE_LLM=claude-cli),

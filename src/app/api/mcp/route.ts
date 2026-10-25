@@ -6,10 +6,10 @@ export const runtime = "nodejs";
 export const maxDuration = 120;
 
 /**
- * The RankForge agent as an MCP server — Streamable HTTP transport, stateless.
+ * The Septune agent as an MCP server — Streamable HTTP transport, stateless.
  *
  * Connect from any MCP-capable dev tool:
- *   Claude Code:  claude mcp add --transport http rankforge http://localhost:3000/api/mcp
+ *   Claude Code:  claude mcp add --transport http septune http://localhost:3000/api/mcp
  *   Cursor/VS Code/Windsurf: add an "http" MCP server with the same URL.
  *
  * Protocol: JSON-RPC 2.0 over POST (initialize, tools/list, tools/call, ping).

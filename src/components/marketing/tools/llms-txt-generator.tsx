@@ -151,7 +151,7 @@ export function LlmsTxtGenerator() {
             Save it at the root of your site, as <span className="font-mono text-xs">/llms.txt</span>:{" "}
             <span className="font-mono text-xs">public/</span> in Next.js, Astro, Nuxt and Vite,{" "}
             <span className="font-mono text-xs">static/</span> in SvelteKit. For the whole site and to keep it current, run{" "}
-            <span className="font-mono text-xs">npx rankforge-cli llms {result.url} --out public/llms.txt</span>, or check your
+            <span className="font-mono text-xs">npx septune llms {result.url} --out public/llms.txt</span>, or check your
             AI-search readiness with the{" "}
             <Link href="/audit" className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
               free audit

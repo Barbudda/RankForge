@@ -14,7 +14,7 @@ let client: Stripe | null | undefined;
 export function getStripe(): Stripe | null {
   if (client === undefined) {
     const key = process.env.STRIPE_SECRET_KEY;
-    client = key ? new Stripe(key, { appInfo: { name: "RankForge", url: config.appUrl } }) : null;
+    client = key ? new Stripe(key, { appInfo: { name: "Septune", url: config.appUrl } }) : null;
   }
   return client;
 }

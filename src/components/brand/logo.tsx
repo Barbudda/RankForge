@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** RankForge mark: a stylized "forge spark" formed from a code chevron. */
+/** Septune mark: a pair of code chevrons around a point, the page being checked. */
 export function Logo({
   className,
   withWordmark = true,
@@ -37,7 +37,7 @@ export function Logo({
       </span>
       {withWordmark && (
         <span className="text-[15px] font-semibold tracking-tight text-fg">
-          Rank<span className="text-fg-muted">Forge</span>
+          Sep<span className="text-fg-muted">tune</span>
         </span>
       )}
     </span>

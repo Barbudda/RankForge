@@ -9,7 +9,7 @@ import type { Plan } from "@/types";
  */
 
 export interface PlanLimits {
-  /** Sites RankForge monitors on its own. */
+  /** Sites Septune monitors on its own. */
   sites: number;
   /** How often each monitored site is checked. */
   frequency: "daily" | "weekly";
@@ -81,7 +81,7 @@ export const PRICING_TIERS: PricingTier[] = [
     id: "pro",
     name: "Pro",
     priceMonthly: 19,
-    tagline: "RankForge watches your production sites and tells you when a deploy breaks SEO.",
+    tagline: "Septune watches your production sites and tells you when a deploy breaks SEO.",
     highlight: true,
     ...ctaFor("pro"),
     limits: PLAN_LIMITS.pro,

@@ -1,7 +1,7 @@
 import type { PullRequest, Repository } from "@/types";
 
 /**
- * The GitHub surface RankForge depends on. Both a mock and an
+ * The GitHub surface Septune depends on. Both a mock and an
  * Octokit-backed adapter implement this — the rest of the app only ever
  * talks to the interface, never to Octokit directly.
  */

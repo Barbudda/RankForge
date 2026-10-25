@@ -17,7 +17,7 @@ const limited = createRateLimiter(10);
 function friendly(e: unknown): { error: string; status: number } {
   const msg = e instanceof Error ? e.message : "";
   if (/robots\.txt disallows/i.test(msg)) {
-    return { error: "This site's robots.txt doesn't let RankForgeBot crawl it. On your own site, the CLI can: npx rankforge-cli llms <url> --ignore-robots", status: 403 };
+    return { error: "This site's robots.txt doesn't let SeptuneBot crawl it. On your own site, the CLI can: npx septune llms <url> --ignore-robots", status: 403 };
   }
   if (/private|internal|not allowed|blocked/i.test(msg)) return { error: "That address isn't a public website.", status: 400 };
   return { error: "Couldn't crawl that site. Check the URL and that the site is online.", status: 502 };
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   const url = parsePublicUrl(body.url);
   if (!url) return NextResponse.json({ error: "Enter a valid http(s) URL." }, { status: 400 });
   if (limited(clientIp(req))) {
-    return NextResponse.json({ error: "That's a lot of crawls for one hour. Try again later, or run npx rankforge-cli llms <url> for unlimited ones." }, { status: 429 });
+    return NextResponse.json({ error: "That's a lot of crawls for one hour. Try again later, or run npx septune llms <url> for unlimited ones." }, { status: 429 });
   }
 
   try {

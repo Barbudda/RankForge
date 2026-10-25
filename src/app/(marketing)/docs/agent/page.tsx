@@ -5,9 +5,9 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Use the RankForge agent in your editor (MCP)",
+  title: "Use the Septune agent in your editor (MCP)",
   description:
-    "Connect RankForge to Claude Code, Cursor, VS Code or any MCP client: your AI coding assistant audits your site with RankForge's engine and fixes the code in your repo.",
+    "Connect Septune to Claude Code, Cursor, VS Code or any MCP client: your AI coding assistant audits your site with Septune's engine and fixes the code in your repo.",
   alternates: { canonical: "/docs/agent" },
 };
 
@@ -30,13 +30,13 @@ export default function AgentDocsPage() {
         ])}
       />
       <ProsePage
-        title="The RankForge agent, inside your editor"
-        intro="RankForge ships as an MCP server. Connect it to Claude Code, Cursor, VS Code, Windsurf or any MCP-capable assistant: the assistant measures your site with RankForge's deterministic engine, then fixes the code right in the repository it already has open."
+        title="The Septune agent, inside your editor"
+        intro="Septune ships as an MCP server. Connect it to Claude Code, Cursor, VS Code, Windsurf or any MCP-capable assistant: the assistant measures your site with Septune's deterministic engine, then fixes the code right in the repository it already has open."
       >
         <ProseBlock heading="Why this beats a dashboard">
           <p>
             An audit report tells you what&apos;s wrong; your coding assistant can
-            actually change the code. With RankForge connected over MCP, one
+            actually change the code. With Septune connected over MCP, one
             prompt (<em>&ldquo;audit my dev server and fix what you find&rdquo;</em>)
             runs the full technical-SEO audit against{" "}
             <span className="font-mono text-xs">localhost</span>, walks the
@@ -48,21 +48,21 @@ export default function AgentDocsPage() {
 
         <ProseBlock heading="Connect from Claude Code">
           <p>Install the plugin. It brings the MCP tools and two skills:</p>
-          <CodeBlock>{`/plugin marketplace add Barbudda/rankforge-cli
-/plugin install rankforge@rankforge`}</CodeBlock>
+          <CodeBlock>{`/plugin marketplace add Barbudda/septune
+/plugin install septune@septune`}</CodeBlock>
           <p className="mt-3">
-            <span className="font-mono text-xs">/rankforge:seo</span> audits the
+            <span className="font-mono text-xs">/septune:seo</span> audits the
             site in your repository and fixes what it can;{" "}
-            <span className="font-mono text-xs">/rankforge:check</span> compares
+            <span className="font-mono text-xs">/septune:check</span> compares
             your local or preview version with production before you ship. Or add
             the bare MCP server:
           </p>
-          <CodeBlock>{`claude mcp add rankforge -- npx -y rankforge-cli mcp`}</CodeBlock>
+          <CodeBlock>{`claude mcp add septune -- npx -y septune mcp`}</CodeBlock>
           <p className="mt-3">
             On native Windows, use{" "}
-            <span className="font-mono text-xs">cmd /c npx -y rankforge-cli mcp</span>{" "}
+            <span className="font-mono text-xs">cmd /c npx -y septune mcp</span>{" "}
             after the <span className="font-mono text-xs">--</span>. Then ask:{" "}
-            <em>&ldquo;Use rankforge to audit http://localhost:3000 and fix the
+            <em>&ldquo;Use septune to audit http://localhost:3000 and fix the
             issues you can.&rdquo;</em>
           </p>
         </ProseBlock>
@@ -76,13 +76,13 @@ export default function AgentDocsPage() {
           </p>
           <CodeBlock>{`{
   "mcpServers": {
-    "rankforge": { "command": "npx", "args": ["-y", "rankforge-cli", "mcp"] }
+    "septune": { "command": "npx", "args": ["-y", "septune", "mcp"] }
   }
 }`}</CodeBlock>
           <p className="mt-3">
             It needs Node.js 18 or later. The{" "}
             <a
-              href="https://github.com/Barbudda/rankforge-cli#2-in-your-ai-editor-the-agent"
+              href="https://github.com/Barbudda/septune#2-in-your-ai-editor-the-agent"
               className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
             >
               README
@@ -127,7 +127,7 @@ export default function AgentDocsPage() {
               <span className="font-mono text-xs">seo_docs</span>: grounded
               answers from the{" "}
               <Link href="/docs" className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
-                RankForge knowledge base
+                Septune knowledge base
               </Link>
               , so the assistant explains issues accurately.
             </li>
@@ -152,9 +152,9 @@ export default function AgentDocsPage() {
         <ProseBlock heading="Security model">
           <p>
             The tools only read rendered pages, the same thing any crawler sees.
-            RankForge never writes to your repository: your assistant edits the
+            Septune never writes to your repository: your assistant edits the
             files, and you review them as you would any change. The crawler
-            identifies itself as RankForgeBot and honours robots.txt unless you
+            identifies itself as SeptuneBot and honours robots.txt unless you
             pass <span className="font-mono text-xs">ignoreRobots</span> for your
             own site. The hosted endpoint at{" "}
             <span className="font-mono text-xs">/api/mcp</span> is closed by

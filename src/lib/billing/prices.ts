@@ -10,8 +10,8 @@ export type PaidPlan = Exclude<Plan, "free">;
  * STRIPE_PRICE_STUDIO override them with explicit price ids.
  */
 export const PRICE_LOOKUP_KEYS: Record<PaidPlan, string> = {
-  pro: "rankforge_pro_monthly",
-  studio: "rankforge_studio_monthly",
+  pro: "septune_pro_monthly",
+  studio: "septune_studio_monthly",
 };
 
 const PLAN_RANK: Record<Plan, number> = { free: 0, pro: 1, studio: 2 };
@@ -20,7 +20,7 @@ export function explicitPriceId(plan: PaidPlan): string | undefined {
   return (plan === "pro" ? process.env.STRIPE_PRICE_PRO : process.env.STRIPE_PRICE_STUDIO) || undefined;
 }
 
-/** The plan a Stripe price grants, or null for a price RankForge doesn't sell. */
+/** The plan a Stripe price grants, or null for a price Septune doesn't sell. */
 export function planForPrice(price: { id: string; lookup_key?: string | null }): PaidPlan | null {
   for (const plan of ["pro", "studio"] as const) {
     if (price.id === explicitPriceId(plan) || price.lookup_key === PRICE_LOOKUP_KEYS[plan]) return plan;

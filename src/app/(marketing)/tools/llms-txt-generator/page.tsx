@@ -32,7 +32,7 @@ export default function LlmsTxtGeneratorPage() {
           {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            name: "RankForge llms.txt generator",
+            name: "Septune llms.txt generator",
             url: `${config.appUrl}/tools/llms-txt-generator`,
             applicationCategory: "DeveloperApplication",
             operatingSystem: "Web",
@@ -53,7 +53,7 @@ export default function LlmsTxtGeneratorPage() {
               llms.txt generator
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-fg-muted">
-              Paste your site&apos;s URL. RankForge crawls up to 15 pages, writes an llms.txt from their real titles and
+              Paste your site&apos;s URL. Septune crawls up to 15 pages, writes an llms.txt from their real titles and
               descriptions, and checks the one you already have.
             </p>
             <div className="mt-8">
@@ -82,7 +82,7 @@ export default function LlmsTxtGeneratorPage() {
               <p className="mt-3 text-fg-muted">
                 Honestly: it&apos;s a proposal, not a standard. Google Search doesn&apos;t use it, some AI tools and
                 agents read it, and Lighthouse now checks for it. It costs one file and a minute, which is why
-                RankForge&apos;s AI-search audit reports it as a suggestion, never as an error. What decides whether
+                Septune&apos;s AI-search audit reports it as a suggestion, never as an error. What decides whether
                 answer engines can cite you is still access (robots.txt), text in the server HTML, and clear answers.
               </p>
             </div>
@@ -91,7 +91,7 @@ export default function LlmsTxtGeneratorPage() {
               <p className="mt-3 text-fg-muted">
                 Pages change; a stale llms.txt points at pages that moved. The open-source CLI regenerates it from the
                 whole site in your build or CI:{" "}
-                <span className="font-mono text-sm">npx rankforge-cli llms https://your-site.com --out public/llms.txt</span>.
+                <span className="font-mono text-sm">npx septune llms https://your-site.com --out public/llms.txt</span>.
                 To see everything AI search engines need from your site, run the{" "}
                 <Link href="/audit" className={link}>
                   free audit

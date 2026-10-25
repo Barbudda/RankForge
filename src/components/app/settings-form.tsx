@@ -104,7 +104,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
         <CardHeader>
           <CardTitle>Modification level</CardTitle>
           <CardDescription>
-            Choose how far RankForge may go by default, from plain advice to
+            Choose how far Septune may go by default, from plain advice to
             full root autonomy. Each repository can override this.
           </CardDescription>
         </CardHeader>
@@ -191,7 +191,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
         <CardHeader>
           <CardTitle>Excluded paths</CardTitle>
           <CardDescription>
-            Globs RankForge will never touch (one per line).
+            Globs Septune will never touch (one per line).
           </CardDescription>
         </CardHeader>
         <div className="px-5 pb-5">

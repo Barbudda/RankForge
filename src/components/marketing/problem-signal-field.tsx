@@ -70,7 +70,7 @@ export function ProblemSection() {
             </h2>
             <p className="mt-4 max-w-md text-fg-muted">
               Crawlers surface hundreds of warnings, weeks after the deploy
-              that caused them. RankForge checks each change as it ships,
+              that caused them. Septune checks each change as it ships,
               groups findings by cause, and ranks them by what they cost you
               in search.
             </p>

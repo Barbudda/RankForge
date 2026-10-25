@@ -48,12 +48,12 @@ export interface SiteFilesInput {
 }
 
 /**
- * Deterministic technical-SEO audit engine — the autonomous core of RankForge.
+ * Deterministic technical-SEO audit engine — the autonomous core of Septune.
  *
  * It runs with ZERO external APIs and ZERO LLM calls: every finding here is
  * derived by parsing the crawled HTML and computing over the link graph and
  * content. An optional LLM pass can enrich these results, but the engine
- * stands entirely on its own, which is what makes RankForge self-reliant.
+ * stands entirely on its own, which is what makes Septune self-reliant.
  *
  * Findings are aggregated the way real audit tools present them: one issue per
  * rule, carrying every affected URL (e.g. "duplicate <title> ×128"), so the

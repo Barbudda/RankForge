@@ -30,11 +30,11 @@ const APP_URL = config.appUrl;
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: "RankForge: automated technical SEO checks for every deploy",
-    template: "%s · RankForge",
+    default: "Septune: automated technical SEO checks for every deploy",
+    template: "%s · Septune",
   },
   description:
-    "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.",
+    "Automated technical SEO for developers. Septune fails the pull request that would drop pages from Google and watches production after the merge.",
   keywords: [
     "technical SEO",
     "automated SEO",
@@ -44,21 +44,21 @@ export const metadata: Metadata = {
     "Next.js SEO",
     "SEO MCP server",
   ],
-  authors: [{ name: "RankForge" }],
+  authors: [{ name: "Septune" }],
   openGraph: {
-    title: "RankForge: technical SEO that survives your deploys",
+    title: "Septune: technical SEO that survives your deploys",
     description:
       "Fails the pull request that would drop pages from Google, then keeps watching production.",
     // Relative path resolved per-page against metadataBase. Pages override
     // this with their own path (see /pricing) so og:url is never wrong.
     url: "/",
-    siteName: "RankForge",
+    siteName: "Septune",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "RankForge: technical SEO that survives your deploys",
+    title: "Septune: technical SEO that survives your deploys",
     description:
       "Fails the pull request that would drop pages from Google, then keeps watching production.",
   },

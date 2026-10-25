@@ -22,7 +22,7 @@ import { CrawlerSwarm } from "./dots/crawler-swarm";
  *
  * An assembly board: scattered SEO findings are grouped into focused
  * buckets, turned into one patch, and shipped as the team's own pull
- * request, which RankForge's check then verifies.
+ * request, which Septune's check then verifies.
  * Scroll progress drives a five-step assembly; hovering a bucket
  * highlights the findings it contains and the files it touches.
  *
@@ -95,7 +95,7 @@ const CAPTIONS = [
   {
     icon: ShieldCheck,
     title: "Checked before the merge",
-    body: "RankForge re-audits the preview: the issues must clear, and nothing else may break.",
+    body: "Septune re-audits the preview: the issues must clear, and nothing else may break.",
   },
 ];
 
@@ -292,7 +292,7 @@ export function PrAssemblySection() {
               </PrRow>
 
               {/* Checks */}
-              <PrRow icon={<ShieldCheck className="size-3.5 text-signal" />} label="RankForge check">
+              <PrRow icon={<ShieldCheck className="size-3.5 text-signal" />} label="Septune check">
                 <div className="space-y-1">
                   {PR.checks.map((c) => (
                     <div key={c} className="flex items-center gap-1.5 text-fg-muted">

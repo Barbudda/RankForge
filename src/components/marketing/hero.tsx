@@ -43,7 +43,7 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="mt-6 max-w-xl text-lg text-fg-muted"
             >
-              RankForge reads your site the way Googlebot does and checks it
+              Septune reads your site the way Googlebot does and checks it
               where SEO breaks: in your editor, in every pull request, and in
               production. It fails the pull request that would drop pages from
               Google, and hands each fix to your AI editor.
@@ -79,7 +79,7 @@ export function Hero() {
                 Or straight from your terminal, nothing to install
               </p>
               <p className="mt-2 font-mono text-sm text-fg-muted">
-                npx rankforge-cli audit your-site.com
+                npx septune audit your-site.com
               </p>
               <p className="mt-4 font-mono text-xs text-fg-subtle">
                 {FRAMEWORKS.join(" / ")}
@@ -87,7 +87,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: the comment RankForge posts on a pull request */}
+          {/* Right: the comment Septune posts on a pull request */}
           <div className="relative min-w-0">
             <PrCheckCard />
           </div>

@@ -11,7 +11,7 @@ export function AppTopbar({ user }: { user: User }) {
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-bg/80 px-5 backdrop-blur-xl">
       {/* Mobile brand */}
       <Link href="/dashboard" className="font-semibold tracking-tight lg:hidden">
-        Rank<span className="text-fg-muted">Forge</span>
+        Sep<span className="text-fg-muted">tune</span>
       </Link>
 
       {/* Search / command palette — not wired yet, honestly disabled. */}

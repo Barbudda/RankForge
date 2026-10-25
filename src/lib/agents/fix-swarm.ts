@@ -5,7 +5,7 @@ import { recall, remember } from "@/lib/brain";
 /**
  * Fix swarm — turns an SEO issue into a concrete, reviewable patch via a
  * three-stage pipeline: locate the files → generate the diff → validate it.
- * Every change is branch-scoped; RankForge never force-pushes to a default
+ * Every change is branch-scoped; Septune never force-pushes to a default
  * branch (enforced in the prompts and reflected in the output).
  */
 
@@ -52,7 +52,7 @@ const PATCH_SCHEMA: Record<string, unknown> = {
     },
     branchName: {
       type: "string",
-      description: "A dedicated branch, e.g. rankforge/seo-<slug>.",
+      description: "A dedicated branch, e.g. septune/seo-<slug>.",
     },
     prTitle: { type: "string" },
     prDescription: { type: "string" },
@@ -109,7 +109,7 @@ export async function runFixSwarm(
   const swarm = new Swarm(opts?.onProgress);
   const base = issueBlock(issue, repo);
 
-  // Brain: recall similar fixes RankForge has generated before, to reuse what
+  // Brain: recall similar fixes Septune has generated before, to reuse what
   // worked for this framework/category.
   const priorFixes = await recall(`${issue.title} ${issue.description}`, {
     repoId: repo.id,
@@ -117,7 +117,7 @@ export async function runFixSwarm(
     limit: 4,
   }).catch(() => []);
   const priorBlock = priorFixes.length
-    ? `\n\nPrior fixes from RankForge's memory (reuse the approach where it fits):\n${priorFixes
+    ? `\n\nPrior fixes from Septune's memory (reuse the approach where it fits):\n${priorFixes
         .map((m) => `• ${m.title || m.content.slice(0, 100)}`)
         .join("\n")}`
     : "";

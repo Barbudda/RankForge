@@ -109,7 +109,7 @@ export function FindingToDiffSection() {
             From crawl finding to a diff you can merge.
           </h2>
           <p className="mt-4 text-fg-muted">
-            RankForge hands your AI editor the evidence: the pattern, every
+            Septune hands your AI editor the evidence: the pattern, every
             affected URL and the likely files. The editor finds the template
             in your code and writes the change; mechanical fixes come as a
             ready patch.

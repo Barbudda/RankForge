@@ -64,7 +64,7 @@ export async function runSiteCheck(input: {
   if (crawl.pages.length === 0) {
     throw new Error(
       crawl.blockedByRobots.length
-        ? "robots.txt disallows RankForgeBot on this site, so it can't be checked."
+        ? "robots.txt disallows SeptuneBot on this site, so it can't be checked."
         : "The site could not be reached.",
     );
   }

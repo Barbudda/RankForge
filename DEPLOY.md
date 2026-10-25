@@ -1,8 +1,8 @@
-# Deploying RankForge to Vercel
+# Deploying Septune to Vercel
 
 Sections 1 to 5 get the app running; section 6 is the checklist to go live and take payments.
 
-RankForge runs fully on Vercel. The **deterministic audit, mechanical fixes, and
+Septune runs fully on Vercel. The **deterministic audit, mechanical fixes, and
 the extractive chatbot need no AI key**. A generative LLM only adds nicer
 fixes/chat. Follow this once.
 
@@ -16,7 +16,7 @@ fixes/chat. Follow this once.
 
 | Variable | Value |
 |---|---|
-| `NEXT_PUBLIC_APP_URL` | Your Vercel URL, e.g. `https://rankforge-xxxx.vercel.app` (used for canonicals, OG, the MCP endpoint shown in-app). |
+| `NEXT_PUBLIC_APP_URL` | Your Vercel URL, e.g. `https://septune-xxxx.vercel.app` (used for canonicals, OG, the MCP endpoint shown in-app). |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API → Project URL |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → API → publishable/anon key. All of the app's own data access runs through this under row-level security. Only the monitoring cron needs the secret key (section 5). |
 
@@ -49,13 +49,13 @@ fixes/chat. Follow this once.
   - **Connect a repository** (name + a production URL) and **Run an audit**. The
     deterministic engine crawls that public URL and reports real issues.
   - Open the audit → **Prepare fixes** → review the per-file diffs → **Open PR**.
-  - Ask the **support chatbot** (bottom-right) anything about RankForge.
+  - Ask the **support chatbot** (bottom-right) anything about Septune.
   - **Use in your editor** (top-right button): connect Claude Code / Cursor / VS
     Code to the hosted agent and audit **any public site** from their editor.
 
 ## 5. Monitoring (the paid feature)
 
-RankForge checks each monitored site on a schedule, compares the check with the
+Septune checks each monitored site on a schedule, compares the check with the
 previous one and sends alerts. It needs, on top of sections 2 and 3:
 
 | Variable | Value |
@@ -63,7 +63,7 @@ previous one and sends alerts. It needs, on top of sections 2 and 3:
 | `CRON_SECRET` | A long random string (`node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`). Vercel Cron sends it as a Bearer token; `/api/cron/monitor` refuses any other caller. |
 | `SUPABASE_SECRET_KEY` | Supabase → API → secret key. Server-only: the cron reads every monitor across accounts. Never prefix it with `NEXT_PUBLIC_`. |
 | `RESEND_API_KEY` | resend.com → API Keys. Without it, checks still run and are stored, but no email goes out. |
-| `RANKFORGE_ALERT_FROM` | Optional sender, e.g. `RankForge <alerts@your-domain.com>`, on a domain verified in Resend. Until then Resend only delivers to the account owner's address. |
+| `RANKFORGE_ALERT_FROM` | Optional sender, e.g. `Septune <alerts@your-domain.com>`, on a domain verified in Resend. Until then Resend only delivers to the account owner's address. |
 | `CRUX_API_KEY` | Optional: Core Web Vitals of real users (Google Cloud → APIs → Chrome UX Report API). |
 | `NEXT_PUBLIC_RANKFORGE_BILLING` | Leave unset during the beta (every account gets Pro). Set to `open` once payments work. |
 
@@ -88,7 +88,7 @@ a key's value.
    built-in sender only delivers to your organization's members, two emails an
    hour: without custom SMTP, real users never get their confirmation email.
    With Resend: host `smtp.resend.com`, port `465`, user `resend`, password a
-   Resend API key, sender e.g. `RankForge <hello@rank-forge.dev>` once
+   Resend API key, sender e.g. `Septune <hello@rank-forge.dev>` once
    `rank-forge.dev` is verified in Resend (the same domain serves the alerts).
 
 **Stripe**
@@ -132,5 +132,5 @@ OpenGraph), the change report + PR flow, and the RAG chatbot (extractive).
 ## Note on the agent + localhost
 A **hosted** agent audits **public URLs**: it crawls from Vercel and can't reach
 a user's `localhost`. To audit a local dev server, use the open-source CLI's MCP
-server on that machine (`claude mcp add rankforge -- npx -y rankforge-cli mcp`)
-or the Claude Code plugin (`/plugin install rankforge@rankforge`).
+server on that machine (`claude mcp add septune -- npx -y septune mcp`)
+or the Claude Code plugin (`/plugin install septune@septune`).

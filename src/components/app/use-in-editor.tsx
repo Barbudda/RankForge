@@ -6,10 +6,10 @@ import { Terminal, X, Copy, Check, ArrowRight, ShieldCheck } from "lucide-react"
 import { cn } from "@/lib/utils";
 
 /**
- * "Use RankForge in your editor" — the discoverable entry point to the MCP
+ * "Use Septune in your editor" — the discoverable entry point to the MCP
  * server. A developer working in the app naturally sees they can connect their
  * AI coding assistant (Claude Code, Cursor, VS Code, Windsurf) and have it run
- * RankForge's audit + fix their repo in place. Copy-paste setup per client.
+ * Septune's audit + fix their repo in place. Copy-paste setup per client.
  */
 
 type ClientId = "claude" | "cursor" | "vscode" | "windsurf";
@@ -54,14 +54,14 @@ function snippetFor(client: ClientId, mcpUrl: string): { intro: string; code: st
     case "claude":
       return {
         intro: "Run this once, then ask Claude Code to audit your dev server:",
-        code: `claude mcp add --transport http rankforge ${mcpUrl}`,
+        code: `claude mcp add --transport http septune ${mcpUrl}`,
       };
     case "cursor":
       return {
         intro: "Add to .cursor/mcp.json (project) or ~/.cursor/mcp.json (global):",
         code: `{
   "mcpServers": {
-    "rankforge": { "url": "${mcpUrl}" }
+    "septune": { "url": "${mcpUrl}" }
   }
 }`,
       };
@@ -70,7 +70,7 @@ function snippetFor(client: ClientId, mcpUrl: string): { intro: string; code: st
         intro: "Add to .vscode/mcp.json in your workspace:",
         code: `{
   "servers": {
-    "rankforge": { "type": "http", "url": "${mcpUrl}" }
+    "septune": { "type": "http", "url": "${mcpUrl}" }
   }
 }`,
       };
@@ -79,7 +79,7 @@ function snippetFor(client: ClientId, mcpUrl: string): { intro: string; code: st
         intro: "Add to ~/.codeium/windsurf/mcp_config.json:",
         code: `{
   "mcpServers": {
-    "rankforge": { "serverUrl": "${mcpUrl}" }
+    "septune": { "serverUrl": "${mcpUrl}" }
   }
 }`,
       };
@@ -161,10 +161,10 @@ export function UseInEditorButton({
               </span>
               <div className="flex-1">
                 <h2 id="use-in-editor-title" className="text-sm font-semibold text-fg">
-                  Use RankForge in your editor
+                  Use Septune in your editor
                 </h2>
                 <p className="mt-0.5 text-[13px] leading-snug text-fg-muted">
-                  Connect your AI coding assistant over MCP. It runs RankForge&apos;s
+                  Connect your AI coding assistant over MCP. It runs Septune&apos;s
                   audit against your dev server and fixes the issues right in your
                   repo.
                 </p>
@@ -181,7 +181,7 @@ export function UseInEditorButton({
             <div className="p-5">
               {/* Endpoint */}
               <label className="mb-1.5 block text-xs font-medium text-fg-muted">
-                Your RankForge MCP endpoint
+                Your Septune MCP endpoint
               </label>
               <CopyBlock code={mcpUrl} />
 
@@ -215,7 +215,7 @@ export function UseInEditorButton({
                   <span>
                     Then prompt it:{" "}
                     <span className="text-fg-muted">
-                      &ldquo;Use rankforge to audit http://localhost:3000 and fix
+                      &ldquo;Use septune to audit http://localhost:3000 and fix
                       what you find.&rdquo;
                     </span>{" "}
                     The audit only reads your rendered pages; nothing reaches your
@@ -226,9 +226,9 @@ export function UseInEditorButton({
                     This hosted instance audits <span className="text-fg-muted">public
                     URLs</span> (it can&apos;t reach your localhost). Prompt it:{" "}
                     <span className="text-fg-muted">
-                      &ldquo;Use rankforge to audit https://your-site.com and fix
+                      &ldquo;Use septune to audit https://your-site.com and fix
                       what you find.&rdquo;</span>{" "}
-                    To audit a local dev server, run RankForge on your machine.
+                    To audit a local dev server, run Septune on your machine.
                   </span>
                 )}
               </div>

@@ -43,7 +43,7 @@ export default function FreeAuditPage() {
           {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            name: "RankForge free technical SEO audit",
+            name: "Septune free technical SEO audit",
             url: `${config.appUrl}/audit`,
             applicationCategory: "DeveloperApplication",
             operatingSystem: "Web",
@@ -65,7 +65,7 @@ export default function FreeAuditPage() {
               Free technical SEO audit. <span className="text-signal">Measured</span>, not guessed.
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-fg-muted">
-              Enter a URL. RankForge crawls the rendered pages and reports every technical-SEO issue it
+              Enter a URL. Septune crawls the rendered pages and reports every technical-SEO issue it
               can actually evidence, with the affected URLs and a ready patch where one exists. No
               account, no AI, no data kept.
             </p>
@@ -81,7 +81,7 @@ export default function FreeAuditPage() {
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">What it measures</h2>
             <p className="mt-3 text-fg-muted">
-              Eight categories, ~35 checks, all deterministic. Green in a RankForge report always means
+              Eight categories, ~35 checks, all deterministic. Green in a Septune report always means
               measured. A finding is never reported without evidence from the page.
             </p>
             <dl className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -123,11 +123,11 @@ export default function FreeAuditPage() {
                 </Link>
                 ; unlimited audits (including <span className="font-mono text-sm">localhost</span>) are
                 one command away with the open-source CLI:{" "}
-                <span className="font-mono text-sm text-fg">npx rankforge-cli audit &lt;url&gt;</span>.
+                <span className="font-mono text-sm text-fg">npx septune audit &lt;url&gt;</span>.
               </p>
               <p>
                 It audits the technical layer your code controls. It can&apos;t see your backlinks, your
-                search volumes or your rankings, since no in-browser tool honestly can, and RankForge never
+                search volumes or your rankings, since no in-browser tool honestly can, and Septune never
                 promises ranking outcomes.
               </p>
               <p>

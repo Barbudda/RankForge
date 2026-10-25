@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 export const maxDuration = 30;
 
 /**
- * The free, no-signup audit behind /audit — RankForge's lead magnet.
+ * The free, no-signup audit behind /audit — Septune's lead magnet.
  *
  * Deliberately BOUNDED so a public endpoint can't become a cost or an abuse
  * vector: 3 pages max, a 15s crawl budget, tightly capped resource probing,
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
   const ip = clientIp(req);
   if (rateLimited(ip)) {
     return NextResponse.json(
-      { error: "That's a lot of audits for one hour. Run unlimited audits locally: npx rankforge-cli audit <url>" },
+      { error: "That's a lot of audits for one hour. Run unlimited audits locally: npx septune audit <url>" },
       { status: 429 },
     );
   }

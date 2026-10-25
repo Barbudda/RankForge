@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!fw) return {};
   return {
     title: `Technical SEO for ${fw.name}, checked on every deploy`,
-    description: `RankForge audits ${fw.name} sites the way Googlebot reads them, fails the pull request that would drop pages from Google, and gives ready ${fw.name} patches for mechanical fixes.`,
+    description: `Septune audits ${fw.name} sites the way Googlebot reads them, fails the pull request that would drop pages from Google, and gives ready ${fw.name} patches for mechanical fixes.`,
     alternates: { canonical: `/frameworks/${slug}` },
   };
 }
@@ -43,16 +43,16 @@ export default async function FrameworkPage({
   const rules = rulesForFramework(slug);
   const faqs = [
     {
-      q: `How does RankForge audit a ${fw.name} site?`,
+      q: `How does Septune audit a ${fw.name} site?`,
       a: `It crawls your rendered pages the way Googlebot reads them, checks them against its 54 rules, and uses ${fw.name} conventions (${fw.metaApi}) to point each issue at the files most likely behind it.`,
     },
     {
-      q: `Does RankForge commit to my ${fw.name} repository?`,
-      a: "Never. RankForge never writes to your repository. Fixes reach your code through your own pull requests, written by you or your AI editor, and the pull-request check verifies them.",
+      q: `Does Septune commit to my ${fw.name} repository?`,
+      a: "Never. Septune never writes to your repository. Fixes reach your code through your own pull requests, written by you or your AI editor, and the pull-request check verifies them.",
     },
     {
       q: `Will fixing these issues improve my rankings?`,
-      a: "No tool can honestly promise rankings. RankForge fixes the technical layer so your pages can be crawled, rendered and indexed correctly. That is the part of SEO your repository controls.",
+      a: "No tool can honestly promise rankings. Septune fixes the technical layer so your pages can be crawled, rendered and indexed correctly. That is the part of SEO your repository controls.",
     },
   ];
 
@@ -70,7 +70,7 @@ export default async function FrameworkPage({
         title={`Technical SEO for ${fw.name}, checked on every deploy`}
         intro={fw.blurb}
       >
-        <ProseBlock heading={`What RankForge checks on ${fw.name} sites`}>
+        <ProseBlock heading={`What Septune checks on ${fw.name} sites`}>
           <ul className="space-y-2">
             {rules.map((r) => (
               <li key={r.id}>

@@ -275,7 +275,7 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4">
           <span className="inline-flex items-center gap-1.5 text-xs text-fg-subtle">
             <ShieldCheck className="size-3.5 text-signal" />
-            Applied to a RankForge branch as a pull request, never to your main branch.
+            Applied to a Septune branch as a pull request, never to your main branch.
           </span>
           <button
             type="button"

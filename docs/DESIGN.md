@@ -1,11 +1,11 @@
-# RankForge, direction artistique
+# Septune, direction artistique
 
 Refonte du 2026-10-08. Périmètre de la première passe : le site marketing. Le tableau de bord
 hérite des jetons (couleurs, polices) mais pas encore des compositions.
 
 ## Concept : la forge, en verre liquide
 
-Le nom fait le travail : RankForge, l'atelier où le chaos SEO d'un site est refondu en structure
+Le nom fait le travail : Septune, l'atelier où le chaos SEO d'un site est refondu en structure
 propre. Le matériau de la forge, c'est le verre en fusion. Il ne sert pas de décor : c'est la
 matière de l'interface elle-même. Chaque surface encadrée (barre de navigation, cartes, onglets,
 bulles du chat, boutons, étiquettes, champs) est une plaque de verre liquide posée au-dessus de
@@ -69,7 +69,7 @@ au texte en couleur dégradée.
 
 - Titres (h1, h2 du site marketing) : **Fraunces**, axe `opsz` haut, graisse 500, sans
   `SOFT` ni `WONK`. Une serif éditoriale pour un outil de développeur, comme une étiquette de
-  fonderie : ça distingue RankForge des landing pages en grotesque par défaut.
+  fonderie : ça distingue Septune des landing pages en grotesque par défaut.
 - Texte et interface : **Schibsted Grotesk**. Remplace Inter (signal n°10).
 - Code : **JetBrains Mono**, conservée : c'est la police que les développeurs ont déjà dans leur
   éditeur, et la carte PR doit ressembler à leur outil.
@@ -101,5 +101,5 @@ Le mouvement montre un état, pas une ambiance.
 - n°2 icônes lucide : gardées dans l'app, trait et taille fixes ; sur le site marketing, réduites
   aux icônes fonctionnelles (GitHub, chat).
 - n°14 fenêtre de terminal : la section éditeur montre une vraie session Claude Code avec les
-  vrais outils MCP de RankForge, c'est une démonstration du produit, pas un décor.
+  vrais outils MCP de Septune, c'est une démonstration du produit, pas un décor.
 - n°16 coches : uniquement dans la carte PR, où elles reproduisent les vérifications réelles d'une PR.

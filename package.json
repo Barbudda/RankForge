@@ -1,8 +1,8 @@
 {
-  "name": "rankforge",
+  "name": "septune",
   "version": "0.1.0",
   "private": true,
-  "description": "RankForge — a technical-SEO agent for GitHub repos that audits your modern site and opens ready-to-merge pull requests.",
+  "description": "Septune — a technical-SEO agent for GitHub repos that audits your modern site and opens ready-to-merge pull requests.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

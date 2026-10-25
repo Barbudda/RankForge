@@ -47,7 +47,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Add a canonical URL to the /features layout and generate per-slug canonicals for dynamic feature pages.",
       filesChanged: ["app/features/layout.tsx", "app/features/[slug]/page.tsx"],
-      branchName: "rankforge/seo-canonical-features",
+      branchName: "septune/seo-canonical-features",
       prTitle: "fix(seo): add canonical URLs to features pages",
       prDescription:
         "Adds canonical metadata to the /features segment so Google consolidates indexing signals on the clean URL instead of trailing-slash and query-string duplicates.",
@@ -130,7 +130,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Implement generateMetadata on the blog route to derive a unique title and description from each post's frontmatter.",
       filesChanged: ["app/blog/[slug]/page.tsx"],
-      branchName: "rankforge/seo-unique-blog-titles",
+      branchName: "septune/seo-unique-blog-titles",
       prTitle: "fix(seo): generate unique titles for blog posts",
       prDescription:
         "Replaces the static \"Acme Blog\" title with per-post titles and descriptions sourced from frontmatter, eliminating 31 duplicate-title pages.",
@@ -192,7 +192,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Add an app/sitemap.ts route that enumerates static pages plus all blog and feature slugs at build/request time.",
       filesChanged: ["app/sitemap.ts"],
-      branchName: "rankforge/seo-dynamic-sitemap",
+      branchName: "septune/seo-dynamic-sitemap",
       prTitle: "fix(seo): generate sitemap for dynamic routes",
       prDescription:
         "Adds a dynamic sitemap covering blog posts and feature pages so Google can discover all 142 indexable URLs, not just 12 static ones.",
@@ -264,7 +264,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Add a dynamic opengraph-image route for /pricing using the built-in ImageResponse API.",
       filesChanged: ["app/pricing/opengraph-image.tsx"],
-      branchName: "rankforge/seo-pricing-og-image",
+      branchName: "septune/seo-pricing-og-image",
       prTitle: "fix(seo): add OpenGraph image for pricing page",
       prDescription:
         "Generates a branded 1200×630 OpenGraph image for /pricing so shared links render a rich preview card.",
@@ -329,7 +329,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Embed Product/Offer JSON-LD for each pricing plan via a typed structured-data helper.",
       filesChanged: ["app/pricing/page.tsx", "lib/schema.ts"],
-      branchName: "rankforge/seo-pricing-product-schema",
+      branchName: "septune/seo-pricing-product-schema",
       prTitle: "fix(seo): add Product schema to pricing page",
       prDescription:
         "Adds Product and Offer structured data for the three plans so eligible price-rich results can appear in search.",
@@ -386,7 +386,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Add SoftwareApplication JSON-LD to the root layout.",
       filesChanged: ["app/layout.tsx", "lib/schema.ts"],
-      branchName: "rankforge/seo-software-application-schema",
+      branchName: "septune/seo-software-application-schema",
       prTitle: "fix(seo): add SoftwareApplication schema",
       prDescription:
         "Adds sitewide SoftwareApplication structured data describing the product, category and pricing band.",
@@ -441,7 +441,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Surface the three orphan pages from the footer (or a /solutions hub) so they receive internal links.",
       filesChanged: ["components/footer.tsx"],
-      branchName: "rankforge/seo-link-orphan-pages",
+      branchName: "septune/seo-link-orphan-pages",
       prTitle: "fix(seo): link orphaned campaign landing pages",
       prDescription:
         "Adds footer links to three orphaned campaign pages so they gain internal authority and stay indexable. Human review recommended for anchor wording.",
@@ -489,7 +489,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Provide a descriptive alt for the hero product screenshot.",
       filesChanged: ["components/hero.tsx"],
-      branchName: "rankforge/seo-hero-alt-text",
+      branchName: "septune/seo-hero-alt-text",
       prTitle: "fix(seo): add alt text to hero image",
       prDescription:
         "Adds a descriptive alt attribute to the homepage hero screenshot for accessibility and image search.",
@@ -536,7 +536,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Promote post-card titles from h4 to h2 to restore the outline.",
       filesChanged: ["components/post-card.tsx"],
-      branchName: "rankforge/seo-blog-heading-levels",
+      branchName: "septune/seo-blog-heading-levels",
       prTitle: "fix(seo): correct heading hierarchy on blog index",
       prDescription:
         "Fixes a skipped-heading-level issue so the blog index has a valid h1 → h2 outline.",
@@ -586,7 +586,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Emit Article JSON-LD from the BlogPost layout using each post's frontmatter (title, author, dates).",
       filesChanged: ["src/layouts/BlogPost.astro"],
-      branchName: "rankforge/seo-article-schema",
+      branchName: "septune/seo-article-schema",
       prTitle: "fix(seo): add Article schema to MDX blog",
       prDescription:
         "Adds TechArticle structured data sourced from frontmatter to all 64 MDX posts, unlocking rich-result eligibility.",
@@ -649,7 +649,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Generate descriptive alt text for each screenshot from its surrounding heading and caption, applied across the guide MDX files.",
       filesChanged: ["src/content/guides/setup.mdx", "src/content/guides/deploy.mdx"],
-      branchName: "rankforge/seo-image-alt-text",
+      branchName: "septune/seo-image-alt-text",
       prTitle: "fix(seo): add alt text to documentation images",
       prDescription:
         "Adds descriptive alt text to 37 documentation screenshots. Alt copy is derived from nearby headings — please skim for accuracy before merge.",
@@ -701,7 +701,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Point robots.txt at the current sitemap index URL.",
       filesChanged: ["public/robots.txt"],
-      branchName: "rankforge/seo-fix-robots-sitemap",
+      branchName: "septune/seo-fix-robots-sitemap",
       prTitle: "fix(seo): correct sitemap URL in robots.txt",
       prDescription:
         "Updates the Sitemap directive to the live /sitemap-index.xml so crawlers stop hitting a 404.",
@@ -753,7 +753,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Set the canonical of archived doc versions to their /latest equivalent.",
       filesChanged: ["src/layouts/Docs.astro"],
-      branchName: "rankforge/seo-versioned-canonical",
+      branchName: "septune/seo-versioned-canonical",
       prTitle: "fix(seo): canonicalize versioned docs to /latest",
       prDescription:
         "Adds canonical links from /v1 and /v2 doc pages to the /latest version. Review the version-mapping logic before merge — medium risk.",
@@ -806,7 +806,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Generate a ~150-char description from each guide's intro paragraph and add it to frontmatter.",
       filesChanged: ["src/content/guides/auth.mdx", "src/content/guides/webhooks.mdx"],
-      branchName: "rankforge/seo-meta-descriptions",
+      branchName: "septune/seo-meta-descriptions",
       prTitle: "fix(seo): add meta descriptions to docs",
       prDescription:
         "Adds descriptions to frontmatter for 23 guides. Generated from each intro — please skim for tone before merge.",
@@ -849,7 +849,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Add a full changelog archive list so every entry is internally linked.",
       filesChanged: ["src/pages/changelog/index.astro"],
-      branchName: "rankforge/seo-changelog-archive",
+      branchName: "septune/seo-changelog-archive",
       prTitle: "fix(seo): link all changelog entries from the index",
       prDescription:
         "Adds an archive section listing every changelog entry so older posts are no longer orphaned.",
@@ -904,7 +904,7 @@ export const mockIssues: SeoIssue[] = [
       summary:
         "Keep the hero <h1> and demote the feature-grid and footer headings to h2 / non-heading.",
       filesChanged: ["components/FeatureGrid.vue", "components/SiteFooter.vue"],
-      branchName: "rankforge/seo-single-h1",
+      branchName: "septune/seo-single-h1",
       prTitle: "fix(seo): enforce a single H1 on the homepage",
       prDescription:
         "Demotes two extra <h1> elements so the homepage has exactly one primary heading.",
@@ -953,7 +953,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Promote case-study subtitles from h5 to h3.",
       filesChanged: ["pages/work.vue"],
-      branchName: "rankforge/seo-work-heading-levels",
+      branchName: "septune/seo-work-heading-levels",
       prTitle: "fix(seo): fix heading hierarchy on /work",
       prDescription: "Restores a valid heading outline on the case-study page.",
       confidence: 81,
@@ -994,7 +994,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Add Organization JSON-LD sitewide through Nuxt's useHead.",
       filesChanged: ["app.vue"],
-      branchName: "rankforge/seo-organization-schema",
+      branchName: "septune/seo-organization-schema",
       prTitle: "fix(seo): add Organization schema",
       prDescription:
         "Adds sitewide Organization structured data (name, logo, sameAs) to strengthen brand entity signals.",
@@ -1050,7 +1050,7 @@ export const mockIssues: SeoIssue[] = [
     suggestedFix: {
       summary: "Rewrite generic footer anchors to descriptive, keyword-aligned text.",
       filesChanged: ["components/SiteFooter.vue"],
-      branchName: "rankforge/seo-descriptive-anchors",
+      branchName: "septune/seo-descriptive-anchors",
       prTitle: "fix(seo): improve footer anchor text",
       prDescription:
         "Replaces vague \"here\"/\"link\" anchors with descriptive text to strengthen internal-link signals and accessibility.",

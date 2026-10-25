@@ -7,7 +7,7 @@ import { HOST, LEGAL, legalNoticeReady } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Legal notice",
-  description: "Who publishes RankForge, how to reach them, and who hosts the site.",
+  description: "Who publishes Septune, how to reach them, and who hosts the site.",
   alternates: { canonical: "/legal" },
 };
 

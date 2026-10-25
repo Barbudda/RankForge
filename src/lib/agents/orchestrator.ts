@@ -5,7 +5,7 @@ import { localAgentsEnabled, runAgentViaLocal } from "./local-driver";
 
 /**
  * Minimal swarm orchestration primitives, mirroring the shape of the workflow
- * tooling used to build RankForge:
+ * tooling used to build Septune:
  *   - runAgent(): one Claude call that returns validated structured output
  *     (via a forced "emit" tool — the most SDK-robust structured-output path).
  *   - mapLimit()/parallel(): concurrency-capped fan-out.

@@ -31,7 +31,7 @@ export default async function MonitoringPage() {
     <>
       <PageHeader
         title="Monitoring"
-        description="RankForge checks each site on a schedule, compares it with the previous check, and alerts you when a deploy breaks SEO."
+        description="Septune checks each site on a schedule, compares it with the previous check, and alerts you when a deploy breaks SEO."
       />
 
       <Card className="mb-4 flex flex-wrap items-center justify-between gap-3 p-4">

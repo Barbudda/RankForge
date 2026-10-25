@@ -119,7 +119,7 @@ export function PrPreview({
 
         <div className="flex items-start gap-2 rounded-lg border border-border bg-surface/40 p-4 text-xs text-fg-subtle">
           <ShieldAlert className="mt-0.5 size-4 shrink-0 text-amber" />
-          RankForge never commits to your default branch. Every change is a PR
+          Septune never commits to your default branch. Every change is a PR
           you review and merge.
         </div>
       </div>

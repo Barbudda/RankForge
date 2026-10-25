@@ -38,7 +38,7 @@ function customerOf(event: Stripe.Event): string | null {
   return idOf(obj.customer);
 }
 
-/** The RankForge user an event names, used when the profile isn't linked to the customer yet. */
+/** The Septune user an event names, used when the profile isn't linked to the customer yet. */
 function userOf(event: Stripe.Event): string | null {
   if (event.type === "checkout.session.completed") return event.data.object.client_reference_id ?? null;
   const obj = event.data.object as { metadata?: Record<string, string> | null };

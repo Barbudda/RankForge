@@ -9,7 +9,7 @@ import { getAutonomyLevel } from "@/lib/agent";
 import { setRepoAgentLevel } from "@/lib/data/actions";
 
 /**
- * Per-repository modification level. Lets a user dial how far RankForge may go
+ * Per-repository modification level. Lets a user dial how far Septune may go
  * on this specific site, overriding the workspace default. Persists via the
  * setRepoAgentLevel server action; only confirms "Updated" when it saved.
  */
@@ -46,7 +46,7 @@ export function RepoAutonomyControl({
           <div>
             <CardTitle>Modification level for {repoName}</CardTitle>
             <CardDescription>
-              How far RankForge may go on this site. Overrides the workspace
+              How far Septune may go on this site. Overrides the workspace
               default.
             </CardDescription>
           </div>
@@ -81,9 +81,9 @@ export function RepoAutonomyControl({
           <div className="mt-4 flex items-start gap-2 rounded-lg border border-danger/30 bg-danger/[0.06] p-4 text-xs text-fg-muted">
             <ShieldAlert className="mt-0.5 size-4 shrink-0 text-danger" />
             <span>
-              Autopilot lets RankForge act across every category and path at the
+              Autopilot lets Septune act across every category and path at the
               root. Even here, changes still arrive as pull requests you can
-              review. RankForge never force-pushes to your default branch.
+              review. Septune never force-pushes to your default branch.
             </span>
           </div>
         )}

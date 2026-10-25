@@ -2,7 +2,7 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { cosine, embed } from "./embed";
 
 /**
- * RankForge's brain — a persistent, owner-scoped memory in Supabase that the
+ * Septune's brain — a persistent, owner-scoped memory in Supabase that the
  * product writes facts/audits/issues/fixes to and recalls from by meaning
  * (semantic retrieval over local embeddings). Independent of the Anthropic
  * key: remembering and recalling work offline; the agent swarms simply read

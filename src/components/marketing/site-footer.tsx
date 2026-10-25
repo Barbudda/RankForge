@@ -47,7 +47,7 @@ export function SiteFooter() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm text-fg-muted">
-              Technical SEO that survives your deploys. RankForge checks your
+              Technical SEO that survives your deploys. Septune checks your
               site in your editor, on every pull request, and in production.
             </p>
           </div>
@@ -83,7 +83,7 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-sm text-fg-subtle md:flex-row">
           <nav className="flex items-center gap-4" aria-label="Legal">
-            <p>© 2026 RankForge</p>
+            <p>© 2026 Septune</p>
             <Link href="/privacy" className="transition-colors hover:text-fg">
               Privacy
             </Link>

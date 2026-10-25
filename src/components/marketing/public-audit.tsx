@@ -122,7 +122,7 @@ export function PublicAudit() {
     }
   };
 
-  const cliCmd = `npx rankforge-cli audit ${report?.url ?? (url.trim() || "https://your-site.com")}`;
+  const cliCmd = `npx septune audit ${report?.url ?? (url.trim() || "https://your-site.com")}`;
 
   return (
     <div>

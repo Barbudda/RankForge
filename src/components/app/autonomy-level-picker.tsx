@@ -14,7 +14,7 @@ const ICONS: Record<AgentMode, typeof Eye> = {
 };
 
 /**
- * The modification-autonomy ladder. A user picks how far RankForge may go on
+ * The modification-autonomy ladder. A user picks how far Septune may go on
  * a site — from plain advice (step 1) to full root autonomy (step 5). Steps up
  * to and including the selection are lit, conveying "how far up the spectrum".
  */

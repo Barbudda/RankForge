@@ -36,7 +36,7 @@ export function AppSidebar({ workspace }: { workspace: Workspace }) {
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-bg-soft/60 lg:flex">
       <div className="flex h-16 items-center border-b border-border px-5">
-        <Link href="/" aria-label="RankForge home">
+        <Link href="/" aria-label="Septune home">
           <Logo />
         </Link>
       </div>

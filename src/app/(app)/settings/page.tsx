@@ -29,7 +29,7 @@ export default async function SettingsPage() {
     <>
       <PageHeader
         title="Settings"
-        description="Your workspace, how far RankForge prepares fixes, and the GitHub connection."
+        description="Your workspace, how far Septune prepares fixes, and the GitHub connection."
       />
 
       {checks && (
@@ -72,7 +72,7 @@ export default async function SettingsPage() {
         <CardHeader>
           <CardTitle>GitHub connection</CardTitle>
           <CardDescription>
-            RankForge reads your public site; it never needs access to your code today.
+            Septune reads your public site; it never needs access to your code today.
           </CardDescription>
         </CardHeader>
         <div className="flex flex-col gap-4 px-5 pb-5 sm:flex-row sm:items-center sm:justify-between">

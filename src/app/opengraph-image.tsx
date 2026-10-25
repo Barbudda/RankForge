@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 // summary_large_image, twitter:image too. Covers / and /pricing.
 // NOTE: satori requires every element with >1 child to set display:flex, and
 // only renders glyphs present in its bundled font (latin) — keep text ASCII.
-export const alt = "RankForge: technical SEO that survives your deploys";
+export const alt = "Septune: technical SEO that survives your deploys";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -46,7 +46,7 @@ export default function OpengraphImage() {
           >
             R
           </div>
-          <div style={{ fontSize: 38, fontWeight: 700 }}>RankForge</div>
+          <div style={{ fontSize: 38, fontWeight: 700 }}>Septune</div>
         </div>
 
         {/* Headline */}

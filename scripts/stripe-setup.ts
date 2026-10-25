@@ -1,5 +1,5 @@
 /**
- * Sets up RankForge's billing in a Stripe account, in one command:
+ * Sets up Septune's billing in a Stripe account, in one command:
  *
  *   npm run stripe:setup                         (reads .env.local)
  *   npm run stripe:setup -- --webhook-url https://www.rank-forge.dev/api/stripe/webhook
@@ -20,17 +20,17 @@ import Stripe from "stripe";
 const PLANS = [
   {
     plan: "pro",
-    name: "RankForge Pro",
+    name: "Septune Pro",
     description: "Monitoring of 5 sites checked daily, with alerts by email, Slack, Discord or webhook.",
     amount: 1900,
-    lookupKey: "rankforge_pro_monthly",
+    lookupKey: "septune_pro_monthly",
   },
   {
     plan: "studio",
-    name: "RankForge Studio",
+    name: "Septune Studio",
     description: "Monitoring of 25 sites checked daily, with an alert address and webhook per client.",
     amount: 4900,
-    lookupKey: "rankforge_studio_monthly",
+    lookupKey: "septune_studio_monthly",
   },
 ] as const;
 
@@ -69,7 +69,7 @@ async function main() {
   const stripe = new Stripe(key);
   const mode = key.includes("_live_") ? "LIVE" : "TEST";
   const origin = arg("app-url") ?? publicOrigin() ?? "https://www.rank-forge.dev";
-  console.log(`\nStripe setup for RankForge (${mode} mode) · site ${origin}\n`);
+  console.log(`\nStripe setup for Septune (${mode} mode) · site ${origin}\n`);
 
   // ── Products and prices ──────────────────────────────────────────────
   const prices: Record<string, { product: string; price: string }> = {};
@@ -84,12 +84,12 @@ async function main() {
     }
     // Reuse the product if a previous run created it.
     const products = await stripe.products.list({ limit: 100, active: true });
-    let product = products.data.find((x) => x.metadata.rankforge_plan === p.plan);
+    let product = products.data.find((x) => x.metadata.septune_plan === p.plan);
     if (!product) {
       product = await stripe.products.create({
         name: p.name,
         description: p.description,
-        metadata: { rankforge_plan: p.plan },
+        metadata: { septune_plan: p.plan },
       });
     }
     const price = await stripe.prices.create({
@@ -103,7 +103,7 @@ async function main() {
       // The price shown on the site is what a customer pays, VAT included
       // if Stripe Tax is switched on later.
       tax_behavior: "inclusive",
-      metadata: { rankforge_plan: p.plan },
+      metadata: { septune_plan: p.plan },
     });
     prices[p.plan] = { product: product.id, price: price.id };
     console.log(`+ ${p.name}: €${p.amount / 100}/month, price ${price.id}`);
@@ -111,7 +111,7 @@ async function main() {
 
   // ── Customer portal ──────────────────────────────────────────────────
   const configs = await stripe.billingPortal.configurations.list({ limit: 50 });
-  let portal = configs.data.find((c) => c.metadata?.app === "rankforge" && c.active);
+  let portal = configs.data.find((c) => c.metadata?.app === "septune" && c.active);
   const portalFeatures: Stripe.BillingPortal.ConfigurationCreateParams.Features = {
     invoice_history: { enabled: true },
     payment_method_update: { enabled: true },
@@ -137,13 +137,13 @@ async function main() {
   } else {
     portal = await stripe.billingPortal.configurations.create({
       business_profile: {
-        headline: "RankForge: manage your plan",
+        headline: "Septune: manage your plan",
         privacy_policy_url: `${origin}/privacy`,
         terms_of_service_url: `${origin}/terms`,
       },
       default_return_url: `${origin}/billing`,
       features: portalFeatures,
-      metadata: { app: "rankforge" },
+      metadata: { app: "septune" },
     });
     console.log(`+ Customer portal: ${portal.id}`);
   }
@@ -160,7 +160,7 @@ async function main() {
     const created = await stripe.webhookEndpoints.create({
       url: webhookUrl,
       enabled_events: WEBHOOK_EVENTS,
-      description: "RankForge: keeps each account's plan in sync",
+      description: "Septune: keeps each account's plan in sync",
     });
     webhookSecret = created.secret ?? null;
     console.log(`+ Webhook ${webhookUrl}`);

@@ -8,7 +8,7 @@ import { LiquidGlass } from "@/components/ui/liquid-glass";
 // Inlined (not imported from lib/support/knowledge) so the support prompt
 // and knowledge base never ship in the client bundle.
 const SUGGESTED_QUESTIONS = [
-  "What does RankForge do?",
+  "What does Septune do?",
   "Is it safe for my main branch?",
   "Which frameworks are supported?",
   "How do the modification levels work?",
@@ -20,7 +20,7 @@ type Msg = { role: "user" | "assistant"; content: string; sources?: Source[] };
 const GREETING: Msg = {
   role: "assistant",
   content:
-    "Ask about audits, pull requests, modification levels, security or pricing. Answers come straight from the RankForge docs.",
+    "Ask about audits, pull requests, modification levels, security or pricing. Answers come straight from the Septune docs.",
 };
 
 export function SupportChat() {
@@ -90,9 +90,9 @@ export function SupportChat() {
               <MessageCircle className="size-4 text-molten" />
             </span>
             <div className="flex-1">
-              <div className="text-sm font-semibold text-fg">RankForge support</div>
+              <div className="text-sm font-semibold text-fg">Septune support</div>
               <div className="text-[11px] text-fg-subtle">
-                Answers from the RankForge docs
+                Answers from the Septune docs
               </div>
             </div>
             <button
@@ -182,7 +182,7 @@ export function SupportChat() {
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about RankForge…"
+              placeholder="Ask about Septune…"
               className="lg lg-thin h-9 flex-1 rounded-full px-4 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:ring-1 focus-visible:ring-molten/60"
             />
             <button

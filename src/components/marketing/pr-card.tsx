@@ -6,9 +6,9 @@ import { useLiquidRefraction } from "@/components/ui/liquid-refraction";
 import { Check, ChevronRight, GitPullRequest, X } from "lucide-react";
 
 /**
- * The comment RankForge's GitHub Action posts on a pull request: the
+ * The comment Septune's GitHub Action posts on a pull request: the
  * preview compared with production, page by page. Every line below is what
- * `rankforge diff --markdown` really prints for this change, so the hero
+ * `septune diff --markdown` really prints for this change, so the hero
  * shows the product, not a mock-up of a promise.
  */
 const CHANGES = [
@@ -45,7 +45,7 @@ export function PrCheckCard({ className }: { className?: string }) {
           <span className="grid size-4 shrink-0 place-items-center rounded-full bg-danger/15">
             <X className="size-2.5 text-danger" />
           </span>
-          <span className="whitespace-nowrap font-medium text-fg">RankForge SEO check</span>
+          <span className="whitespace-nowrap font-medium text-fg">Septune SEO check</span>
           <span className="hidden whitespace-nowrap text-fg-subtle sm:inline">preview vs production</span>
           <span className="ml-auto shrink-0 rounded-full bg-danger/15 px-2 py-0.5 text-[11px] font-medium text-danger">
             Failing
@@ -56,7 +56,7 @@ export function PrCheckCard({ className }: { className?: string }) {
         <div className="mx-4 mb-3 overflow-hidden rounded-md border border-border bg-code text-[12px] leading-relaxed">
           <div className="border-b border-border px-3 py-2">
             <p className="font-semibold text-fg">
-              RankForge · Critical: 1 critical change: /pricing became noindex (robots meta tag)
+              Septune · Critical: 1 critical change: /pricing became noindex (robots meta tag)
             </p>
             <p className="mt-1 text-fg-muted">
               Compared <span className="font-mono text-fg">preview-412.acme.dev</span> with{" "}
@@ -89,7 +89,7 @@ export function PrCheckCard({ className }: { className?: string }) {
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-border px-4 py-3 text-xs">
           <span className="text-fg-muted">Fix it before merging</span>
           <span className="lg-chip rounded-full border border-border px-2 py-0.5 font-mono text-[11px] text-molten-bright">
-            /rankforge:check
+            /septune:check
           </span>
           <span className="ml-auto text-fg-subtle">Updates on every push</span>
         </div>

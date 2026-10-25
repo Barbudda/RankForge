@@ -56,7 +56,7 @@ begin
        or new.subscription_status is distinct from old.subscription_status
        or new.current_period_end is distinct from old.current_period_end
        or new.cancel_at is distinct from old.cancel_at then
-      raise exception 'plan and billing fields are managed by RankForge'
+      raise exception 'plan and billing fields are managed by Septune'
         using errcode = '42501';
     end if;
   end if;
@@ -90,7 +90,7 @@ begin
        or new.last_level is distinct from old.last_level
        or new.last_summary is distinct from old.last_summary
        or new.last_snapshot is distinct from old.last_snapshot then
-      raise exception 'check results are written by RankForge'
+      raise exception 'check results are written by Septune'
         using errcode = '42501';
     end if;
   end if;

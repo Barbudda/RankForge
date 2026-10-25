@@ -51,18 +51,18 @@ const LEVEL_LABEL: Record<AlertLevel, string> = { none: "OK", info: "Info", warn
 export function renderAlert(c: AlertContent): { subject: string; text: string; html: string } {
   const label = c.error ? "Check failed" : c.firstCheck ? "Monitoring is on" : LEVEL_LABEL[c.level];
   const subject = c.error
-    ? `[RankForge] ${c.siteName}: the check failed`
+    ? `[Septune] ${c.siteName}: the check failed`
     : c.firstCheck
-      ? `[RankForge] Monitoring is on for ${c.siteName} (score ${c.firstCheck.overall})`
-      : `[RankForge] ${LEVEL_LABEL[c.level]} on ${c.siteName}: ${c.summary}`.slice(0, 180);
+      ? `[Septune] Monitoring is on for ${c.siteName} (score ${c.firstCheck.overall})`
+      : `[Septune] ${LEVEL_LABEL[c.level]} on ${c.siteName}: ${c.summary}`.slice(0, 180);
 
   const lines: string[] = [];
   if (c.error) {
-    lines.push(`RankForge couldn't check ${c.siteUrl}: ${c.error}`);
+    lines.push(`Septune couldn't check ${c.siteUrl}: ${c.error}`);
     lines.push("It will try again on the next scheduled check.");
   } else if (c.firstCheck) {
     lines.push(`First check of ${c.siteUrl} done: score ${c.firstCheck.overall}/100.`);
-    lines.push("From now on you'll hear from RankForge when something important changes.");
+    lines.push("From now on you'll hear from Septune when something important changes.");
     if (c.firstCheck.topIssues.length) {
       lines.push("");
       lines.push("Worth fixing first:");
@@ -90,7 +90,7 @@ ${lines
   .slice(0, -2)
   .map((l) => (l === "" ? "" : l.startsWith("- ") ? `<p style="margin:2px 0 2px 12px">${esc(l.slice(2))}</p>` : `<p style="margin:0 0 8px">${esc(l)}</p>`))
   .join("\n")}
-<p style="margin:22px 0 0"><a href="${esc(c.link)}" style="display:inline-block;background:#ff7a2f;color:#170b04;text-decoration:none;font-weight:600;padding:10px 16px;border-radius:999px">Open in RankForge</a></p>
+<p style="margin:22px 0 0"><a href="${esc(c.link)}" style="display:inline-block;background:#ff7a2f;color:#170b04;text-decoration:none;font-weight:600;padding:10px 16px;border-radius:999px">Open in Septune</a></p>
 <p style="margin:22px 0 0;font-size:12px;color:#7a726a">You get this because monitoring is on for ${esc(c.siteUrl)}. Change alerts or turn monitoring off from the same page.</p>
 </div></body></html>`;
   return { subject, text, html };
@@ -108,7 +108,7 @@ export async function sendEmail(to: string, c: AlertContent): Promise<boolean> {
       method: "POST",
       headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
       body: JSON.stringify({
-        from: process.env.RANKFORGE_ALERT_FROM || "RankForge <onboarding@resend.dev>",
+        from: process.env.RANKFORGE_ALERT_FROM || "Septune <onboarding@resend.dev>",
         to: [to],
         subject,
         text,
@@ -136,7 +136,7 @@ export async function sendWebhook(url: string, c: AlertContent): Promise<boolean
     : /(^|\.)discord(app)?\.com$/.test(host)
       ? { content: `**${subject}**\n${text}`.slice(0, 1900) }
       : {
-          event: "rankforge.check",
+          event: "septune.check",
           level: c.error ? "error" : c.level,
           site: c.siteName,
           url: c.siteUrl,
@@ -149,7 +149,7 @@ export async function sendWebhook(url: string, c: AlertContent): Promise<boolean
   try {
     const res = await guardedFetch(url, {
       method: "POST",
-      headers: { "content-type": "application/json", "user-agent": "RankForge-Alerts/1.0" },
+      headers: { "content-type": "application/json", "user-agent": "Septune-Alerts/1.0" },
       body: JSON.stringify(body),
       signal: ctrl.signal,
       maxHops: 0,

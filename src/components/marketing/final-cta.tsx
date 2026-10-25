@@ -44,7 +44,7 @@ export function FinalCta() {
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-fg-muted">
               Run a free audit, add the pull-request check in two minutes,
-              and let RankForge watch production. Free for one site, no credit
+              and let Septune watch production. Free for one site, no credit
               card.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

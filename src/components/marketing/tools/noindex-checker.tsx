@@ -109,7 +109,7 @@ export function NoindexChecker() {
           </ul>
           <div className="lg flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-fg-muted">
-              A noindex usually arrives with a deploy. RankForge can check this site every day and alert you the morning it happens.
+              A noindex usually arrives with a deploy. Septune can check this site every day and alert you the morning it happens.
             </p>
             <Link
               href="/signup"

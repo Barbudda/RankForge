@@ -1,7 +1,7 @@
 /**
- * JSON-LD structured data for the RankForge marketing site.
+ * JSON-LD structured data for the Septune marketing site.
  *
- * RankForge is a technical-SEO product, so its own site ships best-in-class
+ * Septune is a technical-SEO product, so its own site ships best-in-class
  * structured data: a single @graph (Organization + WebSite + SoftwareApplication
  * with machine-readable pricing) rendered once on every public page, plus
  * per-page helpers for FAQ and breadcrumbs.
@@ -17,12 +17,12 @@ const APP_URL = config.appUrl;
 const PRICE_CURRENCY = "EUR";
 
 const DESCRIPTION =
-  "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.";
+  "Automated technical SEO for developers. Septune fails the pull request that would drop pages from Google and watches production after the merge.";
 
 const organization = {
   "@type": "Organization",
   "@id": `${APP_URL}/#organization`,
-  name: "RankForge",
+  name: "Septune",
   url: APP_URL,
   logo: `${APP_URL}/icon.svg`,
   description: DESCRIPTION,
@@ -32,7 +32,7 @@ const website = {
   "@type": "WebSite",
   "@id": `${APP_URL}/#website`,
   url: APP_URL,
-  name: "RankForge",
+  name: "Septune",
   description: DESCRIPTION,
   publisher: { "@id": `${APP_URL}/#organization` },
 };
@@ -45,7 +45,7 @@ const prices = pricedTiers.map((t) => t.priceMonthly);
 const softwareApplication = {
   "@type": "SoftwareApplication",
   "@id": `${APP_URL}/#software`,
-  name: "RankForge",
+  name: "Septune",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
   url: APP_URL,

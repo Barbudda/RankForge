@@ -6,7 +6,7 @@ import { FlowField } from "./dots/flow-field-layer";
 /**
  * "In your editor" — showcases the MCP integration for prospects. A terminal
  * mock shows the one-line connect + a realistic agent exchange, so it's
- * immediately obvious RankForge lives where developers already work.
+ * immediately obvious Septune lives where developers already work.
  */
 
 const CLIENTS = ["Claude Code", "Cursor", "VS Code", "Windsurf"];
@@ -33,7 +33,7 @@ export function EditorSection() {
               Install the Claude Code plugin, or connect any MCP client. Your
               assistant audits your dev server, fixes the issues in the
               repository you already have open, then compares your version with
-              production. RankForge measures; your assistant writes the code.
+              production. Septune measures; your assistant writes the code.
             </p>
             <ul className="mt-6 space-y-3 text-sm">
               <li className="flex items-start gap-3">
@@ -83,13 +83,13 @@ export function EditorSection() {
               <div className="space-y-3 p-5 font-mono text-[12.5px] leading-relaxed">
                 <div className="text-fg-subtle">
                   <span className="text-signal">›</span> /plugin install
-                  rankforge@rankforge
+                  septune@septune
                 </div>
                 <div className="text-fg-muted">
                   <span className="text-signal">✓</span> Installed{" "}
-                  <span className="text-fg">rankforge</span> (8 tools, 2 skills)
+                  <span className="text-fg">septune</span> (8 tools, 2 skills)
                 </div>
-                <div className="pt-1 text-molten-bright">› /rankforge:seo</div>
+                <div className="pt-1 text-molten-bright">› /septune:seo</div>
                 <div className="space-y-1.5 border-l-2 border-border pl-3 text-fg-muted">
                   <div>
                     <span className="text-cyan">audit_site</span> → 12 issues ·

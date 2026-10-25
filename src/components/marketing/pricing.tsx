@@ -18,11 +18,11 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
         {!standalone && (
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Free on your machine. Paid when RankForge keeps watch.
+              Free on your machine. Paid when Septune keeps watch.
             </h2>
             <p className="mt-4 text-fg-muted">
               Audits, the editor agent and the CI gate cost nothing. You pay for
-              RankForge checking your production sites every day and telling you
+              Septune checking your production sites every day and telling you
               when a deploy breaks something.
             </p>
           </Reveal>

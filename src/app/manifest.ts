@@ -6,10 +6,10 @@ import type { MetadataRoute } from "next";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RankForge: automated technical SEO checks",
-    short_name: "RankForge",
+    name: "Septune: automated technical SEO checks",
+    short_name: "Septune",
     description:
-      "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.",
+      "Automated technical SEO for developers. Septune fails the pull request that would drop pages from Google and watches production after the merge.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0908",

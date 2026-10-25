@@ -52,7 +52,7 @@ const CARDS: SecurityCard[] = [
   {
     icon: Lock,
     title: "Read-only by design",
-    body: "RankForge reads your rendered pages, like any crawler. It never writes to your repository.",
+    body: "Septune reads your rendered pages, like any crawler. It never writes to your repository.",
     tag: "repo: never written",
   },
   {
@@ -201,7 +201,7 @@ export function SecuritySection() {
               It reads. You merge.
             </h2>
             <p className="mt-4 text-fg-muted">
-              RankForge only ever reads your rendered pages. Changes reach
+              Septune only ever reads your rendered pages. Changes reach
               your code through your own pull requests, checked before they
               ship.
             </p>
@@ -244,7 +244,7 @@ export function SecuritySection() {
                 It reads. You merge.
               </h2>
               <p className="mt-4 text-fg-muted">
-                RankForge only ever reads your rendered pages. Changes reach
+                Septune only ever reads your rendered pages. Changes reach
                 your code through your own pull requests, checked before they
                 ship.
               </p>

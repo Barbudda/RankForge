@@ -18,7 +18,7 @@ import type { GitHubService } from "./types";
  *        });
  *        const { data } = await octokit.rest.repos.listForAuthenticatedUser();
  *
- *   The mapping from Octokit payloads → RankForge `Repository` /
+ *   The mapping from Octokit payloads → Septune `Repository` /
  *   `PullRequest` types belongs here so the rest of the app stays clean.
  */
 function notImplemented(method: string): never {

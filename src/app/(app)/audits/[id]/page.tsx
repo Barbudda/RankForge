@@ -139,7 +139,7 @@ export default async function AuditDetailPage({
         <Card>
           <CardHeader>
             <CardTitle>Crawl summary</CardTitle>
-            <CardDescription>How RankForge gathered this audit.</CardDescription>
+            <CardDescription>How Septune gathered this audit.</CardDescription>
           </CardHeader>
           <dl className="space-y-3 px-5 pb-5 text-sm">
             <Row label="Duration">{(audit.durationMs / 1000).toFixed(1)}s</Row>

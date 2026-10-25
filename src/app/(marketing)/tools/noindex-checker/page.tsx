@@ -39,7 +39,7 @@ export default function NoindexCheckerPage() {
           {
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            name: "RankForge noindex checker",
+            name: "Septune noindex checker",
             url: `${config.appUrl}/tools/noindex-checker`,
             applicationCategory: "DeveloperApplication",
             operatingSystem: "Web",
@@ -60,7 +60,7 @@ export default function NoindexCheckerPage() {
               Noindex checker
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-fg-muted">
-              Paste a URL. RankForge checks every place Google reads an indexing directive and tells you which one, if
+              Paste a URL. Septune checks every place Google reads an indexing directive and tells you which one, if
               any, keeps the page out of search.
             </p>
             <div className="mt-8">
@@ -88,13 +88,13 @@ export default function NoindexCheckerPage() {
 
             <h2 className="mt-14 text-2xl font-semibold tracking-tight md:text-3xl">Catch it before Google does</h2>
             <p className="mt-3 text-fg-muted">
-              This checker looks at one page, once. RankForge checks every page of a pull request&apos;s preview against
+              This checker looks at one page, once. Septune checks every page of a pull request&apos;s preview against
               production and fails the check when a page would turn noindex, then watches the live site every day.
               Start with the{" "}
               <Link href="/audit" className={link}>
                 free audit
               </Link>
-              , or run <span className="font-mono text-sm">npx rankforge-cli audit your-site.com</span> on any site,
+              , or run <span className="font-mono text-sm">npx septune audit your-site.com</span> on any site,
               localhost included.
             </p>
           </div>

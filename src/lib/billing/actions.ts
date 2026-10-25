@@ -35,7 +35,7 @@ async function customerFor(userId: string, email: string | undefined): Promise<s
   const customer = await stripe.customers.create(
     { email: email ?? (profile?.email as string | undefined), metadata: { user_id: userId } },
     // A double click must not create two customers.
-    { idempotencyKey: `rankforge-customer-${userId}` },
+    { idempotencyKey: `septune-customer-${userId}` },
   );
   // The service role writes it: users can't change their own billing fields.
   await admin.from("profiles").update({ stripe_customer_id: customer.id }).eq("id", userId);

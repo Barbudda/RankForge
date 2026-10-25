@@ -12,7 +12,7 @@ import { build } from "esbuild";
 import Stripe from "stripe";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SECRET = "whsec_rankforge_test";
+const SECRET = "whsec_septune_test";
 const sdk = new Stripe("sk_test_offline");
 
 let handleStripeWebhook;
@@ -120,7 +120,7 @@ const checkoutEvent = (id = "evt_checkout") => ({
 test("a completed checkout puts the account on Pro", async () => {
   const db = fakeDb([{ id: "user_1", plan: "free", stripe_customer_id: "cus_123" }]);
   const { payload, header } = signed(checkoutEvent());
-  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "rankforge_pro_monthly" })]));
+  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "septune_pro_monthly" })]));
   assert.equal(res.status, 200, JSON.stringify(res.body));
   assert.equal(res.body.plan, "pro");
   const p = db.profiles[0];
@@ -132,7 +132,7 @@ test("a completed checkout puts the account on Pro", async () => {
 
 test("the same event delivered twice is applied once", async () => {
   const db = fakeDb([{ id: "user_1", plan: "free", stripe_customer_id: "cus_123" }]);
-  const d = deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "rankforge_pro_monthly" })]);
+  const d = deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "septune_pro_monthly" })]);
   const { payload, header } = signed(checkoutEvent("evt_twice"));
   await handleStripeWebhook(payload, header, d);
   const again = await handleStripeWebhook(payload, header, d);
@@ -160,27 +160,27 @@ test("a cancelled subscription returns the account to Free", async () => {
     id: "evt_deleted",
     object: "event",
     type: "customer.subscription.deleted",
-    data: { object: sub({ id: "sub_1", status: "canceled", lookupKey: "rankforge_pro_monthly" }) },
+    data: { object: sub({ id: "sub_1", status: "canceled", lookupKey: "septune_pro_monthly" }) },
   };
   const { payload, header } = signed(event);
-  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "canceled", lookupKey: "rankforge_pro_monthly" })]));
+  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "canceled", lookupKey: "septune_pro_monthly" })]));
   assert.equal(res.status, 200);
   assert.equal(db.profiles[0].plan, "free");
   assert.equal(db.profiles[0].subscription_status, "canceled");
 });
 
 test("plan rules: past_due keeps the plan, the best paid subscription wins, unknown prices grant nothing", () => {
-  assert.equal(billingFieldsFor([sub({ id: "a", status: "past_due", lookupKey: "rankforge_studio_monthly" })]).plan, "studio");
-  assert.equal(billingFieldsFor([sub({ id: "a", status: "unpaid", lookupKey: "rankforge_pro_monthly" })]).plan, "free");
-  assert.equal(billingFieldsFor([sub({ id: "a", status: "incomplete", lookupKey: "rankforge_pro_monthly" })]).plan, "free");
+  assert.equal(billingFieldsFor([sub({ id: "a", status: "past_due", lookupKey: "septune_studio_monthly" })]).plan, "studio");
+  assert.equal(billingFieldsFor([sub({ id: "a", status: "unpaid", lookupKey: "septune_pro_monthly" })]).plan, "free");
+  assert.equal(billingFieldsFor([sub({ id: "a", status: "incomplete", lookupKey: "septune_pro_monthly" })]).plan, "free");
   const both = billingFieldsFor([
-    sub({ id: "old", status: "canceled", lookupKey: "rankforge_studio_monthly", created: 1_795_000_000 }),
-    sub({ id: "new", status: "active", lookupKey: "rankforge_pro_monthly", created: 1_790_000_000 }),
+    sub({ id: "old", status: "canceled", lookupKey: "septune_studio_monthly", created: 1_795_000_000 }),
+    sub({ id: "new", status: "active", lookupKey: "septune_pro_monthly", created: 1_790_000_000 }),
   ]);
   assert.equal(both.plan, "pro");
   assert.equal(both.stripe_subscription_id, "new");
   assert.equal(billingFieldsFor([sub({ id: "x", status: "active", lookupKey: "someone_elses_price" })]).plan, "free");
-  const cancelling = billingFieldsFor([sub({ id: "c", status: "active", lookupKey: "rankforge_pro_monthly", cancelAt: 1_793_000_000 })]);
+  const cancelling = billingFieldsFor([sub({ id: "c", status: "active", lookupKey: "septune_pro_monthly", cancelAt: 1_793_000_000 })]);
   assert.equal(cancelling.plan, "pro", "still paid until the end of the period");
   assert.equal(cancelling.cancel_at, new Date(1_793_000_000 * 1000).toISOString());
   assert.deepEqual(billingFieldsFor([]), { plan: "free", stripe_subscription_id: null, subscription_status: null, current_period_end: null, cancel_at: null });
@@ -189,14 +189,14 @@ test("plan rules: past_due keeps the plan, the best paid subscription wins, unkn
 test("a profile not linked to the customer yet is found through the checkout's user id", async () => {
   const db = fakeDb([{ id: "user_1", plan: "free", stripe_customer_id: null }]);
   const { payload, header } = signed(checkoutEvent("evt_link"));
-  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "rankforge_studio_monthly" })]));
+  const res = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "septune_studio_monthly" })]));
   assert.equal(res.status, 200);
   assert.equal(res.body.matched, true);
   assert.equal(db.profiles[0].plan, "studio");
   assert.equal(db.profiles[0].stripe_customer_id, "cus_123");
 });
 
-test("events RankForge doesn't use are acknowledged and ignored", async () => {
+test("events Septune doesn't use are acknowledged and ignored", async () => {
   const db = fakeDb([{ id: "user_1", plan: "free", stripe_customer_id: "cus_123" }]);
   const { payload, header } = signed({ id: "evt_other", object: "event", type: "invoice.created", data: { object: { customer: "cus_123" } } });
   const res = await handleStripeWebhook(payload, header, deps(db, []));
@@ -211,7 +211,7 @@ test("when Stripe can't be read, the webhook fails so Stripe retries it", async 
   const res = await handleStripeWebhook(payload, header, deps(db, [], { fail: true }));
   assert.equal(res.status, 500);
   assert.equal(db.events.length, 0, "the event is forgotten, so the retry is applied");
-  const retry = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "rankforge_pro_monthly" })]));
+  const retry = await handleStripeWebhook(payload, header, deps(db, [sub({ id: "sub_1", status: "active", lookupKey: "septune_pro_monthly" })]));
   assert.equal(retry.status, 200);
   assert.equal(db.profiles[0].plan, "pro");
 });

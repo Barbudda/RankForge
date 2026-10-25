@@ -68,7 +68,7 @@ export function HowItWorksSection() {
     {
       n: "03",
       t: "After the merge: production",
-      d: "RankForge checks the live site on a schedule and alerts you by email, Slack or Discord when something critical changes: a noindex, a failing robots.txt, a page that starts returning errors, a certificate about to expire.",
+      d: "Septune checks the live site on a schedule and alerts you by email, Slack or Discord when something critical changes: a noindex, a failing robots.txt, a page that starts returning errors, a certificate about to expire.",
     },
     {
       n: "04",
@@ -80,7 +80,7 @@ export function HowItWorksSection() {
     <SectionShell
       id="how-it-works"
       title="Three checkpoints. One engine."
-      description="SEO breaks in the same few places: a template change, a config flag, a CDN rule. RankForge checks each moment with the same deterministic engine, so the editor, the pull request and production always agree."
+      description="SEO breaks in the same few places: a template change, a config flag, a CDN rule. Septune checks each moment with the same deterministic engine, so the editor, the pull request and production always agree."
       dots={<CrawlerSwarm variant="howitworks" className={DOTS_MASK} />}
     >
       <div className="mx-auto max-w-3xl divide-y divide-border lg rounded-2xl">
@@ -152,7 +152,7 @@ export function FrameworksSection() {
     <SectionShell
       id="frameworks"
       title="It reads your framework's conventions"
-      description="RankForge knows where metadata lives and how routes are generated in each stack, so its Next.js, Nuxt and Astro SEO fixes look like code you'd have written yourself."
+      description="Septune knows where metadata lives and how routes are generated in each stack, so its Next.js, Nuxt and Astro SEO fixes look like code you'd have written yourself."
       dots={<FlowField variant="frameworks" className={DOTS_MASK} />}
     >
       <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -204,7 +204,7 @@ export function ComparisonSection() {
   return (
     <SectionShell
       title="How SEO breaks, and where it's caught"
-      description="Site audits find what is already broken in production, weeks later. RankForge stops it in the pull request, then keeps watching after the merge."
+      description="Site audits find what is already broken in production, weeks later. Septune stops it in the pull request, then keeps watching after the merge."
       dots={<CauseWeb variant="comparison" className={DOTS_MASK} />}
     >
       <Reveal className="mx-auto max-w-3xl overflow-hidden lg rounded-2xl">

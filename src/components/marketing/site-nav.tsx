@@ -39,7 +39,7 @@ export function SiteNav() {
           scrolled && "bg-[rgb(18_15_13/0.62)]",
         )}
       >
-        <Link href="/" aria-label="RankForge home">
+        <Link href="/" aria-label="Septune home">
           <Logo />
         </Link>
 

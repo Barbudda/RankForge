@@ -15,7 +15,7 @@ import { BILLING_OPEN } from "@/lib/pricing";
 export const metadata: Metadata = {
   title: "Terms of service",
   description:
-    "The short, honest terms for using RankForge: the service, paid plans, cancellation and refunds.",
+    "The short, honest terms for using Septune: the service, paid plans, cancellation and refunds.",
   alternates: { canonical: "/terms" },
 };
 
@@ -32,11 +32,11 @@ export default function TermsPage() {
       />
       <ProsePage
         title="Terms of service"
-        intro="Short version: use RankForge honestly, review every change before you merge it, and understand it is an early-stage product. Last updated: October 2026."
+        intro="Short version: use Septune honestly, review every change before you merge it, and understand it is an early-stage product. Last updated: October 2026."
       >
         <ProseBlock heading="The service">
           <p>
-            RankForge audits websites you control: from your machine and your
+            Septune audits websites you control: from your machine and your
             CI through the open-source CLI, and on a schedule through hosted
             monitoring. It reads public pages and never writes to your
             repositories; any change to your code is yours to make and merge.
@@ -45,7 +45,7 @@ export default function TermsPage() {
         </ProseBlock>
         <ProseBlock heading="No guarantees on outcomes">
           <p>
-            RankForge fixes technical SEO issues. It does not and cannot
+            Septune fixes technical SEO issues. It does not and cannot
             promise search-ranking improvements, and nothing on this site
             should be read as such a promise.
           </p>
@@ -62,7 +62,7 @@ export default function TermsPage() {
           <p>
             Pro and Studio are monthly subscriptions, paid in advance by card
             through Stripe, our payment processor, at the price in euros shown
-            on the pricing page when you subscribe. RankForge never sees or
+            on the pricing page when you subscribe. Septune never sees or
             stores your card details.
           </p>
           <p>
@@ -93,7 +93,7 @@ export default function TermsPage() {
         </ProseBlock>
         <ProseBlock heading="Service status">
           <p>
-            RankForge is an early-stage product run by a solo founder.
+            Septune is an early-stage product run by a solo founder.
             Features may change and the service may be interrupted. Monitoring
             runs on a schedule and alerts are sent on a best-effort basis: a
             missed or late alert doesn&apos;t replace your own checks. Review

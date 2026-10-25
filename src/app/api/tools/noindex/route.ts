@@ -7,7 +7,7 @@ import { clientIp, createRateLimiter, parsePublicUrl } from "@/lib/net/public-en
  * The free noindex checker behind /tools/noindex-checker: one URL, one fetch
  * of the page plus robots.txt, no sitemap or certificate probing. The visitor
  * asks for this one page, like opening it in a browser, so it's fetched even
- * where robots.txt keeps RankForgeBot out; robots.txt is still read to report
+ * where robots.txt keeps SeptuneBot out; robots.txt is still read to report
  * what Googlebot may do.
  */
 
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   const url = parsePublicUrl(body.url);
   if (!url) return NextResponse.json({ error: "Enter a valid http(s) URL." }, { status: 400 });
   if (limited(clientIp(req))) {
-    return NextResponse.json({ error: "That's a lot of checks for one hour. Try again a bit later, or run npx rankforge-cli audit for unlimited ones." }, { status: 429 });
+    return NextResponse.json({ error: "That's a lot of checks for one hour. Try again a bit later, or run npx septune audit for unlimited ones." }, { status: 429 });
   }
 
   try {
