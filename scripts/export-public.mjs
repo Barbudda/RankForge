@@ -77,8 +77,10 @@ for (const f of [...files].sort()) {
   copyFileSync(f, join(target, rel));
 }
 
-// Tests: same file, it locates dist/ relative to itself.
-put("test/cli.test.mjs", readFileSync(join(ROOT, "cli", "test", "cli.test.mjs"), "utf8"));
+// Tests: same files, they locate dist/ relative to themselves.
+for (const t of ["cli.test.mjs", "v3.test.mjs"]) {
+  put(`test/${t}`, readFileSync(join(ROOT, "cli", "test", t), "utf8"));
+}
 
 // The public repo IS the npm package: its package.json derives from cli/'s.
 const cliPkg = JSON.parse(readFileSync(join(ROOT, "cli", "package.json"), "utf8"));
@@ -100,7 +102,7 @@ const pkg = {
   scripts: {
     build: "tsup",
     typecheck: "tsc --noEmit",
-    test: "npm run build && node --test test/cli.test.mjs",
+    test: "npm run build && node --test test/cli.test.mjs test/v3.test.mjs",
     prepublishOnly: "npm test",
   },
   devDependencies: {
@@ -118,7 +120,8 @@ function copyTemplates(dir, relBase = "") {
     const abs = join(dir, entry);
     const rel = relBase ? `${relBase}/${entry}` : entry;
     if (statSync(abs).isDirectory()) copyTemplates(abs, rel);
-    else put(rel.replace(/^_/, "."), readFileSync(abs, "utf8").replaceAll("{{VERSION}}", pkg.version));
+    // "_name" → ".name" at any depth (_github, plugin/_claude-plugin, _mcp.json…).
+    else put(rel.split("/").map((seg) => seg.replace(/^_/, ".")).join("/"), readFileSync(abs, "utf8").replaceAll("{{VERSION}}", pkg.version));
   }
 }
 copyTemplates(TEMPLATES);
