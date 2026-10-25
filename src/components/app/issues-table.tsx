@@ -48,7 +48,7 @@ export function IssuesTable({
     <div>
       {/* Filter bar */}
       <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center">
-        <div className="flex h-10 flex-1 items-center gap-2 rounded-lg border border-border bg-surface/60 px-3 transition-colors focus-within:border-molten">
+        <div className="flex h-10 items-center gap-2 rounded-lg border border-border bg-surface/60 px-3 transition-colors focus-within:border-molten lg:flex-1">
           <Search className="size-4 text-fg-subtle" />
           <input
             value={query}
