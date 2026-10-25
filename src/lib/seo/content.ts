@@ -6,6 +6,7 @@
  */
 import { SEO_RULES } from "@/lib/audit/rules";
 import type { SeoRule } from "@/lib/audit/types";
+import { BILLING_OPEN } from "@/lib/pricing";
 
 /** URL slug for a rule: "meta.title.missing" → "meta-title-missing". */
 export function ruleSlug(id: string): string {
@@ -156,11 +157,15 @@ export const PRICING_FAQS = [
   },
   {
     q: "Can I cancel anytime?",
-    a: "Yes. Plans will be monthly with no lock-in. After a downgrade, your check history stays readable within the new plan's window (3 months on Free).",
+    a: BILLING_OPEN
+      ? "Yes. Plans are monthly with no lock-in: cancel from the billing portal and your plan runs until the end of the month you paid for. After a downgrade, your check history stays readable within the new plan's window (3 months on Free)."
+      : "Yes. Plans will be monthly with no lock-in. After a downgrade, your check history stays readable within the new plan's window (3 months on Free).",
   },
   {
     q: "Is billing open?",
-    a: "Not yet. During the beta, Pro is free on every account. The prices on this page are what the plans will cost when billing opens, and you'll be told before anything changes.",
+    a: BILLING_OPEN
+      ? "Yes. Pro and Studio are paid monthly by card through Stripe, and Free stays free. Invoices and receipts are in the billing portal."
+      : "Not yet. During the beta, Pro is free on every account. The prices on this page are what the plans will cost when billing opens, and you'll be told before anything changes.",
   },
 ];
 

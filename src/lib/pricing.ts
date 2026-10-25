@@ -28,7 +28,7 @@ export interface PricingTier {
   tagline: string;
   highlight?: boolean;
   cta: string;
-  /** CTA destination (signup during the beta, a checkout link once billing opens). */
+  /** CTA destination: signup during the beta, the billing page (Stripe Checkout) once billing opens. */
   ctaHref: string;
   features: string[];
   limits: PlanLimits;
@@ -47,11 +47,6 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
  */
 export const BILLING_OPEN = process.env.NEXT_PUBLIC_RANKFORGE_BILLING === "open";
 
-const CHECKOUT: Partial<Record<Plan, string | undefined>> = {
-  pro: process.env.NEXT_PUBLIC_RANKFORGE_CHECKOUT_PRO,
-  studio: process.env.NEXT_PUBLIC_RANKFORGE_CHECKOUT_STUDIO,
-};
-
 /** The plan whose limits apply: legacy values map to free, and the beta lifts free to Pro. */
 export function effectivePlan(plan: string | null | undefined): Plan {
   const p: Plan = plan === "pro" || plan === "studio" ? plan : "free";
@@ -61,8 +56,8 @@ export function effectivePlan(plan: string | null | undefined): Plan {
 
 function ctaFor(plan: Plan): { cta: string; ctaHref: string } {
   if (plan === "free") return { cta: "Start free", ctaHref: "/signup" };
-  const checkout = CHECKOUT[plan];
-  if (BILLING_OPEN && checkout) return { cta: `Get ${plan === "pro" ? "Pro" : "Studio"}`, ctaHref: checkout };
+  // Signed-out visitors land on /login first, which brings them back here.
+  if (BILLING_OPEN) return { cta: `Get ${plan === "pro" ? "Pro" : "Studio"}`, ctaHref: `/billing?plan=${plan}` };
   return { cta: "Free during the beta", ctaHref: "/signup" };
 }
 
@@ -122,5 +117,5 @@ export const ROADMAP = [
 ];
 
 export const BILLING_NOTE = BILLING_OPEN
-  ? "Monthly plans, cancel anytime. Prices include no hidden usage fees."
+  ? "Monthly plans in euros, paid by card through Stripe. Cancel anytime from the billing portal; your plan runs until the end of the month you paid for."
   : "Billing isn't open yet: during the beta, Pro is free on every account. The prices shown are what plans will cost when billing opens, and you'll be told before anything changes.";

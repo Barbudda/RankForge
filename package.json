@@ -12,7 +12,9 @@
     "cli:build": "tsup --config cli/tsup.config.ts",
     "cli:test": "npm run cli:build && node --test cli/test/cli.test.mjs cli/test/v3.test.mjs",
     "test:monitor": "node --test tests/monitor.test.mjs",
-    "test": "npm run cli:test && npm run test:monitor"
+    "test": "npm run cli:test && npm run test:monitor && npm run test:billing",
+    "stripe:setup": "node --env-file-if-exists=.env.local scripts/stripe-setup.ts",
+    "test:billing": "node --test tests/billing.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
@@ -25,6 +27,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "stripe": "^23.0.1",
     "tailwind-merge": "latest",
     "three": "^0.184.0"
   },
