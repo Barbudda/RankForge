@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { legalNoticeReady } from "@/lib/legal";
 
 const CONTACT_EMAIL = "hugopoene74@gmail.com";
 
@@ -87,6 +88,11 @@ export function SiteFooter() {
             <Link href="/terms" className="transition-colors hover:text-fg">
               Terms
             </Link>
+            {legalNoticeReady && (
+              <Link href="/legal" className="transition-colors hover:text-fg">
+                Legal notice
+              </Link>
+            )}
           </nav>
           <p>No ranking promises. Just better technical SEO, shipped as code.</p>
         </div>

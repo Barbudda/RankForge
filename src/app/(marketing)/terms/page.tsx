@@ -2,11 +2,20 @@ import type { Metadata } from "next";
 import { ProsePage, ProseBlock } from "@/components/marketing/prose-page";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/seo/schema";
+import { BILLING_OPEN } from "@/lib/pricing";
+
+/*
+ * TO REVIEW before billing opens (asked on 2026-10-25): whether paid plans
+ * are sold to consumers or to professionals only (consumers bring the EU
+ * withdrawal right below and a mandatory consumer mediator in France), and
+ * the publisher's legal details for /legal (src/lib/legal.ts). Have these
+ * terms read by someone qualified; nothing here is legal advice.
+ */
 
 export const metadata: Metadata = {
   title: "Terms of service",
   description:
-    "The short, honest terms for using RankForge while it is an MVP.",
+    "The short, honest terms for using RankForge: the service, paid plans, cancellation and refunds.",
   alternates: { canonical: "/terms" },
 };
 
@@ -41,14 +50,55 @@ export default function TermsPage() {
             should be read as such a promise.
           </p>
         </ProseBlock>
-        <ProseBlock heading="MVP status">
+        <ProseBlock heading="Paid plans">
+          {!BILLING_OPEN && (
+            <p>
+              Billing isn&apos;t open yet: during the beta, Pro is free on
+              every account, and the prices shown are what plans will cost
+              when billing opens. You&apos;ll be told before anything
+              changes, and nothing is ever charged without your checkout.
+            </p>
+          )}
           <p>
-            The product is under active development. Billing isn&apos;t open
-            yet: the prices shown are what plans will cost when it opens, and
-            you&apos;ll be told before anything changes. Features may change
-            and the service may be interrupted. Monitoring runs on a schedule
-            and alerts are sent on a best-effort basis. Review every change
-            before merging; you remain responsible for your codebase.
+            Pro and Studio are monthly subscriptions, paid in advance by card
+            through Stripe, our payment processor, at the price in euros shown
+            on the pricing page when you subscribe. RankForge never sees or
+            stores your card details.
+          </p>
+          <p>
+            A subscription renews every month until you cancel it. You can
+            cancel at any time from the billing portal: the plan stays active
+            until the end of the month already paid, then the account returns
+            to Free. Months already started aren&apos;t refunded, except where
+            the law requires it. Moving between Pro and Studio takes effect at
+            once, and Stripe prorates the difference.
+          </p>
+          <p>
+            If a renewal payment fails, Stripe retries it over the following
+            days and the plan stays active meanwhile. If it still fails, the
+            account returns to Free; your sites and history stay, within the
+            Free plan&apos;s limits.
+          </p>
+          <p>
+            Prices can change. A new price applies to an existing subscription
+            only after an email notice at least 30 days ahead, and you can
+            cancel before it takes effect.
+          </p>
+          <p>
+            If you subscribe as a consumer in the European Union, you can
+            withdraw within 14 days of subscribing by writing to the address
+            below. Because the service starts as soon as you subscribe, you
+            then pay only for the days already used, and the rest is refunded.
+          </p>
+        </ProseBlock>
+        <ProseBlock heading="Service status">
+          <p>
+            RankForge is an early-stage product run by a solo founder.
+            Features may change and the service may be interrupted. Monitoring
+            runs on a schedule and alerts are sent on a best-effort basis: a
+            missed or late alert doesn&apos;t replace your own checks. Review
+            every change before merging; you remain responsible for your
+            codebase.
           </p>
         </ProseBlock>
         <ProseBlock heading="Liability & contact">

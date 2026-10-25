@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { legalNoticeReady } from "@/lib/legal";
 import { config } from "@/lib/config";
 import {
   CHANGELOG,
@@ -41,5 +42,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/changelog", 0.5, "weekly"),
     entry("/privacy", 0.3, "yearly"),
     entry("/terms", 0.3, "yearly"),
+    ...(legalNoticeReady ? [entry("/legal", 0.2, "yearly")] : []),
   ];
 }

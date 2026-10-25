@@ -1,4 +1,6 @@
-# Deploying RankForge to Vercel (for a friend to test)
+# Deploying RankForge to Vercel
+
+Sections 1 to 5 get the app running; section 6 is the checklist to go live and take payments.
 
 RankForge runs fully on Vercel. The **deterministic audit, mechanical fixes, and
 the extractive chatbot need no AI key**. A generative LLM only adds nicer
@@ -34,7 +36,7 @@ fixes/chat. Follow this once.
 > Do **not** set `RANKFORGE_LLM` (ollama/claude-cli) on Vercel. Those are local-only.
 
 ## 3. Supabase setup (once)
-- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables.
+- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004 → 0005`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables; `0005` adds billing and locks plan, billing and check-result columns against users.
 - **Auth → URL Configuration**: set **Site URL** to your Vercel URL, and add
   `https://your-vercel-url/**` to **Redirect URLs** (so email confirmation and
   password reset land back on the deployed app).
@@ -71,6 +73,56 @@ previous one and sends alerts. It needs, on top of sections 2 and 3:
   billing.
 - `/monitoring` shows what is still missing (migration, cron, email) until all of
   it is in place.
+
+## 6. Go live: taking payments
+
+Do it in this order. **Settings → Go-live checklist** shows what is still
+missing (set `RANKFORGE_ADMIN_EMAILS` to your email to see it); it never shows
+a key's value.
+
+**Supabase**
+1. Run `supabase/migrations/0005_billing.sql` in the SQL editor.
+2. Auth → URL Configuration: **Site URL** `https://www.rank-forge.dev`, and
+   `https://www.rank-forge.dev/**` in **Redirect URLs**.
+3. Auth → Emails → **SMTP Settings**: connect your own sender. Supabase's
+   built-in sender only delivers to your organization's members, two emails an
+   hour: without custom SMTP, real users never get their confirmation email.
+   With Resend: host `smtp.resend.com`, port `465`, user `resend`, password a
+   Resend API key, sender e.g. `RankForge <hello@rank-forge.dev>` once
+   `rank-forge.dev` is verified in Resend (the same domain serves the alerts).
+
+**Stripe**
+4. Activate the account (business details, bank account). Stripe checks the
+   site for terms, refunds and contact details: `/terms` covers paid plans,
+   cancellation and refunds; `/privacy` the data; `/legal` the publisher (step 9).
+5. Test mode first: put an `sk_test_…` key in `.env.local`, then run
+   `npm run stripe:setup -- --webhook-url https://www.rank-forge.dev/api/stripe/webhook`.
+   It creates the Pro and Studio prices, the customer portal and the webhook,
+   and prints `STRIPE_WEBHOOK_SECRET` and `STRIPE_PORTAL_CONFIGURATION`.
+   Test a checkout with the card `4242 4242 4242 4242`.
+6. Live: same command with the `sk_live_…` key; put the live values in Vercel
+   (Production).
+7. If you're under the VAT exemption (franchise en base), add
+   "TVA non applicable, art. 293 B du CGI" to the invoice footer (Stripe →
+   Settings → Invoices). If you charge VAT, set up Stripe Tax and
+   `STRIPE_AUTOMATIC_TAX=1`.
+
+**Vercel**
+8. Move the project to Vercel Pro: Hobby forbids commercial use.
+9. Production variables: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
+   `STRIPE_PORTAL_CONFIGURATION`, `SUPABASE_SECRET_KEY`, `CRON_SECRET`,
+   `RESEND_API_KEY`, `RANKFORGE_ALERT_FROM`, `RANKFORGE_ADMIN_EMAILS`, and the
+   publisher details `LEGAL_NAME`, `LEGAL_STATUS`, `LEGAL_ADDRESS`,
+   `LEGAL_SIRET`, `LEGAL_EMAIL` (`LEGAL_VAT`, `LEGAL_PHONE` optional). `/legal`
+   stays hidden until the first four are set.
+10. When the checklist is green: `NEXT_PUBLIC_RANKFORGE_BILLING=open`, redeploy.
+    Checkout appears on `/billing` and the pricing page; the beta's free Pro
+    ends for accounts without a subscription.
+
+**Selling to consumers?** If individuals (not only businesses) can subscribe,
+the 14-day withdrawal right in `/terms` applies, and French law requires a
+consumer mediator named on the site. Selling to professionals only avoids
+both, but has to be stated and enforced at checkout. Decide before step 10.
 
 ## What works without any AI key
 Deterministic audit (crawl + rules + link graph + measured images/links + content

@@ -5,6 +5,8 @@
  *   assistant is useful even without an API key.
  */
 
+import { BILLING_NOTE, BILLING_OPEN } from "@/lib/pricing";
+
 export const SUPPORT_SYSTEM = `You are the RankForge support assistant. Be concise, friendly and accurate.
 
 ABOUT RANKFORGE
@@ -25,7 +27,7 @@ SECURITY
 RankForge only reads rendered pages, like any crawler, and honours robots.txt. It never writes to your repository: fixes reach your code through your own pull requests. The CLI and the editor agent run on your machine and send nothing to RankForge; the GitHub Action uses the job's token only to comment on the pull request; hosted monitoring fetches your public pages. It never reads your source code or environment secrets, and every monitoring check is kept with what changed.
 
 PRICING
-Free €0 (CLI, editor agent, CI regression gate, white-label HTML reports, monitoring of 1 site weekly with email alerts). Pro €19/mo (monitoring of 5 sites daily, email/Slack/Discord/webhook alerts, 12 months of history). Studio €49/mo (25 sites, an alert address per site, 24 months of history). Billing isn't open yet: during the beta Pro is free on every account. Not available yet: Search Console data, scheduled client reports, team seats. There is no SSO and no self-hosting. Support is self-serve via this assistant.
+Free €0 (CLI, editor agent, CI regression gate, white-label HTML reports, monitoring of 1 site weekly with email alerts). Pro €19/mo (monitoring of 5 sites daily, email/Slack/Discord/webhook alerts, 12 months of history). Studio €49/mo (25 sites, an alert address per site, 24 months of history). ${BILLING_NOTE} Payments, invoices, plan changes and cancellation go through Stripe and the billing portal (/billing). Not available yet: Search Console data, scheduled client reports, team seats. There is no SSO and no self-hosting. Support is self-serve via this assistant.
 
 RULES
 - Only answer questions about RankForge and technical SEO. If asked something unrelated, gently steer back.
@@ -66,7 +68,7 @@ export const KB: KbEntry[] = [
   {
     keywords: ["price", "pricing", "cost", "plan", "plans", "free", "trial", "much"],
     answer:
-      "Free costs nothing: CLI, editor agent, CI gate, reports and monitoring of 1 site weekly. Pro is €19/month (5 sites checked daily, Slack/Discord/webhook alerts) and Studio €49/month (25 sites). Billing isn't open yet, so Pro is free for everyone during the beta. See the pricing page.",
+      `Free costs nothing: CLI, editor agent, CI gate, reports and monitoring of 1 site weekly. Pro is €19/month (5 sites checked daily, Slack/Discord/webhook alerts) and Studio €49/month (25 sites). ${BILLING_OPEN ? "Subscribe or cancel anytime from the billing page." : "Billing isn't open yet, so Pro is free for everyone during the beta."} See the pricing page.`,
   },
   {
     keywords: ["pr", "prs", "pull", "request", "requests", "create", "merge", "fix", "diff"],

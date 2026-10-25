@@ -69,7 +69,7 @@ function buildChunks(): CorpusChunk[] {
     {
       id: "privacy",
       title: "Privacy (what is stored)",
-      text: "RankForge stores: your email and a password hash (via Supabase Auth; the plain password is never seen); for each site, its name, the production URL you provide and the audits and issues generated for it; and with monitoring on, the alert address, the webhook URL and a record of each check, kept 3, 12 or 24 months depending on the plan. Processors: Supabase (database, sign-in), Vercel (hosting), Resend (alert emails), Anthropic (optional analysis), Google (the site URL, only when Core Web Vitals are on). No ad trackers, no data resale. Row-level security means each account only reads its own rows. Deletion on request by email.",
+      text: "RankForge stores: your email and a password hash (via Supabase Auth; the plain password is never seen); for each site, its name, the production URL you provide and the audits and issues generated for it; and with monitoring on, the alert address, the webhook URL and a record of each check, kept 3, 12 or 24 months depending on the plan. Processors: Supabase (database, sign-in), Vercel (hosting), Stripe (payments; it holds card details, RankForge keeps only the customer id and subscription status), Resend (alert emails), Anthropic (optional analysis), Google (the site URL, only when Core Web Vitals are on). No ad trackers, no data resale. Row-level security means each account only reads its own rows. Deletion on request by email.",
       url: "/privacy",
     },
     {

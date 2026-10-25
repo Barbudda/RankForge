@@ -44,6 +44,11 @@ export default function PrivacyPage() {
             {PLAN_LIMITS.studio.historyMonths} on Studio; older checks are deleted
             automatically. Removing a site deletes its monitor and every check.
           </p>
+          <p className="mt-3">
+            When you subscribe to a paid plan: your Stripe customer id, the
+            subscription&apos;s status, renewal and cancellation dates. Invoices
+            are kept by Stripe, as accounting law requires.
+          </p>
         </ProseBlock>
         <ProseBlock heading="What we don't do">
           <p>
@@ -72,6 +77,12 @@ export default function PrivacyPage() {
             <li>
               <strong>Resend</strong> delivers the monitoring emails: the alert
               address, the site name and what changed.
+            </li>
+            <li>
+              <strong>Stripe</strong> processes payments for Pro and Studio. It
+              holds your card and billing details; RankForge only keeps your
+              Stripe customer id, the subscription&apos;s status and its renewal
+              date, and never sees your card.
             </li>
             <li>
               <strong>Anthropic</strong>: audit runs may call its API to analyze
