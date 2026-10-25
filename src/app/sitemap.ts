@@ -34,6 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     entry("", 1, "weekly"),
     entry("/audit", 0.9, "weekly"),
+    entry("/tools/noindex-checker", 0.8, "monthly"),
+    entry("/tools/llms-txt-generator", 0.8, "monthly"),
     entry("/pricing", 0.8, "monthly"),
     entry("/docs", 0.7, "weekly"),
     entry("/docs/agent", 0.7, "monthly"),

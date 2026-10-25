@@ -28,6 +28,8 @@ const COLUMNS = [
     title: "Resources",
     links: [
       { href: "/audit", label: "Free SEO audit" },
+      { href: "/tools/noindex-checker", label: "Noindex checker" },
+      { href: "/tools/llms-txt-generator", label: "llms.txt generator" },
       { href: "/docs", label: "Docs" },
       { href: "/docs/agent", label: "Agent in your editor" },
       { href: "/changelog", label: "Changelog" },
