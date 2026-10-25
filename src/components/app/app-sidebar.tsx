@@ -14,10 +14,7 @@ import {
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 import type { Workspace } from "@/types";
-import { BILLING_OPEN } from "@/lib/pricing";
-
 function planLabel(plan: Workspace["plan"]): string {
-  if (!BILLING_OPEN && plan === "free") return "Pro plan · beta";
   return `${plan.charAt(0).toUpperCase()}${plan.slice(1)} plan`;
 }
 

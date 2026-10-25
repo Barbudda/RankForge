@@ -28,7 +28,7 @@ export interface PricingTier {
   tagline: string;
   highlight?: boolean;
   cta: string;
-  /** CTA destination: signup during the beta, the billing page (Stripe Checkout) once billing opens. */
+  /** CTA destination: the pre-order page until payments open, then the billing page (Stripe Checkout). */
   ctaHref: string;
   features: string[];
   limits: PlanLimits;
@@ -42,23 +42,22 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
 
 /**
  * Billing opens when NEXT_PUBLIC_RANKFORGE_BILLING=open (public so server
- * and client render the same CTA). Until then everyone gets Pro limits for
- * free, and the pricing page says so.
+ * and client render the same CTA). Until then Pro and Studio can only be
+ * pre-ordered (/preorder): everyone is on Free.
  */
 export const BILLING_OPEN = process.env.NEXT_PUBLIC_RANKFORGE_BILLING === "open";
 
-/** The plan whose limits apply: legacy values map to free, and the beta lifts free to Pro. */
+/** The plan whose limits apply; legacy values map to free. */
 export function effectivePlan(plan: string | null | undefined): Plan {
-  const p: Plan = plan === "pro" || plan === "studio" ? plan : "free";
-  if (!BILLING_OPEN && p === "free") return "pro";
-  return p;
+  return plan === "pro" || plan === "studio" ? plan : "free";
 }
 
 function ctaFor(plan: Plan): { cta: string; ctaHref: string } {
   if (plan === "free") return { cta: "Start free", ctaHref: "/signup" };
   // Signed-out visitors land on /login first, which brings them back here.
-  if (BILLING_OPEN) return { cta: `Get ${plan === "pro" ? "Pro" : "Studio"}`, ctaHref: `/billing?plan=${plan}` };
-  return { cta: "Free during the beta", ctaHref: "/signup" };
+  const name = plan === "pro" ? "Pro" : "Studio";
+  if (BILLING_OPEN) return { cta: `Get ${name}`, ctaHref: `/billing?plan=${plan}` };
+  return { cta: `Pre-order ${name}`, ctaHref: `/preorder?plan=${plan}&source=pricing` };
 }
 
 export const PRICING_TIERS: PricingTier[] = [
@@ -121,4 +120,4 @@ export const ROADMAP = [
 
 export const BILLING_NOTE = BILLING_OPEN
   ? "Monthly plans in euros, paid by card through Stripe. Cancel anytime from the billing portal; your plan runs until the end of the month you paid for."
-  : "Billing isn't open yet: during the beta, Pro is free on every account. The prices shown are what plans will cost when billing opens, and you'll be told before anything changes.";
+  : "Pro and Studio open soon. Pre-order one and we'll email you the day it does; nothing is charged before you check out. Free works today.";

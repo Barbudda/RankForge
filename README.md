@@ -117,7 +117,7 @@ Setup for every client → [www.rank-forge.dev/docs/agent](https://www.rank-forg
 
 ## The hosted app
 
-[www.rank-forge.dev](https://www.rank-forge.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: Septune checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) are free during the beta, since billing isn't open yet. The hosted app audits public URLs; run the CLI to audit `localhost`.
+[www.rank-forge.dev](https://www.rank-forge.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: Septune checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) open soon and can be pre-ordered now. The hosted app audits public URLs; run the CLI to audit `localhost`.
 
 ## Run it yourself
 

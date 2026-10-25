@@ -68,7 +68,7 @@ export const KB: KbEntry[] = [
   {
     keywords: ["price", "pricing", "cost", "plan", "plans", "free", "trial", "much"],
     answer:
-      `Free costs nothing: CLI, editor agent, CI gate, reports and monitoring of 1 site weekly. Pro is €19/month (5 sites checked daily, Slack/Discord/webhook alerts) and Studio €49/month (25 sites). ${BILLING_OPEN ? "Subscribe or cancel anytime from the billing page." : "Billing isn't open yet, so Pro is free for everyone during the beta."} See the pricing page.`,
+      `Free costs nothing: CLI, editor agent, CI gate, reports and monitoring of 1 site weekly. Pro is €19/month (5 sites checked daily, Slack/Discord/webhook alerts) and Studio €49/month (25 sites). ${BILLING_OPEN ? "Subscribe or cancel anytime from the billing page." : "Payments aren't open yet: pre-order Pro or Studio at /preorder and you'll get an email the day it opens."} See the pricing page.`,
   },
   {
     keywords: ["pr", "prs", "pull", "request", "requests", "create", "merge", "fix", "diff"],

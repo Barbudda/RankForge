@@ -36,7 +36,7 @@ fixes/chat. Follow this once.
 > Do **not** set `RANKFORGE_LLM` (ollama/claude-cli) on Vercel. Those are local-only.
 
 ## 3. Supabase setup (once)
-- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004 → 0005`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables; `0005` adds billing and locks plan, billing and check-result columns against users.
+- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004 → 0005 → 0006`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables; `0005` adds billing and locks plan, billing and check-result columns against users; `0006` stores pre-orders.
 - **Auth → URL Configuration**: set **Site URL** to your Vercel URL, and add
   `https://your-vercel-url/**` to **Redirect URLs** (so email confirmation and
   password reset land back on the deployed app).
@@ -65,7 +65,7 @@ previous one and sends alerts. It needs, on top of sections 2 and 3:
 | `RESEND_API_KEY` | resend.com → API Keys. Without it, checks still run and are stored, but no email goes out. |
 | `RANKFORGE_ALERT_FROM` | Optional sender, e.g. `Septune <alerts@your-domain.com>`, on a domain verified in Resend. Until then Resend only delivers to the account owner's address. |
 | `CRUX_API_KEY` | Optional: Core Web Vitals of real users (Google Cloud → APIs → Chrome UX Report API). |
-| `NEXT_PUBLIC_RANKFORGE_BILLING` | Leave unset during the beta (every account gets Pro). Set to `open` once payments work. |
+| `NEXT_PUBLIC_RANKFORGE_BILLING` | Leave unset until payments work: Pro and Studio buttons lead to the pre-order page. Set to `open` to switch them to checkout. |
 
 - The schedule lives in `vercel.json` (`/api/cron/monitor` every day at 07:00 UTC).
   Vercel Hobby allows one run per day, which is what daily plans need.
@@ -116,8 +116,10 @@ a key's value.
    `LEGAL_SIRET`, `LEGAL_EMAIL` (`LEGAL_VAT`, `LEGAL_PHONE` optional). `/legal`
    stays hidden until the first four are set.
 10. When the checklist is green: `NEXT_PUBLIC_RANKFORGE_BILLING=open`, redeploy.
-    Checkout appears on `/billing` and the pricing page; the beta's free Pro
-    ends for accounts without a subscription.
+    Checkout replaces the pre-order buttons on `/billing` and the pricing page.
+11. Tell the people who pre-ordered: `npm run preorders:notify` lists them,
+    `npm run preorders:notify -- --send` emails each one once (through Resend)
+    and marks them notified. Run it after step 10, not before.
 
 **Selling to consumers?** If individuals (not only businesses) can subscribe,
 the 14-day withdrawal right in `/terms` applies, and French law requires a

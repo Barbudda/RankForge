@@ -250,7 +250,7 @@ Your next deploy can still break production when nobody runs the CLI. The hosted
 - **Pro**: 5 sites, checked daily, alerts by email, Slack, Discord or webhook.
 - **Studio**: 25 sites for freelancers and agencies, with an alert address per client.
 
-Billing isn't open yet: during the beta, Pro is free. [Pricing](https://www.rank-forge.dev/pricing).
+Pro and Studio open soon: [pre-order one](https://www.rank-forge.dev/pricing) and you'll get an email the day it does.
 
 The CLI, the editor agent and the GitHub Action stay free and open source.
 

@@ -38,7 +38,6 @@ export default async function MonitoringPage() {
         <p className="text-sm text-fg-muted">
           <span className="font-medium text-fg">
             {tier.name}
-            {!o.billingOpen && o.plan === "pro" ? " (free during the beta)" : ""}
           </span>
           {" · "}
           {o.enabledCount} of {o.limits.sites} site{o.limits.sites > 1 ? "s" : ""} monitored · checked {o.limits.frequency} · up to {o.limits.pages} pages each ·{" "}

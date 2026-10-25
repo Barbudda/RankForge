@@ -206,6 +206,7 @@ const UTILITY_SEGMENTS = new Set([
   "settings", "dashboard", "admin", "auth", "oauth", "callback", "password",
   "forgot-password", "reset-password", "verify", "cart", "basket", "checkout",
   "thank-you", "thanks", "confirmation", "search", "unsubscribe", "preview",
+  "preorder", "pre-order", "waitlist",
 ]);
 
 function isUtilityPath(path: string): boolean {

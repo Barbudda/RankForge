@@ -21,7 +21,7 @@ export function GET() {
     "## Product",
     "",
     `- [Home](${u("/")}): what Septune checks, at which checkpoint, and how fixes reach your code.`,
-    `- [Pricing](${u("/pricing")}): ${plans}. ${BILLING_OPEN ? "Paid monthly through Stripe." : "Billing isn't open yet: Pro is free during the beta."}`,
+    `- [Pricing](${u("/pricing")}): ${plans}. ${BILLING_OPEN ? "Paid monthly through Stripe." : "Payments open soon: Pro and Studio can be pre-ordered."}`,
     `- [Free SEO audit](${u("/audit")}): audit a few pages of any public site, no signup.`,
     `- [Noindex checker](${u("/tools/noindex-checker")}): whether Google can index one URL, and what blocks it.`,
     `- [llms.txt generator](${u("/tools/llms-txt-generator")}): an llms.txt built from a site's real pages, and a check of the current one.`,

@@ -55,7 +55,6 @@ export default async function BillingPage({
   const current = effectivePlan(stored);
   const tier = PRICING_TIERS.find((t) => t.id === current)!;
   const limits = PLAN_LIMITS[current];
-  const beta = !BILLING_OPEN && stored === "free";
   const ready = billingReady();
   const subscribed = billing.hasCustomer && current !== "free";
   const status = statusLine(billing.status, billing.periodEnd, billing.cancelAt);
@@ -89,17 +88,17 @@ export default async function BillingPage({
         <Card>
           <CardHeader>
             <CardTitle>Current plan</CardTitle>
-            <CardDescription>{beta ? "Pro, free during the beta" : subscribed ? "Your subscription" : "Your plan"}</CardDescription>
+            <CardDescription>{subscribed ? "Your subscription" : "Your plan"}</CardDescription>
           </CardHeader>
           <div className="px-5 pb-5">
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-semibold text-fg">{tier.name}</span>
               <Badge tone={billing.status === "past_due" ? "amber" : "molten"}>
-                {beta ? "Beta" : billing.status === "past_due" ? "Payment due" : "Active"}
+                {billing.status === "past_due" ? "Payment due" : "Active"}
               </Badge>
             </div>
             <div className="mt-1 text-sm text-fg-subtle">
-              {beta ? `€${tier.priceMonthly} / month once billing opens` : `€${tier.priceMonthly} / month`}
+              €{tier.priceMonthly} / month
             </div>
             {status && <p className="mt-3 text-sm text-fg-muted">{status}</p>}
             <div className="mt-5 flex items-start gap-3 rounded-lg border border-dashed border-border bg-surface/40 p-3">
@@ -187,9 +186,13 @@ export default async function BillingPage({
                       {paid ? `Switch to ${t.name}` : "Cancel in the billing portal"}
                     </Button>
                   </form>
+                ) : !BILLING_OPEN && paid ? (
+                  <Button href={`/preorder?plan=${t.id}&source=billing`} variant="secondary" size="sm" className="mt-5 w-full">
+                    Pre-order {t.name}
+                  </Button>
                 ) : (
                   <span className="mt-5 inline-flex h-9 items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-fg-subtle">
-                    {BILLING_OPEN ? "Available soon" : "Opens with billing"}
+                    Available soon
                   </span>
                 )}
               </Card>
@@ -208,7 +211,7 @@ export default async function BillingPage({
               ? "Every invoice and receipt, downloadable as PDF, along with your card and billing details."
               : BILLING_OPEN
                 ? "Invoices appear after your first payment."
-                : "Nothing to pay during the beta."
+                : "Nothing to pay: paid plans open soon."
           }
           action={
             billing.hasCustomer && ready ? (

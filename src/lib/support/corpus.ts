@@ -75,7 +75,7 @@ function buildChunks(): CorpusChunk[] {
     {
       id: "terms",
       title: "Terms (short version)",
-      text: "Use Septune on sites you are authorized to audit. It reads public pages and never writes to your repositories; any change to your code is yours to make and merge. The product is in beta: billing isn't open, features may change, monitoring alerts are best effort, and you remain responsible for reviewing every change. No search-ranking outcomes are promised.",
+      text: "Use Septune on sites you are authorized to audit. It reads public pages and never writes to your repositories; any change to your code is yours to make and merge. The product is early-stage: paid plans can only be pre-ordered until payments open, features may change, monitoring alerts are best effort, and you remain responsible for reviewing every change. No search-ranking outcomes are promised.",
       url: "/terms",
     },
   );

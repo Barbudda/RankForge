@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { getCurrentUser, getCurrentWorkspace } from "@/lib/account";
 import { getAgentSettings } from "@/lib/data";
 import { integrationChecks, isOperator } from "@/lib/integrations";
+import { getPreorderStats } from "@/lib/preorder/stats";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ export default async function SettingsPage() {
   // anyone running the app without Supabase, i.e. locally.
   const checks = isOperator(user.email) || !isSupabaseConfigured ? integrationChecks() : null;
   const missingRequired = checks?.filter((c) => c.required && !c.ok).length ?? 0;
+  const preorders = checks ? await getPreorderStats() : null;
   return (
     <>
       <PageHeader
@@ -64,6 +66,39 @@ export default async function SettingsPage() {
               </li>
             ))}
           </ul>
+        </Card>
+      )}
+
+      {preorders && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Pre-orders</CardTitle>
+            <CardDescription>
+              {preorders.ok
+                ? "People who chose a paid plan before payments opened. Only operators see this card."
+                : preorders.reason === "no-table"
+                  ? "Run supabase/migrations/0006_preorders.sql to start collecting pre-orders."
+                  : preorders.reason === "no-admin"
+                    ? "Set SUPABASE_SECRET_KEY: pre-orders are stored with it."
+                    : "Couldn't read pre-orders right now."}
+            </CardDescription>
+          </CardHeader>
+          {preorders.ok && (
+            <dl className="grid gap-4 px-5 pb-5 sm:grid-cols-3">
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-fg-subtle">Pro</dt>
+                <dd className="mt-1 font-mono text-2xl text-fg">{preorders.pro}</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-fg-subtle">Studio</dt>
+                <dd className="mt-1 font-mono text-2xl text-fg">{preorders.studio}</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-fg-subtle">Waiting for the email</dt>
+                <dd className="mt-1 font-mono text-2xl text-fg">{preorders.waiting}</dd>
+              </div>
+            </dl>
+          )}
         </Card>
       )}
 

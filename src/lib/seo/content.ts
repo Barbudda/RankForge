@@ -165,7 +165,7 @@ export const PRICING_FAQS = [
     q: "Is billing open?",
     a: BILLING_OPEN
       ? "Yes. Pro and Studio are paid monthly by card through Stripe, and Free stays free. Invoices and receipts are in the billing portal."
-      : "Not yet. During the beta, Pro is free on every account. The prices on this page are what the plans will cost when billing opens, and you'll be told before anything changes.",
+      : "Not yet. Pre-order Pro or Studio and we'll email you the day it opens; a pre-order is only an email address, and nothing is charged before you check out. The free plan works today.",
   },
 ];
 

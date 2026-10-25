@@ -45,6 +45,10 @@ export default function PrivacyPage() {
             automatically. Removing a site deletes its monitor and every check.
           </p>
           <p className="mt-3">
+            When you pre-order a plan: your email address and the plan, used
+            only to tell you when it opens, then deleted on request.
+          </p>
+          <p className="mt-3">
             When you subscribe to a paid plan: your Stripe customer id, the
             subscription&apos;s status, renewal and cancellation dates. Invoices
             are kept by Stripe, as accounting law requires.

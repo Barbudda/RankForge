@@ -53,10 +53,10 @@ export default function TermsPage() {
         <ProseBlock heading="Paid plans">
           {!BILLING_OPEN && (
             <p>
-              Billing isn&apos;t open yet: during the beta, Pro is free on
-              every account, and the prices shown are what plans will cost
-              when billing opens. You&apos;ll be told before anything
-              changes, and nothing is ever charged without your checkout.
+              Payments aren&apos;t open yet: Pro and Studio can be
+              pre-ordered, which only leaves an email address. A pre-order
+              costs nothing and commits you to nothing; we write once, the day
+              the plan opens, and nothing is charged without your checkout.
             </p>
           )}
           <p>
