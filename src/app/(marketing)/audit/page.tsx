@@ -5,6 +5,7 @@ import { FlowField } from "@/components/marketing/dots/flow-field-layer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import { config } from "@/lib/config";
+import { RULE_CATALOG } from "@/lib/audit/catalog";
 
 export const metadata: Metadata = {
   title: "Free technical SEO audit: measured, no signup",
@@ -81,7 +82,7 @@ export default function FreeAuditPage() {
           <div className="mx-auto max-w-3xl">
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">What it measures</h2>
             <p className="mt-3 text-fg-muted">
-              Eight categories, ~35 checks, all deterministic. Green in a Septune report always means
+              Eight categories, {RULE_CATALOG.length} checks, all deterministic. Green in a Septune report always means
               measured. A finding is never reported without evidence from the page.
             </p>
             <dl className="mt-8 grid gap-4 sm:grid-cols-2">

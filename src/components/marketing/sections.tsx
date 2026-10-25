@@ -12,6 +12,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/animations/reveal"
 import { CrawlerSwarm } from "./dots/crawler-swarm";
 import { CauseWeb } from "./dots/cause-web";
 import { FlowField } from "./dots/flow-field-layer";
+import { RULE_CATALOG } from "@/lib/audit/catalog";
 
 /** Shared dot-layer mask: fade the top (headings) and bottom (next section). */
 const DOTS_MASK =
@@ -117,7 +118,7 @@ export function FeaturesSection() {
       id="features"
       align="left"
       title="Technical SEO, without the spreadsheet"
-      description="54 checks for what actually breaks: indexing, canonicals, sitemaps, structured data, speed and AI-search access. Every finding cites its evidence."
+      description={`${RULE_CATALOG.length} checks for what actually breaks: indexing, canonicals, sitemaps, structured data, speed and AI-search access. Every finding cites its evidence.`}
       dots={<CauseWeb variant="features" className={DOTS_MASK} />}
     >
       <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

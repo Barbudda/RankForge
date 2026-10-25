@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { ProsePage, ProseBlock } from "@/components/marketing/prose-page";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema, faqPageSchema } from "@/lib/seo/schema";
+import { RULE_CATALOG } from "@/lib/audit/catalog";
 import {
   FRAMEWORK_PAGES,
   getFramework,
@@ -44,7 +45,7 @@ export default async function FrameworkPage({
   const faqs = [
     {
       q: `How does Septune audit a ${fw.name} site?`,
-      a: `It crawls your rendered pages the way Googlebot reads them, checks them against its 54 rules, and uses ${fw.name} conventions (${fw.metaApi}) to point each issue at the files most likely behind it.`,
+      a: `It crawls your rendered pages the way Googlebot reads them, checks them against its ${RULE_CATALOG.length} rules, and uses ${fw.name} conventions (${fw.metaApi}) to point each issue at the files most likely behind it.`,
     },
     {
       q: `Does Septune commit to my ${fw.name} repository?`,

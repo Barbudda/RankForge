@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ProsePage, ProseBlock } from "@/components/marketing/prose-page";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbSchema } from "@/lib/seo/schema";
+import { RULE_CATALOG } from "@/lib/audit/catalog";
 
 export const metadata: Metadata = {
   title: "Use the Septune agent in your editor (MCP)",
@@ -132,7 +133,7 @@ export default function AgentDocsPage() {
               , so the assistant explains issues accurately.
             </li>
             <li>
-              <span className="font-mono text-xs">list_rules</span>: the 54 checks,
+              <span className="font-mono text-xs">list_rules</span>: the {RULE_CATALOG.length} checks,
               under the same rule ids the audits return.
             </li>
           </ul>

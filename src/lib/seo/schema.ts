@@ -12,6 +12,7 @@
  */
 import { config } from "@/lib/config";
 import { BILLING_OPEN, PRICING_TIERS } from "@/lib/pricing";
+import { RULE_CATALOG } from "@/lib/audit/catalog";
 
 const APP_URL = config.appUrl;
 const PRICE_CURRENCY = "EUR";
@@ -52,7 +53,7 @@ const softwareApplication = {
   description: DESCRIPTION,
   publisher: { "@id": `${APP_URL}/#organization` },
   featureList: [
-    "Deterministic technical-SEO audit: 54 checks with evidence, no AI guessing",
+    `Deterministic technical-SEO audit: ${RULE_CATALOG.length} checks with evidence, no AI guessing`,
     "Production monitoring with email, Slack, Discord and webhook alerts",
     "Regression gate for pull requests: preview against production",
     "AI-search readiness (GEO): AI crawler access, llms.txt, citability",
