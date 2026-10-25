@@ -11,13 +11,13 @@
  * actually renders (EUR) — see src/components/marketing/pricing.tsx.
  */
 import { config } from "@/lib/config";
-import { PRICING_TIERS } from "@/lib/pricing";
+import { BILLING_OPEN, PRICING_TIERS } from "@/lib/pricing";
 
 const APP_URL = config.appUrl;
 const PRICE_CURRENCY = "EUR";
 
 const DESCRIPTION =
-  "A technical-SEO agent for GitHub repos that audits your rendered site and opens small, reviewable pull requests that fix it.";
+  "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.";
 
 const organization = {
   "@type": "Organization",
@@ -52,30 +52,35 @@ const softwareApplication = {
   description: DESCRIPTION,
   publisher: { "@id": `${APP_URL}/#organization` },
   featureList: [
-    "GitHub-native fixes as branch-scoped pull requests",
-    "Framework-aware metadata (generateMetadata, useSeoMeta, Astro frontmatter)",
-    "Sitemap & robots automation",
-    "Structured data generation",
-    "Internal linking insights",
-    "Safe PR review workflow",
-    "Performance SEO signals",
-    "Multi-repo dashboard",
+    "Deterministic technical-SEO audit: 54 checks with evidence, no AI guessing",
+    "Production monitoring with email, Slack, Discord and webhook alerts",
+    "Regression gate for pull requests: preview against production",
+    "AI-search readiness (GEO): AI crawler access, llms.txt, citability",
+    "Core Web Vitals of real users (Chrome UX Report)",
+    "Ready patches for mechanical fixes: robots.txt, sitemap, canonical, viewport, lang, JSON-LD, OpenGraph",
+    "MCP server and Claude Code plugin for AI coding assistants",
+    "White-label HTML reports",
   ],
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: PRICE_CURRENCY,
-    lowPrice: String(Math.min(...prices)),
-    highPrice: String(Math.max(...prices)),
-    offerCount: pricedTiers.length,
-    offers: pricedTiers.map((t) => ({
-      "@type": "Offer",
-      name: t.name,
-      price: String(t.priceMonthly),
-      priceCurrency: PRICE_CURRENCY,
-      url: `${APP_URL}/pricing`,
-      category: "subscription",
-    })),
-  },
+  // Until billing opens, the free plan is the only offer anyone can take: the
+  // paid prices are announced on /pricing, not sold, so they stay out of the
+  // markup (structured data must describe what exists).
+  offers: BILLING_OPEN
+    ? {
+        "@type": "AggregateOffer",
+        priceCurrency: PRICE_CURRENCY,
+        lowPrice: String(Math.min(...prices)),
+        highPrice: String(Math.max(...prices)),
+        offerCount: pricedTiers.length,
+        offers: pricedTiers.map((t) => ({
+          "@type": "Offer",
+          name: t.name,
+          price: String(t.priceMonthly),
+          priceCurrency: PRICE_CURRENCY,
+          url: `${APP_URL}/pricing`,
+          category: "subscription",
+        })),
+      }
+    : { "@type": "Offer", name: "Free", price: "0", priceCurrency: PRICE_CURRENCY, url: `${APP_URL}/pricing` },
 };
 
 /** Site-wide entity graph — render once per public page (marketing layout). */

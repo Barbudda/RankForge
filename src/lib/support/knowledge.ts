@@ -5,33 +5,31 @@
  *   assistant is useful even without an API key.
  */
 
-export const SUPPORT_SYSTEM = `You are the RankForge support assistant — concise, friendly and accurate.
+export const SUPPORT_SYSTEM = `You are the RankForge support assistant. Be concise, friendly and accurate.
 
 ABOUT RANKFORGE
-RankForge is a technical-SEO agent for GitHub repos. It connects to a repository, crawls the rendered site, maps every technical-SEO issue back to a file, and opens small, reviewable pull requests that fix it. It is built for modern repos (Next.js, Nuxt, Astro, SvelteKit, Remix, Vite + React, MDX, static). It does NOT promise rankings — it ships better technical SEO as code you review and merge.
+RankForge checks a site's technical SEO at the three moments it breaks: in your editor before you push (the open-source CLI or the Claude Code plugin), on every pull request (a GitHub Action that compares the preview with production, comments the result and fails the check when pages would leave search), and in production (scheduled checks with email, Slack, Discord or webhook alerts). Measurements are deterministic and every finding cites its evidence. RankForge never writes to your repository and never promises Google rankings. Built for modern stacks (Next.js, Nuxt, Astro, SvelteKit, Remix, Vite + React, MDX, static).
 
 HOW IT WORKS
-1) Install the GitHub App (read-only by default) and pick repos. 2) Add a production/staging URL. 3) Run an audit — issues are scored by impact, effort, risk and confidence, then prioritized. 4) Review each issue's suggested fix and diff. 5) Merge the pull requests. Next.js is the most deeply supported framework.
+1) Before you push: run npx rankforge-cli audit http://localhost:3000, or install the Claude Code plugin (/plugin marketplace add Barbudda/rankforge-cli, then /plugin install rankforge@rankforge) so your assistant audits and fixes. 2) In the pull request: add the GitHub Action Barbudda/rankforge-cli with your preview URL and baseline-url set to production; it comments the changes on the pull request and fails it on critical regressions. 3) In production: sign up, add your site and turn on monitoring. 4) Fix from the evidence: every finding lists the affected URLs and likely files, and mechanical ones have a ready patch (rankforge fix <ruleId>). Next.js has the deepest support.
 
-MODIFICATION LEVELS (autonomy spectrum, per repo)
-- Advisor: advice only, no code/diffs, read-only.
-- Suggest: generates diffs to copy, read-only (never touches GitHub).
-- Draft PRs: opens draft pull requests on a branch.
-- Auto (low-risk): auto-opens ready PRs for low-risk fixes; risky ones stay drafts.
-- Autopilot: max autonomy across categories/paths. Even here, changes arrive as pull requests you review — RankForge never force-pushes to your default branch.
+MODIFICATION LEVELS (hosted app, per repo)
+- Advisor: advice only, no code or diffs.
+- Suggest: a ready-to-copy diff for every issue.
+- Draft PRs, Auto (low-risk), Autopilot: RankForge prepares pull requests in the app for you to review and apply. Nothing is pushed to GitHub yet; a GitHub App is on the roadmap.
 
-SEO CATEGORIES
-metadata, indexing, page structure, images, schema.org, internal linking, performance, framework-specific.
+SEO CHECKS
+54 site checks in eight categories (metadata, indexing, page structure, images, schema.org, internal linking, performance, framework) plus 12 AI-search readiness checks.
 
 SECURITY
-Read-only by default; write access scoped to RankForge branches only; never a direct commit/merge to your default branch; no access to environment secrets; full audit log; disable the agent anytime; self-host option on Enterprise.
+RankForge only reads rendered pages, like any crawler, and honours robots.txt. It never writes to your repository: fixes reach your code through your own pull requests. The CLI and the editor agent run on your machine and send nothing to RankForge; the GitHub Action uses the job's token only to comment on the pull request; hosted monitoring fetches your public pages. It never reads your source code or environment secrets, and every monitoring check is kept with what changed.
 
-PRICING (placeholders)
-Starter €29/mo (1 repo), Growth €99/mo (5 repos), Agency €299/mo (25 repos, multi-tenant), Enterprise custom (self-host, SSO/SAML). Free first audit, no card required. Support is self-serve via this assistant.
+PRICING
+Free €0 (CLI, editor agent, CI regression gate, white-label HTML reports, monitoring of 1 site weekly with email alerts). Pro €19/mo (monitoring of 5 sites daily, email/Slack/Discord/webhook alerts, 12 months of history). Studio €49/mo (25 sites, an alert address per site, 24 months of history). Billing isn't open yet: during the beta Pro is free on every account. Not available yet: Search Console data, scheduled client reports, team seats. There is no SSO and no self-hosting. Support is self-serve via this assistant.
 
 RULES
 - Only answer questions about RankForge and technical SEO. If asked something unrelated, gently steer back.
-- Be concise (2-5 sentences). Use plain language. Point users to the dashboard ("Connect GitHub" / Settings) or pricing when relevant.
+- Be concise (2-5 sentences). Use plain language. Point users to the free audit (/audit), the docs (/docs/agent), the dashboard or pricing when relevant.
 - Never claim RankForge guarantees Google rankings. Never invent features or prices not listed above.`;
 
 export interface KbEntry {
@@ -43,12 +41,12 @@ export const KB: KbEntry[] = [
   {
     keywords: ["what", "rankforge", "do", "is", "about"],
     answer:
-      "RankForge is a technical-SEO agent for your GitHub repo. It crawls your rendered site, maps each SEO issue back to a file, and opens small, reviewable pull requests that fix it — for Next.js, Nuxt, Astro, SvelteKit, Remix, MDX and static sites.",
+      "RankForge checks your site's technical SEO where it breaks: in your editor before you push, on every pull request (preview against production, with a comment and a check that fails when pages would leave search), and in production with alerts. It works with Next.js, Nuxt, Astro, SvelteKit, Remix, MDX and static sites.",
   },
   {
     keywords: ["how", "work", "works", "start", "begin", "setup", "audit"],
     answer:
-      "Connect the GitHub App (read-only by default), add a production URL, and run an audit. You'll see prioritized issues scored by impact/effort/risk, each with a suggested fix and diff — then merge the pull requests. Head to the dashboard and click “Connect GitHub” to begin.",
+      "Start with npx rankforge-cli audit <your-url>, or the free audit at /audit. Then add the GitHub Action so every pull request is checked against production, and sign up to turn on monitoring for your live site. The guide is at /docs/agent.",
   },
   {
     keywords: ["framework", "frameworks", "next", "nextjs", "nuxt", "astro", "sveltekit", "remix", "support", "supported"],
@@ -58,42 +56,42 @@ export const KB: KbEntry[] = [
   {
     keywords: ["level", "levels", "autonomy", "modification", "advisor", "suggest", "draft", "autopilot", "root", "how far"],
     answer:
-      "You choose how far RankForge goes per repo: Advisor (advice only), Suggest (diffs to copy), Draft PRs, Auto for low-risk PRs, or Autopilot (full autonomy). Even on Autopilot, changes arrive as pull requests you review — never a force-push to your default branch. Set it in Settings or on a repository's page.",
+      "In the hosted app you choose how far RankForge prepares fixes per repo: Advisor (advice only), Suggest (diffs to copy), or Draft PRs, Auto and Autopilot, which prepare pull requests in RankForge for you to review. Nothing is pushed to GitHub yet. Set it in Settings or on a repository's page.",
   },
   {
     keywords: ["safe", "security", "secure", "permission", "permissions", "main", "branch", "merge", "access", "secret", "secrets", "write"],
     answer:
-      "RankForge is read-only by default; write access is scoped to its own branches. It never commits or merges to your default branch, never touches your secrets, and logs every action. You review and merge every change, and can disable the agent anytime.",
+      "RankForge only reads your rendered pages, like any crawler. It never writes to your repository and never reads your source code or secrets. Fixes reach your code through your own pull requests, and the pull-request check verifies them.",
   },
   {
     keywords: ["price", "pricing", "cost", "plan", "plans", "free", "trial", "much"],
     answer:
-      "Plans: Starter €29/mo (1 repo), Growth €99/mo (5 repos), Agency €299/mo (25 repos), Enterprise custom (self-host, SSO). Your first audit is free — no card required. See the pricing page for details.",
+      "Free costs nothing: CLI, editor agent, CI gate, reports and monitoring of 1 site weekly. Pro is €19/month (5 sites checked daily, Slack/Discord/webhook alerts) and Studio €49/month (25 sites). Billing isn't open yet, so Pro is free for everyone during the beta. See the pricing page.",
   },
   {
     keywords: ["pr", "prs", "pull", "request", "requests", "create", "merge", "fix", "diff"],
     answer:
-      "Each issue maps to a small, branch-scoped pull request with the patch, expected impact, risk and a validation checklist. They're easy to review and you stay in control of every merge — nothing reaches your default branch automatically.",
+      "RankForge checks pull requests: the GitHub Action audits the preview against production, comments what changed and fails the check when pages would leave search. It doesn't open pull requests itself; fixes come as patches or through your AI editor, and you open the PR.",
   },
   {
     keywords: ["agency", "agencies", "multiple", "repos", "clients", "monorepo", "team"],
     answer:
-      "Yes — the Agency plan adds multi-tenant client workspaces, monorepo support, per-client reporting and role-based access so you can manage many sites from one dashboard.",
+      "The Studio plan monitors up to 25 sites, with a separate alert address or webhook per site, so a freelancer or small agency can watch client sites from one account. Client workspaces and team seats aren't available yet. White-label HTML reports work today from the CLI (rankforge audit <url> --html report.html --brand \"Your studio\").",
   },
   {
     keywords: ["rank", "ranking", "rankings", "google", "guarantee", "first", "position"],
     answer:
-      "RankForge doesn't promise rankings — it ships better technical SEO as code you review and merge. It fixes the technical foundations (metadata, indexing, schema, structure, internal links, performance) that help search engines understand your site.",
+      "RankForge doesn't promise rankings. It keeps the technical foundations working (metadata, indexing, schema, structure, internal links, performance), which is the part of SEO your code controls.",
   },
   {
     keywords: ["category", "categories", "issue", "issues", "metadata", "schema", "images", "indexing", "performance", "links"],
     answer:
-      "Audits cover eight categories: metadata, indexing, page structure, images, schema.org, internal linking, performance SEO and framework-specific issues — each scored by impact, effort, risk and confidence.",
+      "Audits cover eight categories: metadata, indexing, page structure, images, schema.org, internal linking, performance SEO and framework-specific issues. Each one is scored by impact, effort, risk and confidence.",
   },
   {
     keywords: ["contact", "help", "support", "human", "email"],
     answer:
-      "You're talking to support right now — ask me anything about RankForge. For account or billing specifics, head to Settings or Billing in the dashboard.",
+      "You're talking to support right now, so ask me anything about RankForge. For account deletion or anything I can't answer, email the address on the privacy page.",
   },
 ];
 
@@ -102,7 +100,7 @@ export const KB: KbEntry[] = [
 // questions) so the prompt/KB never reach the browser bundle.
 
 const DEFAULT_ANSWER =
-  "I can help with anything about RankForge — how it audits your repo, the modification levels, security, supported frameworks, or pricing. What would you like to know? You can also click “Connect GitHub” on the dashboard to try it.";
+  "I can help with anything about RankForge: the audit, the pull-request check, monitoring, security, supported frameworks or pricing. What would you like to know? You can also run a free audit at /audit.";
 
 /** Offline fallback: score KB entries by keyword overlap with the question. */
 export function findAnswer(question: string): string {

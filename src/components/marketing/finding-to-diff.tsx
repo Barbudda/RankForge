@@ -11,7 +11,7 @@ import { ArrowRight, FileCode2, Link2, ScanLine } from "lucide-react";
 import { CauseWeb } from "./dots/cause-web";
 
 /**
- * Section 2 — "From crawl finding to mergeable diff."
+ * Section 2 — "From crawl finding to a diff you can merge."
  *
  * A horizontal transformation lane: a raw crawl finding enters on the left,
  * gets mapped to the template/source in the middle, and becomes a small,
@@ -93,8 +93,8 @@ export function FindingToDiffSection() {
   const active = hover ?? scrollStage;
 
   const panelClass = (i: number) =>
-    `relative rounded-xl border bg-surface/60 p-5 backdrop-blur-sm transition-colors duration-300 ${
-      active >= i ? "border-cyan/40" : "border-border"
+    `lg rounded-2xl border p-5 transition-colors duration-300 ${
+      active >= i ? "border-cyan/40" : "border-transparent"
     }`;
 
   return (
@@ -106,12 +106,13 @@ export function FindingToDiffSection() {
       <div className="container-rf relative z-10">
         <div className="max-w-2xl">
           <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-            From crawl finding to mergeable diff.
+            From crawl finding to a diff you can merge.
           </h2>
           <p className="mt-4 text-fg-muted">
-            The agent does more than report an issue. It traces the cause,
-            locates the right template or content source, and prepares a
-            reviewable change.
+            RankForge hands your AI editor the evidence: the pattern, every
+            affected URL and the likely files. The editor finds the template
+            in your code and writes the change; mechanical fixes come as a
+            ready patch.
           </p>
         </div>
 
@@ -137,7 +138,7 @@ export function FindingToDiffSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: reduce ? 0 : 0.4, delay: reduce ? 0 : 0.1 + i * 0.1 }}
-                  className={`flex items-center gap-2 rounded-md border px-2.5 py-1.5 font-mono text-[11px] ${b.tone}`}
+                  className={`flex items-center gap-2 lg-chip rounded-full border px-2.5 py-1.5 font-mono text-[11px] ${b.tone}`}
                 >
                   <ScanLine className="size-3 shrink-0 opacity-70" />
                   {b.text}
@@ -156,8 +157,8 @@ export function FindingToDiffSection() {
           >
             <StageHead
               n="02"
-              label="Source mapping"
-              desc="Finds the template, CMS field, or component responsible for the repeated pattern."
+              label="In your code"
+              desc="Your AI editor follows the evidence to the template, CMS field or component behind the pattern."
               active={active >= 1}
             />
             <div className="relative mt-4 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
@@ -165,7 +166,7 @@ export function FindingToDiffSection() {
                 {MAP_URLS.map((u) => (
                   <div
                     key={u}
-                    className="truncate rounded border border-border bg-surface/60 px-2 py-1 font-mono text-[11px] text-fg-muted"
+                    className="truncate lg lg-thin rounded-md px-2 py-1 font-mono text-[11px] text-fg-muted"
                   >
                     {u}
                   </div>
@@ -191,7 +192,7 @@ export function FindingToDiffSection() {
                 {MAP_FILES.map((f) => (
                   <div
                     key={f}
-                    className="flex items-center gap-1.5 rounded border border-electric/30 bg-electric/[0.06] px-2 py-1 font-mono text-[11px] text-electric-bright"
+                    className="flex items-center gap-1.5 lg-chip rounded-full border border-molten/30 bg-molten/[0.06] px-2 py-1 font-mono text-[11px] text-molten-bright"
                   >
                     <FileCode2 className="size-3 shrink-0" />
                     <span className="truncate">{f}</span>
@@ -211,8 +212,8 @@ export function FindingToDiffSection() {
           >
             <StageHead
               n="03"
-              label="Safe diff"
-              desc="Generates a minimal change your team can inspect, edit, and merge."
+              label="The diff"
+              desc="A minimal change your team can read, edit and merge. The pull-request check verifies it."
               active={active >= 2}
             />
             <motion.div

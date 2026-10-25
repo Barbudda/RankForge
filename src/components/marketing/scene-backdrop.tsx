@@ -13,11 +13,12 @@ import { ChaosField3D } from "./chaos-field-3d";
  * The WebGL "code chaos → clarity" field is the signature scene and stays
  * present the whole way down — strongest in the hero, then easing to a calmer
  * ambient floor so it COEXISTS with the per-section dot systems (swarm / flow /
- * web) layered on top, instead of either one burying the other.
+ * web) layered on top, instead of either one burying the other. The floor
+ * stays low (0.38): at 0.58 its large glyphs competed with tables and copy.
  */
 export function SceneBackdrop() {
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 1100, 2000], [1, 0.82, 0.58]);
+  const opacity = useTransform(scrollY, [0, 1100, 2200], [1, 0.7, 0.38]);
 
   return (
     <div

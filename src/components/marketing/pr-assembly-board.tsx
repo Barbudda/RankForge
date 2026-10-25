@@ -18,10 +18,11 @@ import {
 import { CrawlerSwarm } from "./dots/crawler-swarm";
 
 /**
- * Section 3 — "From scattered findings to a clean pull request."
+ * Section 3 — "From scattered findings to a pull request that passes."
  *
  * An assembly board: scattered SEO findings are grouped into focused
- * buckets, validated, and packaged into one reviewable pull request.
+ * buckets, turned into one patch, and shipped as the team's own pull
+ * request, which RankForge's check then verifies.
  * Scroll progress drives a five-step assembly; hovering a bucket
  * highlights the findings it contains and the files it touches.
  *
@@ -33,10 +34,10 @@ import { CrawlerSwarm } from "./dots/crawler-swarm";
 
 const STEPS = [
   "Collect findings",
-  "Group related issues",
-  "Validate changes",
-  "Assemble PR",
-  "Ready for review",
+  "Group by cause",
+  "Write the fix",
+  "Open your PR",
+  "Check passes",
 ];
 
 type Bucket = {
@@ -72,10 +73,10 @@ const PR = {
   files: ["CategoryTemplate.tsx", "seo/meta.ts", "schema/product-list.ts"],
   affected: "128 category URLs",
   checks: [
-    "Canonical rules preserved",
-    "Titles unique per page",
-    "Noindex pages excluded",
-    "Schema validated",
+    "No critical change vs production",
+    "3 issues fixed, 0 new",
+    "Canonicals still self-referencing",
+    "Noindex pages unchanged",
   ],
   note: "Adds metadata fallbacks for category pages with missing descriptions and normalizes canonical generation.",
 };
@@ -83,18 +84,18 @@ const PR = {
 const CAPTIONS = [
   {
     icon: Layers,
-    title: "Group related fixes",
-    body: "Combine repeated issues by template, page type, or source instead of creating one task per URL.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Validate before review",
-    body: "Check indexation rules, canonical behavior, title uniqueness, structured data, and affected URL scope.",
+    title: "One finding per cause",
+    body: "A repeated issue is reported once, with every affected URL, instead of one ticket per page.",
   },
   {
     icon: GitPullRequest,
-    title: "Open a focused PR",
-    body: "Produce a small, reviewable pull request with context, changed files, and SEO impact.",
+    title: "Your pull request",
+    body: "The fix ships the way your team ships everything: a small PR, written by you or your AI editor.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Checked before the merge",
+    body: "RankForge re-audits the preview: the issues must clear, and nothing else may break.",
   },
 ];
 
@@ -135,12 +136,12 @@ export function PrAssemblySection() {
       <div className="container-rf relative z-10">
         <div className="max-w-2xl">
           <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-            From scattered findings to a clean pull request.
+            From scattered findings to a pull request that passes.
           </h2>
           <p className="mt-4 text-fg-muted">
-            Related SEO issues are grouped into focused changes, validated
-            against risk, and packaged for review instead of dumped into a
-            ticket backlog.
+            Related SEO issues are grouped by cause and turned into one
+            focused change, instead of a backlog of tickets. Then the
+            pull-request check proves the fix worked.
           </p>
         </div>
 
@@ -192,12 +193,12 @@ export function PrAssemblySection() {
                   key={b.title}
                   onMouseEnter={() => setActiveBucket(bi)}
                   onMouseLeave={() => setActiveBucket(null)}
-                  className={`rounded-xl border bg-surface/60 p-4 backdrop-blur-sm transition-colors duration-300 ${
+                  className={`lg rounded-2xl border p-4 transition-colors duration-300 ${
                     isActive
                       ? "border-cyan/45"
                       : grouped
-                        ? "border-border"
-                        : "border-dashed border-border"
+                        ? "border-transparent"
+                        : "border-dashed border-white/15"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
@@ -222,7 +223,7 @@ export function PrAssemblySection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: reduce ? 0 : 0.35, delay: reduce ? 0 : 0.05 * ci + 0.1 * bi }}
-                        className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-colors duration-300 ${
+                        className={`lg-chip rounded-full border px-2 py-1 font-mono text-[11px] transition-colors duration-300 ${
                           isActive
                             ? "border-cyan/30 bg-cyan/[0.06] text-cyan/90"
                             : "border-border bg-surface/50 text-fg-muted"
@@ -239,20 +240,20 @@ export function PrAssemblySection() {
 
           {/* PR summary panel */}
           <div
-            className={`rounded-xl border bg-surface/85 backdrop-blur-md transition-colors duration-300 ${
-              effStep >= 4 ? "border-signal/40" : "border-border"
+            className={`lg rounded-2xl border transition-colors duration-300 ${
+              effStep >= 4 ? "border-signal/40" : "border-transparent"
             }`}
           >
             <div className="flex items-center gap-2 border-b border-border px-4 py-3">
               <GitPullRequest className="size-4 text-signal" />
-              <span className="text-sm font-medium text-fg">Pull request</span>
+              <span className="text-sm font-medium text-fg">Your pull request</span>
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: effStep >= 4 ? 1 : 0 }}
                 transition={{ duration: reduce ? 0 : 0.3 }}
                 className="ml-auto rounded-full bg-signal/15 px-2 py-0.5 text-[11px] font-medium text-signal"
               >
-                Ready for review
+                Check passed
               </motion.span>
             </div>
 
@@ -263,8 +264,8 @@ export function PrAssemblySection() {
               variants={{ show: { transition: { staggerChildren: reduce ? 0 : 0.06 } } }}
             >
               {/* Branch */}
-              <PrRow icon={<GitBranch className="size-3.5 text-electric-bright" />} label="Branch">
-                <span className="font-mono text-electric-bright">{PR.branch}</span>
+              <PrRow icon={<GitBranch className="size-3.5 text-molten-bright" />} label="Branch">
+                <span className="font-mono text-molten-bright">{PR.branch}</span>
               </PrRow>
 
               {/* Files */}
@@ -273,7 +274,7 @@ export function PrAssemblySection() {
                   {PR.files.map((f) => (
                     <span
                       key={f}
-                      className={`rounded border px-1.5 py-0.5 font-mono text-[11px] transition-colors duration-300 ${
+                      className={`lg-chip rounded-full border px-1.5 py-0.5 font-mono text-[11px] transition-colors duration-300 ${
                         activeFiles.includes(f)
                           ? "border-cyan/45 bg-cyan/[0.08] text-cyan"
                           : "border-border text-fg-muted"
@@ -291,7 +292,7 @@ export function PrAssemblySection() {
               </PrRow>
 
               {/* Checks */}
-              <PrRow icon={<ShieldCheck className="size-3.5 text-signal" />} label="Checks">
+              <PrRow icon={<ShieldCheck className="size-3.5 text-signal" />} label="RankForge check">
                 <div className="space-y-1">
                   {PR.checks.map((c) => (
                     <div key={c} className="flex items-center gap-1.5 text-fg-muted">

@@ -17,7 +17,7 @@ import {
   Eye,
   ShieldCheck,
   ScrollText,
-  Building2,
+  Code2,
   type LucideIcon,
 } from "lucide-react";
 import { CauseWeb } from "./dots/cause-web";
@@ -51,39 +51,39 @@ type SecurityCard = {
 const CARDS: SecurityCard[] = [
   {
     icon: Lock,
-    title: "Minimal permissions",
-    body: "Read-only by default. Write access is scoped to RankForge branches only.",
-    tag: "permissions: read-only",
+    title: "Read-only by design",
+    body: "RankForge reads your rendered pages, like any crawler. It never writes to your repository.",
+    tag: "repo: never written",
   },
   {
     icon: GitBranch,
-    title: "Branch-only changes",
-    body: "Never a direct commit or merge to main. Every change arrives as a PR.",
-    tag: "target: rankforge/*",
+    title: "You open the pull request",
+    body: "Fixes reach your code through your own PR, reviewed like any other change.",
+    tag: "merge: yours",
   },
   {
     icon: Eye,
-    title: "Review before shipping",
-    body: "You inspect every diff. Nothing merges without a human.",
-    tag: "merge: human-only",
+    title: "Nothing ships unchecked",
+    body: "Patches are proposals. Whoever applies one, the pull-request check verifies the result.",
+    tag: "check: every push",
   },
   {
     icon: ShieldCheck,
     title: "No access to secrets",
-    body: "RankForge reads your source and rendered HTML. It never reads your environment secrets.",
+    body: "It reads public pages and your preview, never your source code or your environment secrets.",
     tag: "env: unreadable",
   },
   {
     icon: ScrollText,
-    title: "Logs & audit trail",
-    body: "Every action is recorded. Disable the agent at any time.",
-    tag: "audit: full",
+    title: "A history you can trace",
+    body: "Every check is kept with what changed, so a regression leads back to the deploy that caused it.",
+    tag: "history: per check",
   },
   {
-    icon: Building2,
-    title: "Enterprise & self-host",
-    body: "Advanced controls and self-hosting available for larger teams.",
-    tag: "deploy: self-host",
+    icon: Code2,
+    title: "Open-source engine",
+    body: "The audit engine is MIT-licensed on GitHub: read exactly what it checks, or run it yourself.",
+    tag: "license: MIT",
   },
 ];
 
@@ -139,12 +139,12 @@ function TrafficCard({
       style={{ scale, opacity, x, y }}
       className="absolute w-[34rem] max-w-[86vw]"
     >
-      <div className="rounded-2xl border border-border bg-surface/80 p-7 shadow-2xl shadow-black/40 backdrop-blur-md">
+      <div className="lg rounded-2xl p-7">
         <div className="flex items-center justify-between gap-3">
           <span className="grid size-11 place-items-center rounded-xl border border-signal/30 bg-signal/[0.07]">
             <card.icon className="size-5 text-signal" />
           </span>
-          <span className="rounded border border-border bg-bg/50 px-2 py-1 font-mono text-[11px] text-fg-subtle">
+          <span className="lg-chip rounded-full border border-border bg-bg/50 px-2 py-1 font-mono text-[11px] text-fg-subtle">
             {card.tag}
           </span>
         </div>
@@ -198,19 +198,19 @@ export function SecuritySection() {
         <div className="container-rf relative z-10">
           <div className="max-w-2xl">
             <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-              Built to be safe with write access
+              It reads. You merge.
             </h2>
             <p className="mt-4 text-fg-muted">
-              Read-only by default. When you grant write access, RankForge is
-              boxed into its own branches and never touches main or your
-              secrets.
+              RankForge only ever reads your rendered pages. Changes reach
+              your code through your own pull requests, checked before they
+              ship.
             </p>
           </div>
           <div className="mt-12 grid gap-4 md:grid-cols-3">
             {CARDS.map((c) => (
               <div
                 key={c.title}
-                className="rounded-xl border border-border bg-surface/60 p-6"
+                className="lg rounded-2xl p-6"
               >
                 <c.icon className="size-5 text-signal" />
                 <h3 className="mt-3 text-sm font-semibold text-fg">{c.title}</h3>
@@ -241,12 +241,12 @@ export function SecuritySection() {
           >
             <div className="max-w-2xl">
               <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-                Built to be safe with write access
+                It reads. You merge.
               </h2>
               <p className="mt-4 text-fg-muted">
-                Read-only by default. When you grant write access, RankForge is
-                boxed into its own branches and never touches main or your
-                secrets.
+                RankForge only ever reads your rendered pages. Changes reach
+                your code through your own pull requests, checked before they
+                ship.
               </p>
             </div>
           </motion.div>

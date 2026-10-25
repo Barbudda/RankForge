@@ -26,7 +26,7 @@ const FINDINGS = [
   {
     icon: Network,
     title: "Connect cause and context",
-    body: "Group related findings by template, page type, crawl path, and technical pattern instead of treating every URL as an isolated problem.",
+    body: "One finding per cause, with every affected URL and the files to look at, instead of treating each URL as its own problem.",
     tags: ["by template", "by page type", "crawl path"],
     group: 1,
     offset: "lg:ml-16",
@@ -69,9 +69,10 @@ export function ProblemSection() {
               Finding problems was never the hard part.
             </h2>
             <p className="mt-4 max-w-md text-fg-muted">
-              Crawlers surface hundreds of warnings. RankForge&apos;s technical
-              SEO agent connects symptoms, causes, and impact so your team
-              knows what to fix first.
+              Crawlers surface hundreds of warnings, weeks after the deploy
+              that caused them. RankForge checks each change as it ships,
+              groups findings by cause, and ranks them by what they cost you
+              in search.
             </p>
           </div>
 
@@ -92,8 +93,8 @@ export function ProblemSection() {
                       ? { duration: 0 }
                       : { duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }
                   }
-                  className={`group relative w-full overflow-hidden rounded-xl border bg-surface/70 p-6 backdrop-blur-md transition-colors duration-300 lg:max-w-xl ${f.offset} ${
-                    isActive ? "border-cyan/45" : "border-border"
+                  className={`group lg w-full overflow-hidden rounded-2xl border p-6 transition-colors duration-300 lg:max-w-xl ${f.offset} ${
+                    isActive ? "border-cyan/45" : "border-transparent"
                   }`}
                 >
                   {/* Left accent bar — lights when this finding is active */}
@@ -108,7 +109,7 @@ export function ProblemSection() {
                         className={`grid size-9 place-items-center rounded-lg border transition-colors duration-300 ${
                           isActive
                             ? "border-cyan/40 bg-cyan/10 text-cyan"
-                            : "border-border bg-surface text-electric-bright"
+                            : "border-border bg-surface text-molten-bright"
                         }`}
                       >
                         <f.icon className="size-5" />
@@ -124,7 +125,7 @@ export function ProblemSection() {
                     {f.tags.map((t) => (
                       <span
                         key={t}
-                        className={`rounded border px-1.5 py-0.5 font-mono text-[11px] transition-colors duration-300 ${
+                        className={`lg-chip rounded-full border px-1.5 py-0.5 font-mono text-[11px] transition-colors duration-300 ${
                           isActive
                             ? "border-cyan/30 text-cyan/90"
                             : "border-border text-fg-subtle"

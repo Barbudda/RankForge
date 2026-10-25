@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { config } from "@/lib/config";
 import { DevButton } from "@/components/dev/dev-button";
 import { SupportChat } from "@/components/support/support-chat";
 
-const inter = Inter({
+const grotesk = Schibsted_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-grotesk",
+  display: "swap",
+});
+
+// Display serif for marketing headings only (see .marketing h1/h2 in globals.css).
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  axes: ["opsz", "SOFT", "WONK"],
   display: "swap",
 });
 
@@ -22,24 +30,25 @@ const APP_URL = config.appUrl;
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: "RankForge — Automated technical SEO fixes, shipped as pull requests",
+    default: "RankForge: automated technical SEO checks for every deploy",
     template: "%s · RankForge",
   },
   description:
-    "RankForge audits your rendered site and opens small, reviewable pull requests that fix your technical SEO. Built for Next.js, Nuxt, Astro & SvelteKit.",
+    "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.",
   keywords: [
     "technical SEO",
-    "GitHub",
-    "pull requests",
-    "Next.js SEO",
     "automated SEO",
-    "SEO agent",
+    "SEO regression testing",
+    "SEO monitoring",
+    "GitHub Action",
+    "Next.js SEO",
+    "SEO MCP server",
   ],
   authors: [{ name: "RankForge" }],
   openGraph: {
-    title: "RankForge — Automated technical SEO fixes, shipped as pull requests",
+    title: "RankForge: technical SEO that survives your deploys",
     description:
-      "Audits tell you what is broken. RankForge ships the fix as a pull request.",
+      "Fails the pull request that would drop pages from Google, then keeps watching production.",
     // Relative path resolved per-page against metadataBase. Pages override
     // this with their own path (see /pricing) so og:url is never wrong.
     url: "/",
@@ -49,14 +58,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RankForge — Automated technical SEO fixes, shipped as pull requests",
+    title: "RankForge: technical SEO that survives your deploys",
     description:
-      "Audits tell you what is broken. RankForge ships the fix as a pull request.",
+      "Fails the pull request that would drop pages from Google, then keeps watching production.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060b",
+  themeColor: "#0a0908",
   colorScheme: "dark",
 };
 
@@ -64,7 +73,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={`${grotesk.variable} ${fraunces.variable} ${mono.variable}`}>
       <body className="min-h-screen bg-bg text-fg antialiased">
         {children}
         {/* Dev tooling never ships to production bundles (statically eliminated). */}

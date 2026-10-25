@@ -22,46 +22,46 @@ export function EditorSection() {
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Copy */}
           <Reveal className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-xs font-medium text-fg-muted">
-              <Terminal className="size-3.5 text-electric-bright" />
+            <span className="inline-flex items-center gap-2 lg lg-thin rounded-full px-3 py-1 text-xs font-medium text-fg-muted">
+              <Terminal className="size-3.5 text-molten-bright" />
               Model Context Protocol
             </span>
             <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-              Or bring RankForge into your editor
+              Fix it before you push
             </h2>
             <p className="mt-4 text-fg-muted">
-              Connect the RankForge agent to your AI coding assistant. It runs
-              the full technical-SEO audit against your dev server, then fixes
-              the issues in the repository you already have open — measured by
-              RankForge, applied by your assistant.
+              Install the Claude Code plugin, or connect any MCP client. Your
+              assistant audits your dev server, fixes the issues in the
+              repository you already have open, then compares your version with
+              production. RankForge measures; your assistant writes the code.
             </p>
             <ul className="mt-6 space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <Search className="mt-0.5 size-4 shrink-0 text-cyan" />
                 <span className="text-fg-muted">
-                  <span className="text-fg">Audits localhost</span> — no deploy, no
+                  <span className="text-fg">Audits localhost.</span> No deploy, no
                   waiting. See issues as you build.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <Wand2 className="mt-0.5 size-4 shrink-0 text-signal" />
                 <span className="text-fg-muted">
-                  <span className="text-fg">Fixes in place</span> — your assistant
+                  <span className="text-fg">Fixes in place:</span> your assistant
                   edits the real files and you review the diff.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <FileCode2 className="mt-0.5 size-4 shrink-0 text-electric-bright" />
+                <FileCode2 className="mt-0.5 size-4 shrink-0 text-molten-bright" />
                 <span className="text-fg-muted">
-                  <span className="text-fg">Deterministic measurements</span> — the
-                  audit is real, not the model guessing.
+                  <span className="text-fg">Deterministic measurements.</span> Every
+                  score comes from the crawl itself, with the URLs to prove it.
                 </span>
               </li>
             </ul>
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <Link
                 href="/docs/agent"
-                className="inline-flex h-11 items-center gap-2 rounded-lg bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+                className="lg lg-molten inline-flex h-11 items-center gap-2 px-5 text-sm font-medium rounded-full transition-[filter] hover:brightness-110"
               >
                 Set it up
                 <ArrowRight className="size-4" />
@@ -74,28 +74,22 @@ export function EditorSection() {
 
           {/* Terminal mock */}
           <Reveal>
-            <div className="overflow-hidden rounded-xl border border-border bg-code shadow-2xl shadow-black/40">
-              <div className="flex items-center gap-2 border-b border-border bg-surface/70 px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-danger/60" />
-                <span className="size-2.5 rounded-full bg-amber/60" />
-                <span className="size-2.5 rounded-full bg-signal/60" />
-                <span className="ml-2 font-mono text-[11px] text-fg-subtle">
-                  ~/my-app — claude code
+            <div className="lg overflow-hidden rounded-2xl">
+              <div className="border-b border-white/10 px-4 py-2.5">
+                <span className="font-mono text-[11px] text-fg-subtle">
+                  ~/my-app · claude code
                 </span>
               </div>
               <div className="space-y-3 p-5 font-mono text-[12.5px] leading-relaxed">
                 <div className="text-fg-subtle">
-                  <span className="text-signal">$</span> claude mcp add --transport
-                  http rankforge http://localhost:3000/api/mcp
+                  <span className="text-signal">›</span> /plugin install
+                  rankforge@rankforge
                 </div>
                 <div className="text-fg-muted">
-                  <span className="text-signal">✓</span> Added MCP server{" "}
-                  <span className="text-fg">rankforge</span> (5 tools)
+                  <span className="text-signal">✓</span> Installed{" "}
+                  <span className="text-fg">rankforge</span> (8 tools, 2 skills)
                 </div>
-                <div className="pt-1 text-electric-bright">
-                  › Use rankforge to audit http://localhost:3000 and fix what you
-                  can.
-                </div>
+                <div className="pt-1 text-molten-bright">› /rankforge:seo</div>
                 <div className="space-y-1.5 border-l-2 border-border pl-3 text-fg-muted">
                   <div>
                     <span className="text-cyan">audit_site</span> → 12 issues ·
@@ -111,9 +105,13 @@ export function EditorSection() {
                     <span className="text-cyan">audit_site</span> → re-check:
                     indexing <span className="text-signal">94</span> ▲
                   </div>
+                  <div>
+                    <span className="text-cyan">compare_sites</span> → no critical
+                    change vs production
+                  </div>
                 </div>
                 <div className="text-fg-muted">
-                  Fixed 6 issues across 3 files. Opening a pull request for review.
+                  Fixed 6 issues across 3 files. Ready to push.
                 </div>
               </div>
             </div>

@@ -33,7 +33,7 @@ const FRAGMENTS: Fragment[] = [
   { text: "sitemap: 12/142", x: 30, y: 80, rot: -4, tone: "warn", delay: 0.5, dur: 9 },
   { text: "canonical: valid", x: 52, y: 50, rot: -2, tone: "good", delay: 1.6, dur: 10 },
   { text: "alt: generated", x: 14, y: 86, rot: 3, tone: "good", delay: 1.2, dur: 9 },
-  { text: "PR #42 ready", x: 80, y: 84, rot: -6, tone: "good", delay: 0.4, dur: 8 },
+  { text: "PR check passed", x: 80, y: 84, rot: -6, tone: "good", delay: 0.4, dur: 8 },
   { text: "robots.txt", x: 46, y: 30, rot: 7, tone: "muted", delay: 0.8, dur: 8.5 },
 ];
 
@@ -70,7 +70,7 @@ export function ChaosToClarityBackground({
       >
         <defs>
           <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--color-electric)" />
+            <stop offset="0%" stopColor="var(--color-molten)" />
             <stop offset="100%" stopColor="var(--color-cyan)" />
           </linearGradient>
         </defs>

@@ -1,10 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
-import { GithubIcon } from "@/components/brand/github-icon";
 import Link from "next/link";
-import { GeneratedPrCard } from "./pr-card";
+import { PrCheckCard } from "./pr-card";
 import { FlowField } from "./dots/flow-field-layer";
 
 const FRAMEWORKS = ["Next.js", "Nuxt", "Astro", "SvelteKit", "Remix", "MDX"];
@@ -35,8 +33,8 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="text-balance text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl"
             >
-              Forge your codebase into a{" "}
-              <span className="text-signal">search-ranking machine</span>.
+              Ship fast.{" "}
+              <span className="text-signal">Stay indexed.</span>
             </motion.h1>
 
             <motion.p
@@ -45,9 +43,10 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="mt-6 max-w-xl text-lg text-fg-muted"
             >
-              RankForge crawls your live site, finds every technical SEO and
-              performance issue, and opens small, reviewable pull requests that
-              fix them. Connect your repo and let it do the busywork.
+              RankForge reads your site the way Googlebot does and checks it
+              where SEO breaks: in your editor, in every pull request, and in
+              production. It fails the pull request that would drop pages from
+              Google, and hands each fix to your AI editor.
             </motion.p>
 
             <motion.div
@@ -57,18 +56,16 @@ export function Hero() {
               className="mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <Link
-                href="/dashboard"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-electric px-6 font-medium text-white shadow-[0_10px_40px_-10px_var(--color-electric)] transition-all hover:bg-electric-bright active:translate-y-px"
+                href="/signup"
+                className="lg lg-molten inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-medium transition-[filter] hover:brightness-110 active:brightness-95"
               >
-                <GithubIcon className="size-5" />
-                Connect GitHub
-                <ArrowRight className="size-4" />
+                Start free
               </Link>
               <Link
                 href="/audit"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border px-6 font-medium text-fg transition-all hover:border-electric/50 hover:bg-surface/60"
+                className="lg lg-thin inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-medium text-fg transition-[filter] hover:brightness-125"
               >
-                Audit a URL free — no signup
+                Audit a URL, free, no signup
               </Link>
             </motion.div>
 
@@ -79,24 +76,20 @@ export function Hero() {
               className="mt-10"
             >
               <p className="text-sm text-fg-subtle">
-                Works with the frameworks your team already ships
+                Or straight from your terminal, nothing to install
               </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {FRAMEWORKS.map((f) => (
-                  <span
-                    key={f}
-                    className="rounded-full border border-border bg-surface/60 px-3 py-1 text-sm text-fg-muted"
-                  >
-                    {f}
-                  </span>
-                ))}
-              </div>
+              <p className="mt-2 font-mono text-sm text-fg-muted">
+                npx rankforge-cli audit your-site.com
+              </p>
+              <p className="mt-4 font-mono text-xs text-fg-subtle">
+                {FRAMEWORKS.join(" / ")}
+              </p>
             </motion.div>
           </motion.div>
 
-          {/* Right: generated PR card */}
+          {/* Right: the comment RankForge posts on a pull request */}
           <div className="relative min-w-0">
-            <GeneratedPrCard />
+            <PrCheckCard />
           </div>
         </div>
       </div>

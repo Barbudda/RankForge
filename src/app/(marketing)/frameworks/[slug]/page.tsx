@@ -25,8 +25,8 @@ export async function generateMetadata({
   const fw = getFramework(slug);
   if (!fw) return {};
   return {
-    title: `Technical SEO for ${fw.name}, fixed as pull requests`,
-    description: `RankForge audits ${fw.name} sites, maps each technical SEO issue to the source file, and opens small, reviewable pull requests that fix it.`,
+    title: `Technical SEO for ${fw.name}, checked on every deploy`,
+    description: `RankForge audits ${fw.name} sites the way Googlebot reads them, fails the pull request that would drop pages from Google, and gives ready ${fw.name} patches for mechanical fixes.`,
     alternates: { canonical: `/frameworks/${slug}` },
   };
 }
@@ -44,15 +44,15 @@ export default async function FrameworkPage({
   const faqs = [
     {
       q: `How does RankForge audit a ${fw.name} site?`,
-      a: `It crawls your rendered pages like a browser, checks them against its rule catalog, and uses its knowledge of ${fw.name} conventions (${fw.metaApi}) to trace each issue back to the file that produces it.`,
+      a: `It crawls your rendered pages the way Googlebot reads them, checks them against its 54 rules, and uses ${fw.name} conventions (${fw.metaApi}) to point each issue at the files most likely behind it.`,
     },
     {
-      q: `Does RankForge commit to my ${fw.name} repository directly?`,
-      a: "Never. Fixes arrive as small pull requests on RankForge's own branches. You review and merge; nothing reaches your main branch without you.",
+      q: `Does RankForge commit to my ${fw.name} repository?`,
+      a: "Never. RankForge never writes to your repository. Fixes reach your code through your own pull requests, written by you or your AI editor, and the pull-request check verifies them.",
     },
     {
       q: `Will fixing these issues improve my rankings?`,
-      a: "No tool can honestly promise rankings. RankForge fixes the technical layer so your pages can be crawled, rendered and indexed correctly — the part of SEO your repository controls.",
+      a: "No tool can honestly promise rankings. RankForge fixes the technical layer so your pages can be crawled, rendered and indexed correctly. That is the part of SEO your repository controls.",
     },
   ];
 
@@ -67,7 +67,7 @@ export default async function FrameworkPage({
       />
       <JsonLd data={faqPageSchema(faqs)} />
       <ProsePage
-        title={`Technical SEO for ${fw.name}, fixed as pull requests`}
+        title={`Technical SEO for ${fw.name}, checked on every deploy`}
         intro={fw.blurb}
       >
         <ProseBlock heading={`What RankForge checks on ${fw.name} sites`}>
@@ -76,7 +76,7 @@ export default async function FrameworkPage({
               <li key={r.id}>
                 <Link
                   href={`/docs/issues/${ruleSlug(r.id)}`}
-                  className="group flex items-center justify-between gap-4 rounded-lg border border-border bg-surface/50 px-4 py-3 transition-colors hover:border-electric/40"
+                  className="group flex items-center justify-between gap-4 lg lg-thin rounded-xl px-4 py-3 transition-colors hover:border-molten/40"
                 >
                   <span>
                     <span className="text-sm font-medium text-fg">
@@ -86,7 +86,7 @@ export default async function FrameworkPage({
                       {r.description}
                     </span>
                   </span>
-                  <ArrowRight className="size-4 shrink-0 text-fg-subtle transition-colors group-hover:text-electric-bright" />
+                  <ArrowRight className="size-4 shrink-0 text-fg-subtle transition-colors group-hover:text-molten-bright" />
                 </Link>
               </li>
             ))}
@@ -107,7 +107,7 @@ export default async function FrameworkPage({
         <div className="flex flex-wrap items-center gap-4">
           <Link
             href="/dashboard"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+            className="lg lg-molten inline-flex h-11 items-center justify-center gap-2 px-5 text-sm font-medium rounded-full transition-[filter] hover:brightness-110"
           >
             Run a free audit
             <ArrowRight className="size-4" />

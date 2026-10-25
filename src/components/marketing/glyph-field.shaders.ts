@@ -7,7 +7,7 @@
  * is sucked into a slowly rotating DOUBLE-HELIX spindle, which then unwinds and
  * flattens onto a clean aligned grid. All three acts are derived in the vertex
  * shader from one `uProgress` uniform — zero per-instance CPU per frame, still
- * 2 draw calls. Tint ramps red/amber → electric ignition → cyan/signal. Colors
+ * 2 draw calls. Tint ramps red/amber → molten ignition → cyan/signal. Colors
  * are the exact globals.css @theme tokens.
  */
 
@@ -31,7 +31,7 @@ export const TOKENS: GlyphToken[] = [
   { text: "robots.txt", tone: 1 },
   { text: "generateMetadata()", tone: 1 },
   { text: "/blog/[slug]", tone: 1 },
-  { text: "PR #42 ready", tone: 1 },
+  { text: "PR check passed", tone: 1 },
 ];
 
 const HELPERS = `
@@ -128,7 +128,7 @@ precision highp float;
 uniform sampler2D uAtlas;
 uniform vec3 uColorBad;
 uniform vec3 uColorWarn;
-uniform vec3 uColorElectric;
+uniform vec3 uColorHeat;
 uniform vec3 uColorCyan;
 uniform vec3 uColorSignal;
 uniform vec3 uColorBg;
@@ -151,9 +151,9 @@ void main() {
   float tintP = min(1.0, 0.5 * vStageA + vStageB);
   vec3 tint = mix(chaosTint, orderTint, easeOutExpo(tintP));
 
-  // Electric ignition at the helix suck-in crossover.
+  // Molten ignition at the helix suck-in crossover (the tokens hit the forge).
   float ignite = smoothstep(0.35, 0.5, vStageA) * smoothstep(0.65, 0.5, vStageA);
-  tint = mix(tint, uColorElectric, ignite * 0.85);
+  tint = mix(tint, uColorHeat, ignite * 0.85);
 
   // Depth recession into the page background.
   tint = mix(tint, uColorBg, smoothstep(2.5, 6.0, vViewZ));

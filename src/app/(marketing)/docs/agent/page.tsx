@@ -37,7 +37,7 @@ export default function AgentDocsPage() {
           <p>
             An audit report tells you what&apos;s wrong; your coding assistant can
             actually change the code. With RankForge connected over MCP, one
-            prompt — <em>&ldquo;audit my dev server and fix what you find&rdquo;</em> —
+            prompt (<em>&ldquo;audit my dev server and fix what you find&rdquo;</em>)
             runs the full technical-SEO audit against{" "}
             <span className="font-mono text-xs">localhost</span>, walks the
             findings, patches your files, and re-audits to verify. The
@@ -47,10 +47,21 @@ export default function AgentDocsPage() {
         </ProseBlock>
 
         <ProseBlock heading="Connect from Claude Code">
-          <p>Run RankForge locally (or use your deployed instance), then:</p>
-          <CodeBlock>{`claude mcp add --transport http rankforge http://localhost:3000/api/mcp`}</CodeBlock>
+          <p>Install the plugin. It brings the MCP tools and two skills:</p>
+          <CodeBlock>{`/plugin marketplace add Barbudda/rankforge-cli
+/plugin install rankforge@rankforge`}</CodeBlock>
           <p className="mt-3">
-            That&apos;s it. Ask Claude Code:{" "}
+            <span className="font-mono text-xs">/rankforge:seo</span> audits the
+            site in your repository and fixes what it can;{" "}
+            <span className="font-mono text-xs">/rankforge:check</span> compares
+            your local or preview version with production before you ship. Or add
+            the bare MCP server:
+          </p>
+          <CodeBlock>{`claude mcp add rankforge -- npx -y rankforge-cli mcp`}</CodeBlock>
+          <p className="mt-3">
+            On native Windows, use{" "}
+            <span className="font-mono text-xs">cmd /c npx -y rankforge-cli mcp</span>{" "}
+            after the <span className="font-mono text-xs">--</span>. Then ask:{" "}
             <em>&ldquo;Use rankforge to audit http://localhost:3000 and fix the
             issues you can.&rdquo;</em>
           </p>
@@ -58,77 +69,97 @@ export default function AgentDocsPage() {
 
         <ProseBlock heading="Connect from Cursor / VS Code / Windsurf">
           <p>
-            Add an HTTP MCP server to your client&apos;s configuration (e.g.{" "}
-            <span className="font-mono text-xs">.cursor/mcp.json</span> or VS
-            Code&apos;s <span className="font-mono text-xs">mcp.json</span>):
+            Add a stdio server to your client&apos;s configuration (e.g.{" "}
+            <span className="font-mono text-xs">.cursor/mcp.json</span>; VS Code&apos;s{" "}
+            <span className="font-mono text-xs">.vscode/mcp.json</span> uses a{" "}
+            <span className="font-mono text-xs">servers</span> key instead):
           </p>
           <CodeBlock>{`{
   "mcpServers": {
-    "rankforge": {
-      "url": "http://localhost:3000/api/mcp"
-    }
+    "rankforge": { "command": "npx", "args": ["-y", "rankforge-cli", "mcp"] }
   }
 }`}</CodeBlock>
+          <p className="mt-3">
+            It needs Node.js 18 or later. The{" "}
+            <a
+              href="https://github.com/Barbudda/rankforge-cli#2-in-your-ai-editor-the-agent"
+              className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
+            >
+              README
+            </a>{" "}
+            has the exact file for each editor.
+          </p>
         </ProseBlock>
 
         <ProseBlock heading="What the agent can do">
           <ul className="mt-2 list-inside list-disc space-y-2">
             <li>
-              <span className="font-mono text-xs">audit_site</span> — full
-              deterministic audit: category scores, every issue with evidence,
+              <span className="font-mono text-xs">audit_site</span>: a full
+              deterministic audit with category scores, every issue with evidence,
               orphan pages, click depth, duplicate-content clusters, semantic
               internal-link suggestions, measured image weights and broken
               links. Works on localhost.
             </li>
             <li>
-              <span className="font-mono text-xs">audit_page</span> — instant
+              <span className="font-mono text-xs">compare_sites</span>: production
+              against your dev server or a preview deployment, page by page. It
+              reports what would drop pages from search (new noindex, pages that
+              start failing, robots.txt blocking Google) and keeps differences
+              that come from the preview environment apart.
+            </li>
+            <li>
+              <span className="font-mono text-xs">audit_page</span>: an instant
               single-page check while you iterate.
             </li>
             <li>
-              <span className="font-mono text-xs">get_fix_template</span> —
+              <span className="font-mono text-xs">geo_audit</span> and{" "}
+              <span className="font-mono text-xs">generate_llms_txt</span>:
+              whether AI search engines can reach, read and cite the site, and an
+              llms.txt built from your pages.
+            </li>
+            <li>
+              <span className="font-mono text-xs">get_fix_template</span>: a
               framework-idiomatic patch (unified diff) for mechanical issues:
               robots, sitemap, viewport, lang, canonical, structured data,
               OpenGraph image.
             </li>
             <li>
-              <span className="font-mono text-xs">seo_docs</span> — grounded
+              <span className="font-mono text-xs">seo_docs</span>: grounded
               answers from the{" "}
-              <Link href="/docs" className="text-electric-bright hover:underline">
+              <Link href="/docs" className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
                 RankForge knowledge base
               </Link>
               , so the assistant explains issues accurately.
             </li>
             <li>
-              <span className="font-mono text-xs">list_rules</span> — the full
-              rule catalog with documentation links.
+              <span className="font-mono text-xs">list_rules</span>: the 54 checks,
+              under the same rule ids the audits return.
             </li>
           </ul>
         </ProseBlock>
 
-        <ProseBlock heading="Local vs hosted">
+        <ProseBlock heading="Runs on your machine">
           <p>
-            Running RankForge locally, the agent audits{" "}
-            <span className="font-mono text-xs">localhost</span> — see issues as
-            you build, before deploying. A <em>hosted</em> instance (e.g. on
-            Vercel) audits <strong>public URLs</strong> instead: it crawls from
-            the server, so it can&apos;t reach your machine&apos;s localhost.
-            Point it at your live or staging site; to audit a dev server, run
-            RankForge on your own machine.
+            The MCP server is the open-source CLI, started by your editor. It runs
+            on your machine, so it audits{" "}
+            <span className="font-mono text-xs">localhost</span> and you see issues
+            as you build, before deploying. It needs no account and no key, and it
+            sends nothing anywhere: the only outside call is the optional Core Web
+            Vitals lookup, which asks Google about the URL when you request it.
           </p>
         </ProseBlock>
 
         <ProseBlock heading="Security model">
           <p>
-            In development the endpoint is open on localhost. A deployed
-            instance is locked by default and refuses to probe private or
-            internal addresses — it validates every resolved IP, including
-            through redirects. To let people connect to a hosted instance, set{" "}
-            <span className="font-mono text-xs">RANKFORGE_MCP_PUBLIC=1</span> to
-            open it, or{" "}
-            <span className="font-mono text-xs">RANKFORGE_MCP_KEY</span> to
-            require a Bearer token. Either way the tools only read rendered
-            pages — the same thing any crawler sees — and nothing touches your
-            repository without a human merging a pull request.
+            The tools only read rendered pages, the same thing any crawler sees.
+            RankForge never writes to your repository: your assistant edits the
+            files, and you review them as you would any change. The crawler
+            identifies itself as RankForgeBot and honours robots.txt unless you
+            pass <span className="font-mono text-xs">ignoreRobots</span> for your
+            own site. The hosted endpoint at{" "}
+            <span className="font-mono text-xs">/api/mcp</span> is closed by
+            default and, when opened, refuses private and internal addresses,
+            checking every resolved IP, redirects included.
           </p>
         </ProseBlock>
       </ProsePage>

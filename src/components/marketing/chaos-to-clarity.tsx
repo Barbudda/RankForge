@@ -48,11 +48,13 @@ export function ChaosToClaritySection() {
 
   // Hold the "before" card fully readable through the first ~half of the
   // scroll, then crossfade it with the "after" card in the back half — so the
-  // red chaos doesn't vanish before the viewer has read it.
+  // red chaos doesn't vanish before the viewer has read it. The "after" card
+  // never drops below 0.7: its small green text stays above 4.5:1 contrast
+  // wherever the visitor stops scrolling.
   const chaosOpacity = useTransform(p, [0.45, 0.9], [1, 0.18]);
   const chaosRotate = useTransform(p, [0, 1], [-2.5, 0]);
   const chaosX = useTransform(p, [0, 1], [0, -18]);
-  const clarityOpacity = useTransform(p, [0.45, 0.95], [0.18, 1]);
+  const clarityOpacity = useTransform(p, [0.45, 0.95], [0.7, 1]);
   const clarityY = useTransform(p, [0.45, 1], [28, 0]);
 
   // Drive the score off a MotionValue so the whole section doesn't re-render
@@ -69,8 +71,8 @@ export function ChaosToClaritySection() {
           </h2>
           <p className="mt-4 text-fg-muted">
             Scroll, and watch a messy repo resolve into clean, indexable
-            structure — every warning turned into a check, every fix backed by a
-            diff.
+            structure. Every warning turns into a check, and every fix is backed
+            by a diff.
           </p>
         </div>
 
@@ -85,13 +87,13 @@ export function ChaosToClaritySection() {
             className="rounded-xl border border-danger/25 bg-danger/[0.04] p-5"
           >
             <p className="mb-4 text-xs font-medium uppercase tracking-wider text-danger/80">
-              Before — raw repo
+              Before: raw repo
             </p>
             <ul className="space-y-2">
               {BEFORE.map((t) => (
                 <li
                   key={t}
-                  className="flex items-center gap-2.5 rounded-md border border-danger/15 bg-danger/[0.05] px-3 py-2 font-mono text-xs text-danger/90"
+                  className="flex items-center gap-2.5 lg-chip rounded-full border border-danger/15 bg-danger/[0.05] px-3 py-2 font-mono text-xs text-danger/90"
                 >
                   <AlertTriangle className="size-3.5 shrink-0" />
                   {t}
@@ -117,13 +119,13 @@ export function ChaosToClaritySection() {
             className="glow-signal rounded-xl border border-signal/30 bg-signal/[0.04] p-5"
           >
             <p className="mb-4 text-xs font-medium uppercase tracking-wider text-signal/90">
-              After — RankForge PRs merged
+              After: fixes merged
             </p>
             <ul className="space-y-2">
               {AFTER.map((t) => (
                 <li
                   key={t}
-                  className="flex items-center gap-2.5 rounded-md border border-signal/20 bg-signal/[0.06] px-3 py-2 font-mono text-xs text-signal"
+                  className="flex items-center gap-2.5 lg-chip rounded-full border border-signal/20 bg-signal/[0.06] px-3 py-2 font-mono text-xs text-signal"
                 >
                   <Check className="size-3.5 shrink-0" />
                   {t}

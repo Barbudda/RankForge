@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { GithubIcon } from "@/components/brand/github-icon";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
+import { useLiquidRefraction } from "@/components/ui/liquid-refraction";
 
 const LINKS = [
   { href: "/audit", label: "Free audit" },
@@ -19,6 +19,8 @@ const LINKS = [
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const bar = useRef<HTMLElement>(null);
+  useLiquidRefraction(bar, { bezel: 14, thickness: 18, blur: 10 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -28,49 +30,48 @@ export function SiteNav() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "border-b border-border bg-bg/80 backdrop-blur-xl"
-          : "border-b border-transparent",
-      )}
-    >
-      <nav className="container-rf flex h-16 items-center justify-between">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3">
+      {/* Floating liquid-glass bar. A touch denser once content scrolls under it. */}
+      <nav
+        ref={bar}
+        className={cn(
+          "lg mx-auto flex h-14 max-w-[76rem] items-center justify-between rounded-full pr-2 pl-5 transition-[background-color] duration-300",
+          scrolled && "bg-[rgb(18_15_13/0.62)]",
+        )}
+      >
         <Link href="/" aria-label="RankForge home">
           <Logo />
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 lg:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-md px-3 py-2 text-sm text-fg-muted transition-colors hover:text-fg"
+              className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-fg-muted transition-colors hover:bg-white/[0.07] hover:text-fg hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.12)]"
             >
               {l.label}
             </Link>
           ))}
         </div>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/login"
-            className="rounded-md px-3 py-2 text-sm text-fg-muted transition-colors hover:text-fg"
+            className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-fg-muted transition-colors hover:bg-white/[0.07] hover:text-fg"
           >
             Sign in
           </Link>
           <Link
-            href="/dashboard"
-            className="inline-flex h-9 items-center gap-2 rounded-md bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+            href="/signup"
+            className="lg lg-molten inline-flex h-9 items-center gap-2 whitespace-nowrap px-4 text-sm font-medium rounded-full transition-[filter] hover:brightness-110"
           >
-            <GithubIcon className="size-4" />
-            Connect GitHub
+            Start free
           </Link>
         </div>
 
         <button
-          className="grid size-9 place-items-center rounded-md border border-border text-fg md:hidden"
+          className="grid size-9 place-items-center rounded-full text-fg hover:bg-white/[0.07] lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -80,8 +81,8 @@ export function SiteNav() {
       </nav>
 
       {open && (
-        <div className="border-t border-border bg-bg/95 backdrop-blur-xl md:hidden">
-          <div className="container-rf flex flex-col py-3">
+        <div className="lg mx-auto mt-2 max-w-[76rem] rounded-3xl lg:hidden">
+          <div className="flex flex-col px-4 py-3">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
@@ -100,12 +101,11 @@ export function SiteNav() {
               Sign in
             </Link>
             <Link
-              href="/dashboard"
+              href="/signup"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-electric px-4 text-sm font-medium text-white"
+              className="lg lg-molten mt-2 inline-flex h-10 items-center justify-center gap-2 px-4 text-sm font-medium rounded-full transition-[filter] hover:brightness-110"
             >
-              <GithubIcon className="size-4" />
-              Connect GitHub
+              Start free
             </Link>
           </div>
         </div>

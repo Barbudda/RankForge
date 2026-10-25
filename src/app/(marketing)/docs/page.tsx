@@ -7,9 +7,9 @@ import { breadcrumbSchema } from "@/lib/seo/schema";
 import { DOC_RULES, ruleSlug } from "@/lib/seo/content";
 
 export const metadata: Metadata = {
-  title: "Docs — what RankForge detects and fixes",
+  title: "Docs: what RankForge detects and fixes",
   description:
-    "Every technical SEO issue RankForge detects, what it means, and the pull request it opens to fix it.",
+    "Every technical SEO issue RankForge detects, what it means, and how to fix it in your code.",
   alternates: { canonical: "/docs" },
 };
 
@@ -41,15 +41,16 @@ export default function DocsPage() {
       />
       <ProsePage
         title="What RankForge detects and fixes"
-        intro="RankForge crawls your rendered site, checks it against this rule catalog, and opens a small, reviewable pull request for each fix. These pages double as plain-language guides to each issue."
+        intro="RankForge crawls your rendered site, checks it against this rule catalog, and gives each finding its evidence and, for mechanical issues, a ready patch. These pages double as plain-language guides to each issue."
       >
         <ProseBlock heading="Getting started">
           <p>
-            Connect a GitHub repository, add the production URL, and run an
-            audit. Issues are scored by impact, effort and risk; each one links
-            to the files that cause it and the patch that fixes it. Nothing is
-            ever committed to your main branch. You can also{" "}
-            <Link href="/docs/agent" className="text-electric-bright hover:underline">
+            Run <span className="font-mono text-xs">npx rankforge-cli audit &lt;url&gt;</span>{" "}
+            or the free audit, then add the pull-request check and monitoring.
+            Issues are scored by impact, effort and risk; each one lists the
+            affected URLs and the files most likely behind it. RankForge never
+            writes to your repository. You can also{" "}
+            <Link href="/docs/agent" className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
               use the RankForge agent directly in your editor
             </Link>{" "}
             via MCP.
@@ -65,7 +66,7 @@ export default function DocsPage() {
                 <li key={r.id}>
                   <Link
                     href={`/docs/issues/${ruleSlug(r.id)}`}
-                    className="group flex items-center justify-between gap-4 rounded-lg border border-border bg-surface/50 px-4 py-3 transition-colors hover:border-electric/40"
+                    className="group flex items-center justify-between gap-4 lg lg-thin rounded-xl px-4 py-3 transition-colors hover:border-molten/40"
                   >
                     <span>
                       <span className="text-sm font-medium text-fg">
@@ -75,7 +76,7 @@ export default function DocsPage() {
                         {r.description}
                       </span>
                     </span>
-                    <ArrowRight className="size-4 shrink-0 text-fg-subtle transition-colors group-hover:text-electric-bright" />
+                    <ArrowRight className="size-4 shrink-0 text-fg-subtle transition-colors group-hover:text-molten-bright" />
                   </Link>
                 </li>
               ))}

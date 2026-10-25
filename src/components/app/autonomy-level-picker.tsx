@@ -50,7 +50,7 @@ export function AutonomyLevelPicker({
               className={cn(
                 "group relative flex w-full items-start gap-3 rounded-xl border p-4 text-left transition-colors",
                 active
-                  ? "border-electric/50 bg-electric/[0.06]"
+                  ? "border-molten/50 bg-molten/[0.06]"
                   : "border-transparent hover:bg-surface/50",
               )}
             >
@@ -83,14 +83,14 @@ export function AutonomyLevelPicker({
                       borderColor: `color-mix(in oklab, ${level.writes ? accent : "var(--color-border)"} 45%, transparent)`,
                     }}
                   >
-                    {level.writes ? "Writes to GitHub" : (
+                    {level.writes ? "Prepares PRs" : (
                       <>
                         <Lock className="size-2.5" /> Read-only
                       </>
                     )}
                   </span>
                   {active && (
-                    <span className="ml-auto inline-flex items-center gap-1 text-xs font-medium text-electric-bright">
+                    <span className="ml-auto inline-flex items-center gap-1 text-xs font-medium text-molten-bright">
                       <Check className="size-3.5" />
                       Selected
                     </span>

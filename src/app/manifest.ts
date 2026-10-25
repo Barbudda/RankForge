@@ -6,14 +6,14 @@ import type { MetadataRoute } from "next";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RankForge — Automated technical SEO fixes, shipped as pull requests",
+    name: "RankForge: automated technical SEO checks",
     short_name: "RankForge",
     description:
-      "A technical-SEO agent for GitHub repos that audits your rendered site and opens small, reviewable pull requests that fix it.",
+      "Automated technical SEO for developers. RankForge fails the pull request that would drop pages from Google and watches production after the merge.",
     start_url: "/",
     display: "standalone",
-    background_color: "#05060b",
-    theme_color: "#05060b",
+    background_color: "#0a0908",
+    theme_color: "#0a0908",
     icons: [
       { src: "/icon.svg", type: "image/svg+xml", sizes: "any", purpose: "any" },
     ],

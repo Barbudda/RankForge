@@ -44,8 +44,8 @@ export function SiteFooter() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm text-fg-muted">
-              A technical-SEO automation agent for GitHub repos. It audits your
-              site and opens small, reviewable pull requests.
+              Technical SEO that survives your deploys. RankForge checks your
+              site in your editor, on every pull request, and in production.
             </p>
           </div>
           {COLUMNS.map((col) => (

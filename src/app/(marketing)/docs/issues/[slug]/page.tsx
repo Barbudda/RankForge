@@ -20,8 +20,8 @@ export async function generateMetadata({
   const rule = getRuleBySlug(slug);
   if (!rule) return {};
   return {
-    title: `${rule.title} — how to fix it`,
-    description: `${rule.description} What it means for technical SEO and the pull request RankForge opens to fix it.`,
+    title: `${rule.title}: how to fix it`,
+    description: `${rule.description} What it means for technical SEO, how RankForge detects it and how to fix it.`,
     alternates: { canonical: `/docs/issues/${slug}` },
   };
 }
@@ -56,13 +56,13 @@ export default async function IssueDocPage({
         intro={rule.description}
       >
         <div className="flex flex-wrap gap-2 text-xs">
-          <span className="rounded-full border border-border bg-surface/60 px-3 py-1 text-fg-muted">
+          <span className="lg lg-thin rounded-full px-3 py-1 text-fg-muted">
             {IMPACT_LABEL[rule.defaultImpact] ?? rule.defaultImpact}
           </span>
-          <span className="rounded-full border border-border bg-surface/60 px-3 py-1 text-fg-muted">
+          <span className="lg lg-thin rounded-full px-3 py-1 text-fg-muted">
             Effort: {rule.defaultEffort}
           </span>
-          <span className="rounded-full border border-border bg-surface/60 px-3 py-1 text-fg-muted">
+          <span className="lg lg-thin rounded-full px-3 py-1 text-fg-muted">
             Risk: {rule.defaultRisk}
           </span>
           {rule.canAutoFix && (
@@ -76,7 +76,7 @@ export default async function IssueDocPage({
           <p>
             Search engines can only rank what they can crawl, render and
             understand. {rule.description} Left unfixed, this class of issue
-            quietly limits how well your pages are indexed — it is exactly the
+            quietly limits how well your pages are indexed. It is exactly the
             kind of mechanical work that sits in a backlog because finding the
             responsible file takes longer than the fix itself.
           </p>
@@ -84,21 +84,21 @@ export default async function IssueDocPage({
 
         <ProseBlock heading="How RankForge fixes it">
           <p>
-            An audit detects this issue on your rendered pages, traces it to
-            the template or source file that produces it
+            An audit detects this issue on your rendered pages and points it
+            at the template or source file most likely behind it
             {rule.frameworks?.length
               ? ` (with tailored fixes for ${rule.frameworks.join(", ")})`
               : ""}
             , and{" "}
             {rule.canAutoFix
-              ? "opens a small, reviewable pull request with the patch, its expected impact and a validation checklist. You review and merge — nothing is committed to your main branch."
+              ? "prepares a patch with what to adapt and how to verify it. You or your AI editor apply it in your own pull request, and the pull-request check confirms the issue cleared."
               : "reports it with the affected pages and concrete guidance, since this class of issue needs a human decision rather than an automatic patch."}
           </p>
         </ProseBlock>
 
         <Link
           href="/docs"
-          className="inline-flex items-center gap-2 text-sm text-electric-bright hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
         >
           <ArrowLeft className="size-4" />
           All detected issues

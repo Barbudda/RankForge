@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 // summary_large_image, twitter:image too. Covers / and /pricing.
 // NOTE: satori requires every element with >1 child to set display:flex, and
 // only renders glyphs present in its bundled font (latin) — keep text ASCII.
-export const alt = "RankForge — Technical SEO PRs for modern repos";
+export const alt = "RankForge: technical SEO that survives your deploys";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,10 +22,10 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           background:
-            "radial-gradient(1200px 600px at 15% -10%, #10204a 0%, #05060b 55%)",
+            "radial-gradient(900px 520px at 88% 18%, #3a1606 0%, #0a0908 60%)",
           padding: "72px 80px",
           fontFamily: "sans-serif",
-          color: "#f5f7ff",
+          color: "#f3efe9",
         }}
       >
         {/* Wordmark */}
@@ -38,8 +38,8 @@ export default function OpengraphImage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "linear-gradient(135deg, #4f7bff 0%, #22d3ee 100%)",
-              color: "#05060b",
+              background: "#ff7a2f",
+              color: "#170b04",
               fontSize: 38,
               fontWeight: 800,
             }}
@@ -61,9 +61,9 @@ export default function OpengraphImage() {
               maxWidth: 960,
             }}
           >
-            <div style={{ display: "flex" }}>Technical SEO problems become</div>
+            <div style={{ display: "flex" }}>Ship fast.</div>
             <div style={{ display: "flex", color: "#34e0a1" }}>
-              pull requests that fix them.
+              Stay indexed.
             </div>
           </div>
           <div
@@ -71,12 +71,12 @@ export default function OpengraphImage() {
               display: "flex",
               marginTop: 26,
               fontSize: 29,
-              color: "#a7aec4",
+              color: "#b4aca2",
               maxWidth: 920,
             }}
           >
-            Audits your rendered site, maps each issue to a file, and opens
-            small, reviewable PRs. Built for Next.js, Nuxt, Astro and more.
+            Fails the pull request that would drop pages from Google, watches
+            production, and hands each fix to your AI editor.
           </div>
         </div>
 
@@ -88,8 +88,8 @@ export default function OpengraphImage() {
               style={{
                 display: "flex",
                 fontSize: 24,
-                color: "#6b7390",
-                border: "1px solid #1d2334",
+                color: "#8f877e",
+                border: "1px solid #2a2521",
                 borderRadius: 999,
                 padding: "8px 18px",
               }}
