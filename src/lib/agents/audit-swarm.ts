@@ -9,7 +9,7 @@ import type {
 import type { AuditResult, CrawledPage } from "@/lib/audit/types";
 import { CATEGORY_META, CATEGORY_WEIGHTS } from "@/lib/seo/constants";
 import { computeOverallScore } from "@/lib/scoring";
-import { crawl, probeSiteFiles } from "./crawl";
+import { scanSite } from "./crawl";
 import {
   runDeterministicAudit,
   type EngineIssue,
@@ -153,10 +153,12 @@ export async function runAuditSwarm(
   // Budget the crawl to stay comfortably within a serverless function limit
   // (the audit pages set maxDuration=60). Fewer pages + a ~45s wall-clock
   // deadline keeps a real audit well under the timeout on any Vercel plan.
-  const [pages, siteFiles] = await Promise.all([
-    crawl(repo.productionUrl, { maxPages: opts?.maxPages ?? 8, deadlineMs: 45_000 }),
-    probeSiteFiles(repo.productionUrl),
-  ]);
+  const { pages, siteFiles } = await scanSite(repo.productionUrl, {
+    maxPages: opts?.maxPages ?? 12,
+    deadlineMs: 40_000,
+    concurrency: 4,
+    light: true,
+  });
   opts?.onProgress?.(`crawl:${pages.length}-pages`);
 
   // Measure real resources (images + links) — bounded, best-effort. If it

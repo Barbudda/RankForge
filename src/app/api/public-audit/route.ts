@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { CategoryScore, Repository, SeoCategory } from "@/types";
-import { crawl, probeSiteFiles } from "@/lib/agents/crawl";
+import { scanSite } from "@/lib/agents/crawl";
 import { runDeterministicAudit } from "@/lib/audit/engine";
 import { probeResources } from "@/lib/audit/resource-probe";
 import { FIXABLE_RULE_IDS } from "@/lib/audit/deterministic-fix";
@@ -99,10 +99,14 @@ export async function POST(req: Request) {
       score: 0,
     } as unknown as Repository;
 
-    const [pages, siteFiles] = await Promise.all([
-      crawl(url, { maxPages: MAX_PAGES, deadlineMs: CRAWL_DEADLINE_MS }),
-      probeSiteFiles(url),
-    ]);
+    // robots.txt is honoured here: this endpoint audits other people's sites.
+    const { pages, siteFiles } = await scanSite(url, {
+      maxPages: MAX_PAGES,
+      deadlineMs: CRAWL_DEADLINE_MS,
+      light: true,
+      concurrency: 3,
+      sitemapSeeds: 0,
+    });
     const resources = await probeResources(pages, url, {
       maxImages: 12,
       maxLinks: 16,
