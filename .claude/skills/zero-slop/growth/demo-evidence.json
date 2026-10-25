@@ -1,0 +1,28 @@
+{
+  "kind": "Restored dark-shell README animation",
+  "sourceCommit": "5b9ef28f5807e5d8cbf577f1a514920e3970f116",
+  "masterIntroducedCommit": "91ee2fc15e18ceea484daf2beb3e72ce6c234a2d",
+  "gifGitBlob": "dd642cbe7b73d06ceff3e2511a553bcfd244e369",
+  "terminalRenderer": "HTML/CSS terminal reconstruction",
+  "audio": "none",
+  "durationMs": 15150,
+  "mcpURL": "https://mcp.zero-slop.ai/mcp",
+  "source": "growth/shell-demo.before.md",
+  "edit": "growth/shell-demo.after.md",
+  "before": "We're thrilled to announce that our team has leveraged cutting-edge AI to deliver a seamless onboarding experience. It's not just a redesign, it's a fundamental reimagining of how users engage with our platform. In today's fast-paced landscape, the ability to iterate quickly is crucial. By harnessing the power of machine learning, we've been able to reduce setup time by 40%. Here's the thing nobody tells you: onboarding is where most products lose their users. We're excited to continue this journey with you.",
+  "after": "We used machine learning to reduce onboarding setup time by 40%.",
+  "beforeScore": 100,
+  "afterScore": 9.5,
+  "beforeSha256": "bb276a80c09c16eebd4f4ecb32842413828a52ef16272b4a554b88b993cbff8a",
+  "afterSha256": "4fa6dbbb40d2d7dfa3349be679a6a6aff393772d5f11995e81ecea83c80e2472",
+  "flags": [
+    "In today's fast-paced",
+    "We're thrilled to",
+    "It's not just a redesign, it's",
+    "cutting-edge",
+    "leveraged"
+  ],
+  "flaggedPhraseCount": 11,
+  "protectedDetail": "40%",
+  "note": "Exact GIF shown in the README on September 4, 2026. The 83-word sample and displayed scores are historical; today's shorter README example is separate. The third flag is displayed as the abstract pattern \"It's not X, it's Y\". The shell-style display includes /zero-slop as an assistant request. The MCP address appears in the README and player, not in the restored animation. MP4 and lossless WebP are derived from this GIF without changing its content or timing."
+}

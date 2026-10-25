@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Zero Slop | The skill in your terminal</title>
+  <style>
+    :root{color-scheme:light}*{box-sizing:border-box}
+    body{margin:0;padding:32px 20px;background:#FBFAF7;color:#141412;font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1100px;margin:auto}
+    .brand{display:inline-block}.brand img{display:block;width:190px;height:auto}
+    video{display:block;width:100%;height:auto;aspect-ratio:45/29;background:#1b1a18}
+    h1{font-size:26px;font-weight:600;letter-spacing:-.6px}a{color:#17634F}
+    p{max-width:75ch}summary{cursor:pointer}code{font-size:.94em;overflow-wrap:anywhere}
+    .links{display:flex;gap:24px;flex-wrap:wrap}
+    @media(prefers-reduced-motion:reduce){video{scroll-behavior:auto}}
+  </style>
+</head>
+<body><main>
+  <a class="brand" href="https://zero-slop.ai/brand/"><img src="logo/zero-slop-logo-primary.svg" alt="Zero Slop"></a>
+  <h1>Zero Slop: the skill in your terminal</h1>
+  <video controls playsinline preload="metadata" poster="zero-slop-demo-poster.png">
+    <source src="zero-slop-demo.mp4" type="video/mp4">
+    Your browser cannot play this video. <a href="zero-slop-demo.mp4">Download the MP4</a>.
+  </video>
+  <p>The original 15-second dark-shell demo, restored from the September 4 README. No audio track.</p>
+  <p>This reconstruction shows the original, longer launch-post sample.
+    Your AI assistant edits; Zero Slop’s local tools score the wording and compare details against the source.</p>
+  <div class="links">
+    <a href="https://zero-slop.ai/try/">Try the free editor</a>
+    <a href="https://zero-slop.ai/#mcp">MCP setup guide</a>
+    <a href="https://github.com/manavmishra/ZeroSlop">Install the skill</a>
+  </div>
+  <p>Hosted MCP endpoint: <code>https://mcp.zero-slop.ai/mcp</code></p>
+  <details><summary>Read the demo transcript</summary>
+    <p>Install in your shell: <code>npx zero-slop install</code>.</p>
+    <p>Score the draft: <code>zero-slop score post.md</code>.</p>
+    <p>The original sample scores 100.0/100, with 11 flagged phrases across 83 scored words.
+      The shell lists stock openings, promotional language, and a formulaic contrast.</p>
+    <p>Ask your AI assistant to edit the file with <code>/zero-slop post.md</code>.
+      Enter this request in the assistant session.</p>
+    <p>The demo displays <code>fact gate: 40% held</code>, then the edited score.</p>
+    <p>The writing score is 9.5/100, with zero flagged phrases.
+      The source’s 40% figure is retained. The checks do not establish whether that source claim is true.</p>
+    <p>The saved rewrite is: “We used machine learning to reduce onboarding setup time by 40%.”</p>
+    <p>To use the optional hosted MCP, add <code>https://mcp.zero-slop.ai/mcp</code> to your MCP client.</p>
+  </details>
+</main></body></html>

@@ -1,0 +1,151 @@
+{
+ "result_kind": "interleaved_local_version_comparison",
+ "measured_at": "2026-09-08T23:27:03+00:00",
+ "environment": {
+  "platform": "Darwin",
+  "architecture": "arm64",
+  "python": "3.9.6"
+ },
+ "baseline": {
+  "version": "2.7.7",
+  "commit": "51d1d3bc055d59782a5d10c330bbaa63106e7d78",
+  "slopscore_sha256": "e96c607189a1763d2ce26c2380edb777c26caadb7f264e6993f7d78ff2bfe1ce"
+ },
+ "candidate": {
+  "version": "2.11.5",
+  "slopscore_sha256": "e2f139f932e3dfec5dbd266f252bfd46abfb09eb4c04f5f619cdc00a2cdc5367"
+ },
+ "workload": {
+  "documents_per_run": 600,
+  "runs_per_version": 12,
+  "warm_cache": true,
+  "alternating_order": true,
+  "tracked_documents": 114
+ },
+ "timing_seconds": {
+  "baseline": [
+   0.9633,
+   0.9658,
+   0.9753,
+   0.9671,
+   0.969,
+   0.965,
+   0.9708,
+   0.9641,
+   0.9677,
+   0.9641,
+   0.966,
+   0.965
+  ],
+  "candidate": [
+   0.9712,
+   0.9741,
+   1.0224,
+   0.9721,
+   0.9682,
+   0.9728,
+   0.9719,
+   0.9681,
+   0.9714,
+   0.9752,
+   0.972,
+   0.971
+  ],
+  "median_baseline": 0.9659,
+  "median_candidate": 0.9719,
+  "documents_per_second_baseline": 621.2,
+  "documents_per_second_candidate": 617.3,
+  "median_speed_change_pct": -0.62
+ },
+ "frozen_regression": {
+  "score_changes": 0,
+  "changed_document_ids": [],
+  "known_human_below_gate_baseline": 18,
+  "known_human_below_gate_candidate": 18,
+  "known_human_documents": 18,
+  "search_slop_caught_baseline": 18,
+  "search_slop_caught_candidate": 18,
+  "search_documents": 18,
+  "quality_baseline": {
+   "items": 38,
+   "true_positive": 27,
+   "true_negative": 5,
+   "false_positive": 4,
+   "false_negative": 2,
+   "accuracy": 0.8421
+  },
+  "quality_candidate": {
+   "items": 38,
+   "true_positive": 27,
+   "true_negative": 5,
+   "false_positive": 4,
+   "false_negative": 2,
+   "accuracy": 0.8421
+  }
+ },
+ "new_adversarial_detection": {
+  "zero_width_known_phrase": {
+   "baseline": 99.3,
+   "candidate": 99.3
+  },
+  "mixed_script_known_phrase": {
+   "baseline": 99.9,
+   "candidate": 99.9
+  },
+  "chat_roleplay_action": {
+   "baseline": 93.6,
+   "candidate": 93.6
+  },
+  "expanded_tool_tracker": {
+   "baseline": 92.7,
+   "candidate": 92.7
+  },
+  "long_low_word_variety": {
+   "baseline": 22.9,
+   "candidate": 22.9
+  },
+  "reasoning_artifact": {
+   "baseline": 65.1,
+   "candidate": 65.1
+  },
+  "novelty_inflation": {
+   "baseline": 41.7,
+   "candidate": 41.7
+  },
+  "emotional_flatline": {
+   "baseline": 30.7,
+   "candidate": 30.7
+  },
+  "acknowledgment_loop": {
+   "baseline": 30.7,
+   "candidate": 30.7
+  }
+ },
+ "new_structured_fidelity": {
+  "fenced_code": {
+   "baseline_blocks": true,
+   "candidate_blocks": true
+  },
+  "frontmatter": {
+   "baseline_blocks": true,
+   "candidate_blocks": true
+  },
+  "inline_and_path": {
+   "baseline_blocks": true,
+   "candidate_blocks": true
+  },
+  "capitalized_magnitude": {
+   "baseline_blocks": false,
+   "candidate_blocks": true
+  },
+  "bare_relative_path": {
+   "baseline_blocks": false,
+   "candidate_blocks": true
+  },
+  "heading_level": {
+   "baseline_blocks": true,
+   "candidate_blocks": true
+  }
+ },
+ "limits": "Local scorer comparison on one machine. It excludes AI editing time and is not a service-level guarantee. The frozen quality labels are consensus calls from two LLM editorial raters, not human field accuracy."
+}

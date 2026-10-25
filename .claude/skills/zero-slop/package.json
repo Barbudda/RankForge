@@ -1,0 +1,72 @@
+{
+  "name": "zero-slop",
+  "version": "2.11.5",
+  "description": "An editing skill, offline writing checks, and a CLI for the hosted Zero Slop MCP pipeline. Find stock AI phrasing, rewrite, and check source details.",
+  "bin": {
+    "zero-slop": "bin/zero-slop.mjs"
+  },
+  "keywords": [
+    "agent-skill",
+    "agent-skills",
+    "skills",
+    "claude-code",
+    "claude-skill",
+    "codex",
+    "cursor",
+    "ai-slop",
+    "de-slop",
+    "humanizer",
+    "humanize-ai-text",
+    "prose-linter",
+    "ai-writing",
+    "writing-tools",
+    "editing",
+    "cli",
+    "mcp",
+    "rest-api",
+    "prose"
+  ],
+  "homepage": "https://zero-slop.ai",
+  "bugs": "https://github.com/manavmishra/ZeroSlop/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manavmishra/ZeroSlop.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Manav Mishra",
+    "url": "https://zero-slop.ai/about/"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "references/",
+    "scripts/",
+    "data/",
+    "README.md",
+    "docs/cli.md",
+    "docs/rest-api.md",
+    "SECURITY.md",
+    "LICENSE",
+    "plugin.json",
+    "mcp.json",
+    ".mcp.json",
+    "gemini-extension.json",
+    "!scripts/build_bundle.py",
+    "!scripts/build_onepager_pdf.py",
+    "!scripts/build_plugin.py",
+    "!scripts/build_skill_zip.py",
+    "!scripts/check_svg.py",
+    "!scripts/check_distribution_manifests.py",
+    "!scripts/check_release_version.py",
+    "!scripts/check_release_surfaces.py",
+    "!scripts/contextual.py",
+    "!scripts/contextual-signals.md",
+    "!references/contextual-signals.md",
+    "!scripts/make-readme-gif.mjs",
+    "!scripts/growth-snapshot.mjs",
+    "!data/voices/",
+    "!**/__pycache__/"
+  ],
+  "private": false
+}

@@ -1,0 +1,508 @@
+{
+ "raid_plus_surface": [
+  [
+   "DeepSeek V3",
+   14.5
+  ],
+  [
+   "Gemini 3.1 Pro",
+   17.0
+  ],
+  [
+   "Gemma 3 27B",
+   21.6
+  ],
+  [
+   "Llama 3.3 70B",
+   25.5
+  ]
+ ],
+ "detector_panel": [
+  [
+   "original drafts",
+   76.9
+  ],
+  [
+   "isatimur/de-slop",
+   27.3
+  ],
+  [
+   "stacked pipeline",
+   23.6
+  ],
+  [
+   "blader/humanizer",
+   20.7
+  ],
+  [
+   "petergyang/no-ai-slop",
+   21.3
+  ],
+  [
+   "hardikpandya/stop-slop",
+   16.9
+  ],
+  [
+   "Zero Slop",
+   10.8
+  ]
+ ],
+ "search_corpus": [
+  [
+   "blog",
+   99.8
+  ],
+  [
+   "email",
+   79.7
+  ],
+  [
+   "linkedin",
+   61.7
+  ],
+  [
+   "newsletter",
+   46.5
+  ],
+  [
+   "research",
+   96.8
+  ],
+  [
+   "x",
+   73.3
+  ]
+ ],
+ "search_rewrite_scores": [
+  [
+   "Original drafts",
+   76.3
+  ],
+  [
+   "Zero Slop",
+   12.8
+  ],
+  [
+   "avoid-ai-writing",
+   23.3
+  ],
+  [
+   "no-ai-slop",
+   28.4
+  ],
+  [
+   "humanizer",
+   35.4
+  ]
+ ],
+ "search_rewrite_passes": [
+  [
+   "Original drafts",
+   0.0
+  ],
+  [
+   "Zero Slop",
+   100.0
+  ],
+  [
+   "avoid-ai-writing",
+   83.3
+  ],
+  [
+   "no-ai-slop",
+   66.7
+  ],
+  [
+   "humanizer",
+   50.0
+  ]
+ ],
+ "external_checker_clean": [
+  [
+   "Original drafts",
+   16.7
+  ],
+  [
+   "Zero Slop",
+   88.2
+  ],
+  [
+   "no-ai-slop",
+   72.2
+  ],
+  [
+   "humanizer",
+   72.2
+  ],
+  [
+   "de-slop",
+   38.9
+  ],
+  [
+   "stop-slop",
+   76.5
+  ]
+ ],
+ "external_model_context": [
+  [
+   "mistral-large",
+   40.6
+  ],
+  [
+   "claude-fable-5",
+   35.6
+  ],
+  [
+   "gpt-5.6-terra",
+   32.8
+  ],
+  [
+   "claude-opus-4-8",
+   31.8
+  ],
+  [
+   "gpt-5.6-sol",
+   31.7
+  ],
+  [
+   "gpt-5.6-luna",
+   31.7
+  ],
+  [
+   "glm-5.2",
+   31.2
+  ],
+  [
+   "claude-sonnet-5",
+   30.5
+  ],
+  [
+   "qwen3.7-max",
+   28.7
+  ],
+  [
+   "gemini-3.5-flash",
+   27.8
+  ],
+  [
+   "gpt-5.4-mini",
+   26.8
+  ],
+  [
+   "claude-haiku-4-5",
+   24.9
+  ],
+  [
+   "gemini-3.1-pro-preview",
+   24.3
+  ],
+  [
+   "grok-4.5",
+   24.1
+  ],
+  [
+   "deepseek-v4-pro",
+   23.8
+  ],
+  [
+   "minimax-m3",
+   23.1
+  ],
+  [
+   "muse-spark-1.1",
+   23.1
+  ],
+  [
+   "kimi-k2p6",
+   21.1
+  ]
+ ],
+ "beemo_surface": [
+  [
+   "Raw model output",
+   30.2
+  ],
+  [
+   "Expert human edit",
+   25.3
+  ],
+  [
+   "Independent human answer",
+   20.0
+  ]
+ ],
+ "blind_quality": [
+  [
+   "Original drafts",
+   4.75
+  ],
+  [
+   "de-slop",
+   4.08
+  ],
+  [
+   "stop-slop",
+   3.21
+  ],
+  [
+   "no-ai-slop",
+   3.12
+  ],
+  [
+   "humanizer",
+   2.88
+  ],
+  [
+   "Zero Slop",
+   2.38
+  ]
+ ],
+ "contextual_ablation": [
+  [
+   "v2.11.5 local score",
+   93.18
+  ],
+  [
+   "contextual research review",
+   95.45
+  ]
+ ],
+ "incumbent_hidden_preferences": [
+  [
+   "Zero Slop v2.6.0",
+   13
+  ],
+  [
+   "avoid-ai-writing",
+   3
+  ],
+  [
+   "Tie",
+   0
+  ],
+  [
+   "Unresolved",
+   2
+  ]
+ ],
+ "antithesis_accuracy": [
+  [
+   "recall, 2.8.0",
+   40.0
+  ],
+  [
+   "recall, now",
+   91.2
+  ],
+  [
+   "precision, 2.8.0",
+   80.0
+  ],
+  [
+   "precision, now",
+   100.0
+  ]
+ ],
+ "capability_matrix": {
+  "audited_on": "2026-08-30",
+  "products": [
+   [
+    "zero_slop",
+    "Zero Slop",
+    "37f838d3689ac43845cfc21d1f3edcf6da6959b1"
+   ],
+   [
+    "blader",
+    "blader/humanizer",
+    "e2e92e7b4b8229253ed5c8e81dc65463fdeddda5"
+   ],
+   [
+    "no_ai_slop",
+    "petergyang/no-ai-slop",
+    "d30eddb9e04562234f2070b5ee63ca4649d9a05e"
+   ],
+   [
+    "unslop_text",
+    "JCarterJohnson/unslop-text",
+    "f7c4aefc2c797a66e55b49354a93917ab60d33ac"
+   ],
+   [
+    "avoid_ai_writing",
+    "avoid-ai-writing",
+    "40328bd292bc682d46010a6f9ac2cdbf4fb4ceca"
+   ],
+   [
+    "stop_slop",
+    "hardikpandya/stop-slop",
+    "8da1f030185bdfe8471220585162991eaeb970e9"
+   ],
+   [
+    "de_slop",
+    "isatimur/de-slop",
+    "4349a8af4116d6f02b38d62f4b19e66108c4aada"
+   ]
+  ],
+  "rows": [
+   [
+    "Findings report without rewriting",
+    "native",
+    "not_documented",
+    "guided",
+    "native",
+    "native",
+    "guided",
+    "native"
+   ],
+   [
+    "Traceable numeric writing score",
+    "native",
+    "not_documented",
+    "not_documented",
+    "native",
+    "native",
+    "guided",
+    "native"
+   ],
+   [
+    "Machine-readable batch and CI gate",
+    "native",
+    "not_documented",
+    "not_documented",
+    "native",
+    "not_documented",
+    "not_documented",
+    "native"
+   ],
+   [
+    "Statistical rhythm and format signals",
+    "native",
+    "guided",
+    "guided",
+    "guided",
+    "native",
+    "guided",
+    "not_documented"
+   ],
+   [
+    "Scripted fact and claim check",
+    "native",
+    "guided",
+    "guided",
+    "not_documented",
+    "native",
+    "not_documented",
+    "guided"
+   ],
+   [
+    "Chooses among several safe rewrites",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Separate copy desk and read-aloud gates",
+    "native",
+    "guided",
+    "guided",
+    "not_documented",
+    "guided",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Separate post-verification fresh-eyes gate",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Cross-draft portfolio probe",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Private learning with safety checks",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Recurring rewrite-fix memory",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Old private rules fade without support",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "External voice sample or profile",
+    "native",
+    "guided",
+    "not_documented",
+    "guided",
+    "guided",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Public tests of finished rewrites",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "native",
+    "not_documented",
+    "native"
+   ],
+   [
+    "Obfuscation-resistant phrase matching",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "native",
+    "not_documented",
+    "not_documented"
+   ],
+   [
+    "Scores long documents without a hard cutoff",
+    "native",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "not_documented",
+    "native"
+   ]
+  ]
+ }
+}

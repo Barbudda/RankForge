@@ -1,0 +1,36 @@
+class ZeroSlop < Formula
+  desc "Edit drafts through MCP, score writing locally, and install the skill"
+  homepage "https://zero-slop.ai"
+  url "https://registry.npmjs.org/zero-slop/-/zero-slop-2.10.0.tgz"
+  sha256 "5d691cc19e9d2294d82990f9eeda900063d877c68e6572159ade00198cb43fd1"
+  license "MIT"
+
+  depends_on "node"
+  depends_on "python@3.14"
+
+  def install
+    system "npm", "install", *std_npm_args
+    (bin/"zero-slop").write_env_script libexec/"bin/zero-slop",
+      PATH: "#{formula_opt_bin("node")}:#{formula_opt_libexec("python@3.14")}/bin:$PATH"
+  end
+
+  test do
+    require "json"
+
+    ENV["ZERO_SLOP_NO_NOTES"] = "1"
+    ENV["ZS_NO_UPDATE_CHECK"] = "1"
+    ENV["ZERO_SLOP_HOME"] = (testpath/"private-state").to_s
+
+    assert_equal version.to_s, shell_output("#{bin}/zero-slop --version").strip
+    (testpath/"draft.txt").write "The cache expires after 15 minutes.\n"
+    result = JSON.parse(shell_output("#{bin}/zero-slop score #{testpath}/draft.txt -- --json"))
+    assert_equal "heuristic_surface_meter", result.fetch("score_kind")
+    assert_equal false, result.fetch("calibrated_probability")
+    assert_operator result.fetch("ai_likelihood"), :<=, 25
+
+    system bin/"zero-slop", "install", "--dir", testpath/"installed-skill"
+    assert_path_exists testpath/"installed-skill/SKILL.md"
+    assert_path_exists testpath/"installed-skill/scripts/slopscore.py"
+    assert_path_exists testpath/"installed-skill/data/patterns.json"
+  end
+end

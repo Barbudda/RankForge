@@ -1,0 +1,42 @@
+{
+ "Original drafts": {
+  "ai": 69.0,
+  "fol": 0.46,
+  "w": 159
+ },
+ "isatimur/de-slop": {
+  "ai": 23.4,
+  "fol": 0.41,
+  "w": 137
+ },
+ "stacked pipeline": {
+  "ai": 21.2,
+  "fol": 0.38,
+  "w": 114
+ },
+ "blader/humanizer": {
+  "ai": 19.3,
+  "fol": 0.46,
+  "w": 135
+ },
+ "petergyang/no-ai-slop": {
+  "ai": 18.7,
+  "fol": 0.41,
+  "w": 123
+ },
+ "hardikpandya/stop-slop": {
+  "ai": 15.7,
+  "fol": 0.33,
+  "w": 116
+ },
+ "Zero Slop v1.0 (judged)": {
+  "ai": 10.4,
+  "fol": 0.36,
+  "w": 128
+ },
+ "Zero Slop v1.2": {
+  "ai": 9.8,
+  "fol": 0.07,
+  "w": 159
+ }
+}

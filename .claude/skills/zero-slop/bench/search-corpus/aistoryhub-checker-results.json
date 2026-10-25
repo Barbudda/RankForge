@@ -1,0 +1,150 @@
+{
+ "result_kind": "public_checker_observation",
+ "checker_url": "https://aistoryhub.co/slop-checker",
+ "corpus_url": "https://aistoryhub.co/corpus",
+ "corpus_version": "1.8",
+ "observed": "2026-08-22",
+ "minimum_words": 20,
+ "reads_clean_below": 15,
+ "method": "Each item was submitted separately to the public browser-based checker during fresh replay. Null means the checker abstained because the rewrite had fewer than 20 words.",
+ "inputs": {
+  "original": {
+   "input_sha256": "6c41b983977e1f1b7d31fb00e0b1693d0ab0e1bb895fa7127d312df7931b2632",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 97,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 96,
+    "x-future-03": 97,
+    "email-outreach-01": 99,
+    "email-launch-02": 99,
+    "email-followup-03": 98,
+    "blog-landscape-01": 99,
+    "blog-guide-02": 95,
+    "blog-transformation-03": 99,
+    "newsletter-productivity-01": 97,
+    "newsletter-edition-02": 97,
+    "newsletter-trends-03": 93,
+    "research-framework-01": 99,
+    "research-approach-02": 99,
+    "research-future-03": 87
+   }
+  },
+  "de-slop": {
+   "input_sha256": "7f09e15d5079a078c5b68faca996b47b54b962b9d5a65b734f5c5e6f5e41bd11",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 97,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 0,
+    "x-future-03": 98,
+    "email-outreach-01": 99,
+    "email-launch-02": 99,
+    "email-followup-03": 0,
+    "blog-landscape-01": 0,
+    "blog-guide-02": 95,
+    "blog-transformation-03": 0,
+    "newsletter-productivity-01": 97,
+    "newsletter-edition-02": 97,
+    "newsletter-trends-03": 93,
+    "research-framework-01": 99,
+    "research-approach-02": 99,
+    "research-future-03": 87
+   }
+  },
+  "humanizer": {
+   "input_sha256": "7709d096a626672232637cf4b4ff2f9e723379c24d05d8bad0b9e497848982b3",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 97,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 0,
+    "x-future-03": 98,
+    "email-outreach-01": 0,
+    "email-launch-02": 0,
+    "email-followup-03": 0,
+    "blog-landscape-01": 0,
+    "blog-guide-02": 0,
+    "blog-transformation-03": 0,
+    "newsletter-productivity-01": 0,
+    "newsletter-edition-02": 0,
+    "newsletter-trends-03": 0,
+    "research-framework-01": 98,
+    "research-approach-02": 98,
+    "research-future-03": 90
+   }
+  },
+  "no-ai-slop": {
+   "input_sha256": "8763cbdaedcb039d321d4101f7b6039e71f6bdbd1e35c2aebde9d4d28ba1a142",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 97,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 0,
+    "x-future-03": 98,
+    "email-outreach-01": 0,
+    "email-launch-02": 0,
+    "email-followup-03": 0,
+    "blog-landscape-01": 0,
+    "blog-guide-02": 0,
+    "blog-transformation-03": 0,
+    "newsletter-productivity-01": 0,
+    "newsletter-edition-02": 0,
+    "newsletter-trends-03": 0,
+    "research-framework-01": 98,
+    "research-approach-02": 98,
+    "research-future-03": 89
+   }
+  },
+  "stop-slop": {
+   "input_sha256": "7e091933a3a1dfbd6b4dccfc63c1fcd32796829e16cc598a935351a34143f56f",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 97,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 0,
+    "x-future-03": 98,
+    "email-outreach-01": 0,
+    "email-launch-02": 0,
+    "email-followup-03": 0,
+    "blog-landscape-01": 0,
+    "blog-guide-02": 0,
+    "blog-transformation-03": 0,
+    "newsletter-productivity-01": 0,
+    "newsletter-edition-02": 0,
+    "newsletter-trends-03": null,
+    "research-framework-01": 95,
+    "research-approach-02": 95,
+    "research-future-03": 0
+   }
+  },
+  "zero-slop": {
+   "input_sha256": "7b17a3735bcebcd69bcb93e68ed20fdb7917265571947433b25ee54999fd04af",
+   "rows": {
+    "linkedin-lessons-01": 0,
+    "linkedin-contrarian-02": 95,
+    "linkedin-executive-03": 0,
+    "x-agents-01": 0,
+    "x-habit-02": 0,
+    "x-future-03": 0,
+    "email-outreach-01": 0,
+    "email-launch-02": 0,
+    "email-followup-03": 0,
+    "blog-landscape-01": 0,
+    "blog-guide-02": 0,
+    "blog-transformation-03": 0,
+    "newsletter-productivity-01": 0,
+    "newsletter-edition-02": 0,
+    "newsletter-trends-03": null,
+    "research-framework-01": 94,
+    "research-approach-02": 0,
+    "research-future-03": 0
+   }
+  }
+ }
+}

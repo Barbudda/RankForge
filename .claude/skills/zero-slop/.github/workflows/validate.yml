@@ -1,0 +1,291 @@
+name: validate
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - name: Compile Python sources
+        run: python3 -m compileall -q scripts tests bench
+      - name: Released code requires a new version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git fetch --no-tags origin "$BASE_REF"
+            base="origin/$BASE_REF"
+          elif [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            base="$BEFORE"
+          else
+            echo "No stable base commit; skipping the release-delta check"
+            exit 0
+          fi
+          python3 scripts/check_release_version.py "$base"
+      - name: Validate pattern data
+        run: |
+          python3 -c "import json; json.load(open('data/patterns.json')); json.load(open('data/learned.json'))"
+      - name: Validate MCP registry metadata
+        run: |
+          python3 - <<'EOF'
+          import json
+          from pathlib import Path
+
+          server = json.loads(Path("server.json").read_text())
+          package = json.loads(Path("package.json").read_text())
+          assert server["$schema"] == "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json"
+          assert server["name"] == "io.github.manavmishra/zero-slop"
+          assert server["version"] == package["version"]
+          assert len(server["description"]) <= 100
+          assert server["remotes"] == [{"type": "streamable-http", "url": "https://mcp.zero-slop.ai/mcp"}]
+          print("server.json release metadata OK")
+          EOF
+      - name: Validate plugin and extension manifests
+        run: python3 scripts/check_distribution_manifests.py
+
+      - name: PyPI mirror matches the shipped scorer
+        run: python3 tooling/build_pypi.py --check
+
+      - name: Distribution surfaces suite
+        run: python3 -m unittest tests.test_distribution
+
+      - name: Wheel builds and scores identically to the repository scorer
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --upgrade build
+          python3 -m build --wheel --outdir /tmp/wheel
+          python3 -m venv /tmp/wheelcheck
+          /tmp/wheelcheck/bin/pip install --quiet /tmp/wheel/*.whl
+          sample="We are thrilled to announce a transformative solution."
+          installed="$(/tmp/wheelcheck/bin/python -c "
+          from zero_slop import load_patterns, score_text
+          print(score_text('$sample', load_patterns())['ai_likelihood'])")"
+          repo="$(python3 -c "
+          import sys; sys.path.insert(0,'scripts'); import slopscore
+          print(slopscore.score_text('$sample', slopscore.load_patterns())['ai_likelihood'])")"
+          echo "installed=$installed repo=$repo"
+          [ "$installed" = "$repo" ] || { echo "the wheel scorer drifted from the repository" >&2; exit 1; }
+      - name: Compile all regexes
+        run: |
+          python3 - <<'EOF'
+          import json, re
+          d = json.load(open("data/patterns.json"))
+          for p in d["patterns"]:
+              re.compile(p["rx"], re.I)
+          print(f"{len(d['patterns'])} patterns, {len(d['lexicon'])} lexicon terms OK")
+          EOF
+      - name: Scorer smoke test
+        run: |
+          python3 - <<'EOF'
+          import sys
+          sys.path.insert(0, "scripts")
+          import slopscore
+          data = slopscore.load_patterns()
+          slop = ("I'm beyond excited to announce our game-changing platform! "
+                  "It's not just a tool — it's a testament to our incredible "
+                  "journey. Let's dive in! Agree? 👇 #ai #growth #startup #future")
+          human = ("We raised $4.2M. It took 18 months, and for the first six "
+                   "of them the demo crashed on stage more often than it ran.")
+          s1 = slopscore.score_text(slop, data)["ai_likelihood"]
+          s2 = slopscore.score_text(human, data)["ai_likelihood"]
+          print(f"slop={s1} human={s2}")
+          assert s1 > 60, f"slop sample under-scored: {s1}"
+          assert s2 < 30, f"human sample over-scored: {s2}"
+          EOF
+      - name: Full test suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Plugin mirror in sync
+        run: python3 scripts/build_plugin.py --check
+
+      - name: Single-file bundle in sync
+        run: python3 scripts/build_bundle.py --check
+      - name: False-positive regression
+        run: python3 scripts/calibrate.py --selftest
+
+      - name: Predictability probe self-test
+        run: python3 scripts/predictability.py --selftest
+
+      - name: Final-review and benchmark contracts
+        run: |
+          python3 scripts/register.py --selftest
+          python3 bench/validate_corpus_registry.py
+          python3 bench/make_charts.py --check
+
+      - name: Validate repository graphics
+        run: |
+          python3 scripts/check_svg.py assets/engine.svg
+          python3 scripts/check_svg.py assets/demo.svg
+          python3 growth/check-motion.py
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22.13.0"
+      - name: Validate studio motion cadence
+        run: node growth/check-studio-cadence.mjs
+
+      - name: CLI and distribution integration contracts
+        run: |
+          node distribution/sync-version.mjs --check
+          node --test tests/cli-deslop.test.mjs
+          node --test distribution/homebrew/prepare-formula.test.mjs
+          node --test integrations/github-action/review.test.mjs
+          node --experimental-strip-types --test integrations/raycast/test/review.test.ts
+          node --test integrations/templates.test.mjs
+          node --test mcp/scripts/e2e_rest.test.mjs
+
+      - name: SKILL.md frontmatter present
+        run: |
+          head -1 SKILL.md | grep -q '^---$'
+          grep -q '^name: zero-slop' SKILL.md
+          grep -q '^description:' SKILL.md
+
+  action:
+    # The Action is a release surface, so CI runs it rather than trusting it.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Score prose that is meant to be clean
+        id: scored
+        uses: ./
+        with:
+          path: DISTRIBUTION.md
+          gate: "40"
+      - name: The examples directory holds deliberately bad drafts, so report only
+        uses: ./
+        with:
+          path: examples
+          gate: "40"
+          fail-on-gate: "false"
+      - name: Report-only mode never blocks
+        uses: ./
+        with:
+          path: README.md
+          gate: "0"
+          fail-on-gate: "false"
+      - name: A directory with nothing to score is a no-op
+        uses: ./
+        with:
+          path: .github/workflows
+          gate: "25"
+      - name: Outputs are populated
+        env:
+          PASSED: ${{ steps.scored.outputs.passed }}
+          WORST: ${{ steps.scored.outputs.max-score }}
+          DOCS: ${{ steps.scored.outputs.documents }}
+        run: |
+          set -euo pipefail
+          echo "passed=$PASSED worst=$WORST documents=$DOCS"
+          [ -n "$PASSED" ] && [ -n "$WORST" ] && [ -n "$DOCS" ]
+          [ "$DOCS" -gt 0 ]
+
+  website:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22.13.0"
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+      - name: Verify dependency audit gate
+        run: node --test ../.github/scripts/audit-npm.test.mjs
+      - name: Audit dependencies
+        env:
+          # An npm advisory outage must not suppress lint and tests. Completed
+          # audits with findings still fail; release jobs remain fail-closed.
+          AUDIT_ALLOW_UNAVAILABLE: "1"
+          AUDIT_MAX_ATTEMPTS: "2"
+          AUDIT_ATTEMPT_TIMEOUT_MS: "30000"
+          AUDIT_RETRY_DELAY_MS: "3000"
+        run: node ../.github/scripts/audit-npm.mjs
+      - run: npm run lint
+      - run: npm test
+
+  mcp:
+    runs-on: ubuntu-latest
+    # Two independent npm audits can each wait several minutes on the registry.
+    # Keep the security gates strict without cancelling a healthy packaging run.
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: mcp/gateway
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: |
+            mcp/gateway/package-lock.json
+            mcp/scorer/package-lock.json
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.5"
+      - name: Verify exact scorer bundle
+        working-directory: .
+        run: |
+          python3 mcp/scripts/sync_scorer.py --check
+          python3 mcp/scripts/test_scorer.py
+      - run: npm ci
+      - name: Audit gateway dependencies
+        env:
+          AUDIT_ALLOW_UNAVAILABLE: "1"
+          AUDIT_MAX_ATTEMPTS: "2"
+          AUDIT_ATTEMPT_TIMEOUT_MS: "30000"
+          AUDIT_RETRY_DELAY_MS: "3000"
+        run: node ../../.github/scripts/audit-npm.mjs
+      - run: npm run check
+      - run: npm run dry-run
+      - name: Install scorer Worker dependencies
+        working-directory: mcp/scorer
+        run: npm ci
+      - name: Lock and install scorer Python dependencies
+        working-directory: mcp/scorer
+        run: uv sync --locked
+      - name: Audit scorer Worker dependencies
+        working-directory: mcp/scorer
+        env:
+          AUDIT_ALLOW_UNAVAILABLE: "1"
+          AUDIT_MAX_ATTEMPTS: "2"
+          AUDIT_ATTEMPT_TIMEOUT_MS: "30000"
+          AUDIT_RETRY_DELAY_MS: "3000"
+        run: node ../../.github/scripts/audit-npm.mjs
+      - name: Package scorer Worker
+        working-directory: mcp/scorer
+        run: npm run dry-run
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [validate, website, mcp]
+    permissions:
+      actions: write
+      contents: write
+    uses: ./.github/workflows/sync-release.yml

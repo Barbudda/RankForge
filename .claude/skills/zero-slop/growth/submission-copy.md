@@ -1,0 +1,193 @@
+# Canonical submission copy
+
+One source for every directory form, so the listing text stops being improvised
+per site. Copy from here; do not rewrite in the form field.
+
+Every claim below is checkable in the repository. Keep it that way: a directory
+listing is the first thing a sceptical reader checks against the README.
+
+Score this file before changing it:
+
+```bash
+python3 scripts/slopscore.py --explain growth/submission-copy.md
+```
+
+---
+
+## Name
+
+Zero Slop
+
+## Tagline, under 40 characters
+
+Find AI slop. Keep the source intact.
+
+## One-liner, under 60 characters
+
+Score AI-sounding writing 0-100. Edit it without losing the point.
+
+## One-liner, under 100 characters
+
+An open-source skill that scores AI-sounding prose, edits it, and checks source details locally.
+
+## Short description, about 50 words
+
+Zero Slop is a free Agent Skill that scores your writing 0-100 for AI-sounding
+language, names the exact phrases behind the score, and rewrites them with your
+existing assistant. Local checks protect names, numbers, quotations, links,
+code, tables, and paths. It works with Claude Code, Codex, Cursor, Warp, Zed,
+OpenCode, and Gemini CLI.
+
+## Description, about 150 words
+
+You used AI to help with a draft and it came back sounding generic. Zero Slop
+finds that and strips it out without changing what you said.
+
+It is a skill, not a model. The AI assistant you already use does the editing;
+Zero Slop supplies the method and the local checks. A standard-library Python
+scorer gives the draft a 0-100 writing score and lists the phrases, rhythm
+problems, and formatting that raised it. Separate copy-desk and read-aloud
+passes follow, and a fact gate rejects any rewrite that loses a number or
+invents one.
+
+The installed scorer runs offline, needs no account, and has zero runtime
+dependencies. An optional hosted MCP provides one remote connection for
+supported clients. On a public 18-draft replay, Zero Slop moved the mean writing
+score from 76.3 to 12.8 with 18 of 18 source checks passing.
+
+Free and MIT-licensed. Install with one command.
+
+Zero Slop is installed about 1,600 times a week on npm and has 114 GitHub
+stars. That is a current run rate measured over the seven days to 7 September
+2026, not a lifetime launch total.
+
+## Description, about 300 words
+
+You used AI to help with a draft, and the result sounds like a machine wrote it.
+Readers notice. That machine sound has a name: slop.
+
+Zero Slop is an Agent Skill rather than an AI model. Claude, GPT, or another
+compatible model in your assistant does the editing; Zero Slop supplies the
+method and the local checks. Eight responsibilities make up one workflow. A local scorer
+finds exact phrases, mechanical rhythm, and distracting formatting, then
+explains the 0-100 writing score it produced. Your assistant interprets the
+draft and rewrites it. A local fact gate rejects any version that adds or drops
+a name, number, quotation, or link. Fresh passes handle copy editing and a
+read-aloud check. Local tools and your assistant then compare the finished text
+against the source.
+
+The score describes the writing, not the author. In the test sets, human samples
+scored 9 to 21 and unedited AI drafts averaged 77, which are reference points
+rather than boundaries.
+
+The evidence is public and reproducible. Zero Slop scored 7,627 abstracts from
+the MIT-licensed RAID+ dataset, re-scored all 2,187 Beemo records, and published
+an 18-draft comparison against three other open-source editors: a mean of 76.3
+before, 12.8 after, with 18 of 18 source checks passing. The scorer handles 1,000
+documents in 2.0 seconds on one Apple silicon Mac.
+
+The installed scorer uses only Python's standard library, runs offline, and
+never transmits a draft. The separately documented hosted MCP is optional and
+remote. Zero Slop can also learn
+privately from edits you make afterwards, but a phrase must be cut from three
+unrelated pieces before it becomes a rule, and those rules stay on your machine.
+
+Free, MIT-licensed, and installed with one command in Claude Code, Codex,
+Cursor, Warp, Zed, OpenCode, or any assistant that reads SKILL.md.
+
+## Install command
+
+```
+npx skills add manavmishra/ZeroSlop --global
+```
+
+## Links
+
+- Website: https://zero-slop.ai
+- Source: https://github.com/manavmishra/ZeroSlop
+- Latest release: https://github.com/manavmishra/ZeroSlop/releases/latest
+- Free checker page: https://zero-slop.ai/ai-slop-checker/
+- Benchmark detail: https://github.com/manavmishra/ZeroSlop/tree/main/bench
+- Official brand assets: https://zero-slop.ai/brand/
+- Privacy: https://zero-slop.ai/privacy/
+- Security: https://github.com/manavmishra/ZeroSlop/security/policy
+- Support: https://github.com/manavmishra/ZeroSlop/discussions
+- Hosted MCP: https://mcp.zero-slop.ai/mcp
+- MCP server card: https://mcp.zero-slop.ai/.well-known/mcp/server-card.json
+- Official MCP Registry: https://registry.modelcontextprotocol.io/?q=io.github.manavmishra%2Fzero-slop
+
+## Pricing
+
+Free and open source under the MIT License. The local skill requires no account.
+
+## Categories and tags
+
+Primary category: Developer Tools. Secondary: Writing, Productivity.
+
+Tags: ai-writing, writing-assistant, ai-editor, editing, humanizer,
+developer-tools, open-source, agent-skill, claude-code, codex, privacy,
+offline-first, mcp.
+
+Never select an "AI detector" or "AI checker" category, even where a directory
+offers one and it would win traffic. See "What not to claim" below.
+
+## Author
+
+Manav Mishra. Machine learning in production, from Microsoft's first ML spam
+filtering and SmartScreen anti-phishing to agentic AI.
+https://zero-slop.ai/about/
+
+## Reviewer setup
+
+- Repository: `https://github.com/manavmishra/ZeroSlop`
+- MCP endpoint: `https://mcp.zero-slop.ai/mcp`
+- Authentication: none
+- Tool: `deslop`
+- Input limit: 20,000 characters per draft
+- Data handling: drafts are processed in memory and are not stored, logged, or
+  used for training
+
+### Test 1: ordinary rewrite
+
+Ask the tool to edit: “We are incredibly excited to announce a transformative
+new dashboard that leverages cutting-edge automation.” The result should change
+the wording, return before-and-after scores, and preserve the dashboard claim.
+
+### Test 2: protected details
+
+Ask the tool to edit: “Northstar cut setup time by 40% for 200 teams. Details:
+https://example.com/report”. The result must retain Northstar, 40%, 200, and the
+exact URL.
+
+### Test 3: already-clear text
+
+Ask the tool to edit: “The cache expires after 15 minutes.” The service may
+return it unchanged as already clear, without spending a model call.
+
+## Store-specific release notes
+
+Version 2.9.1 packages the Agent Skill and hosted MCP as one portable Agent
+Plugin, adds a Gemini CLI extension manifest, publishes MCP metadata through
+the official Registry, and checks that every public release surface serves the
+same version. The hosted connector still makes at most one editing-model call
+per request and returns a source-preserving local edit with a warning when that
+call is unavailable.
+
+## Facts a reviewer may check
+
+- 7,627 RAID+ abstracts scored; overall mean 19.6.
+- 2,187 Beemo records: 30.2 raw model output, 25.3 expert edit, 20.0
+  independent human answer.
+- 18-draft workflow comparison: 76.3 original, 12.8 after Zero Slop, 18/18
+  passing all checks.
+- 1,000 documents in 1.9929 seconds (501.8 per second) on one Apple silicon Mac.
+- Zero runtime dependencies; Python standard library only.
+- MIT licence; every benchmark reproducible from the commands in the README.
+
+## What not to claim
+
+Zero Slop does not detect authorship and must never be filed under AI detection.
+The score describes writing, not who wrote it. Do not describe the private
+learning as retraining, reinforcement learning, or RLHF; it updates local rules
+and nothing else. Do not quote a productivity number the repository does not
+support.

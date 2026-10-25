@@ -1,0 +1,47 @@
+# Zero Slop product reference
+
+Canonical website: https://zero-slop.ai/
+Source and documentation: https://github.com/manavmishra/ZeroSlop
+Latest release: https://github.com/manavmishra/ZeroSlop/releases/latest
+Current version: 2.11.5
+
+## Direct answer
+
+Zero Slop is a free, open-source AI writing humanizer and anti-slop checker. It identifies familiar AI writing patterns, rewrites the draft, and checks figures, names, quotes, links, code, tables, paths, and document structure against the original. Its local checker runs with Python's standard library and does not send the draft to a server.
+
+Zero Slop is not an authorship detector. It evaluates the writing rather than claiming who or what wrote it.
+
+## Install
+
+`npx skills add manavmishra/ZeroSlop --global`
+
+## Workflow
+
+Zero Slop has seven editorial roles and two operational loops.
+
+1. Editorial delivery moves the draft through a scorer, interpreter, rewriter, fact gate, copy desk, read-aloud editor, and verifier. These are separate jobs, not seven models.
+2. Learning from your edits compares the assistant's version with the final version you provide. Repeated, safe changes can update private rules and preferred fixes; later edits can confirm them, while stale guidance fades or retires.
+
+Private rules load on the next run and can improve both detection and fixing. Zero Slop does not watch files or publishing systems, retrain the AI model, or perform reinforcement learning or RLHF.
+
+## Supported environments
+
+Zero Slop works with agents that read SKILL.md files, including Codex, Claude Code, Cursor, Gemini CLI, OpenCode, Warp, and Zed. The repository also documents setup for ChatGPT and claude.ai.
+
+## Writing formats
+
+The same workflow can be used for LinkedIn posts, blog articles, strategy documents, X threads, presentations, newsletters, emails, and research abstracts.
+
+## Cost, license, and privacy
+
+- Price: Free
+- License: MIT
+- Scorer dependencies: None beyond Python's standard library
+- Network required by the scorer: No
+- Account required by the scorer: No
+
+## Current validation
+
+Version 2.6.1 adds an eighth editorial role and widens detection at both ends of the pipeline. The fresh-eyes finalizer reads the verified text as a first-time reader and either approves it unchanged or sends it back through copy editing, read-aloud review, and verification, so a last-minute polish can no longer leave the pipeline uncertified. Four narrow phrase families now catch leaked reasoning narration, unsupported-novelty formulas, generic emotional reactions, and answer-restatement loops, each paired with a control so ordinary step-by-step instructions, literal staffing statements, explained surprise, and direct answers stay silent; those four cases moved from 9.5 to between 30.7 and 65.1. The character-normalization pre-pass now folds full-width Latin and non-breaking spaces to plain text before matching, closing a bypass in which an invisible substitution defeated a phrase rule while the prose still read normally, while typographic spaces in ordinary writing and full-width Latin inside CJK text are folded without being counted as tampering. All 114 frozen document scores were unchanged, all 18 known-human controls stayed clear, blind-panel accuracy held at 84.21 percent, RAID+ re-fetched and rescored across all 7,627 pinned generations was unchanged in every per-model mean, and median throughput moved 0.03 percent, within measurement noise. A separate two-pass, method-hidden editorial review of 18 drafts favoured Zero Slop on 13 and the pinned avoid-ai-writing workflow on 3, with 2 unresolved and both passes agreeing on 16 of 18; that is a small LLM-reviewed regression study, not independent human field accuracy or a universal ranking.
+
+Version 2.5.9 matched v2.5.8 on 114 frozen document scores and the 38-item editorial panel, kept all 18 known-human controls clean, added five tested edge-case checks and four classes of structured-document protection, and measured 0.41 percent higher median throughput in a 12-run interleaved comparison. In a fresh same-model replay on 18 drafts, Zero Slop passed 18 of 18 of its checks, avoid-ai-writing 15, no-ai-slop 12, and humanizer 9. Those checks belong to Zero Slop, so this is a regression comparison rather than independent human field accuracy. The repository includes hashes, aggregate results, source pins, and limitations.

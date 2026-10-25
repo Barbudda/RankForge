@@ -1,0 +1,385 @@
+{
+ "result_kind": "blind_slop_quality_evaluation",
+ "calibrated_field_accuracy": false,
+ "source": {
+  "manifest_sha256": "0acbd49b5cadd8254f08d02893d98e830ced4f24068c2ad9a6c45331a823c503",
+  "items": 72,
+  "source_drafts": 12
+ },
+ "labels": {
+  "raters": [
+   "blind-editor-a",
+   "blind-editor-b"
+  ],
+  "consensus_items": 38,
+  "unresolved_items": 34,
+  "exact_agreement": 0.7778,
+  "cohens_kappa": 0.6542
+ },
+ "generic_surface_gate": 25.0,
+ "surface_meter": {
+  "items": 38,
+  "true_positive": 27,
+  "true_negative": 5,
+  "false_positive": 4,
+  "false_negative": 2,
+  "accuracy": 0.8421,
+  "accuracy_wilson_95_ci": [
+   0.6958,
+   0.9256
+  ],
+  "precision": 0.871,
+  "recall": 0.931,
+  "specificity": 0.5556,
+  "f1": 0.9,
+  "balanced_accuracy": 0.7433,
+  "roc_auc": 0.8142
+ },
+ "splits": {
+  "dev": {
+   "items": 17,
+   "true_positive": 10,
+   "true_negative": 2,
+   "false_positive": 4,
+   "false_negative": 1,
+   "accuracy": 0.7059,
+   "accuracy_wilson_95_ci": [
+    0.4687,
+    0.8672
+   ],
+   "precision": 0.7143,
+   "recall": 0.9091,
+   "specificity": 0.3333,
+   "f1": 0.8,
+   "balanced_accuracy": 0.6212,
+   "roc_auc": 0.7273
+  },
+  "test": {
+   "items": 21,
+   "true_positive": 17,
+   "true_negative": 3,
+   "false_positive": 0,
+   "false_negative": 1,
+   "accuracy": 0.9524,
+   "accuracy_wilson_95_ci": [
+    0.7733,
+    0.9915
+   ],
+   "precision": 1.0,
+   "recall": 0.9444,
+   "specificity": 1.0,
+   "f1": 0.9714,
+   "balanced_accuracy": 0.9722,
+   "roc_auc": 0.9907
+  }
+ },
+ "contextual_research_ablation": {
+  "field_accuracy": false,
+  "design": "Each blind rater acts once as the structured contextual reviewer and once as the independent comparison label. Borderline calls abstain; each direction is scored on the same eligible items.",
+  "directions": {
+   "blind-editor-a_to_blind-editor-b": {
+    "all": {
+     "eligible_items": 39,
+     "contextual": {
+      "items": 39,
+      "true_positive": 29,
+      "true_negative": 9,
+      "false_positive": 1,
+      "false_negative": 0,
+      "accuracy": 0.9744,
+      "accuracy_wilson_95_ci": [
+       0.8682,
+       0.9955
+      ],
+      "precision": 0.9667,
+      "recall": 1.0,
+      "specificity": 0.9,
+      "f1": 0.9831,
+      "balanced_accuracy": 0.95,
+      "roc_auc": 0.95
+     },
+     "surface_on_same_items": {
+      "items": 39,
+      "true_positive": 27,
+      "true_negative": 6,
+      "false_positive": 4,
+      "false_negative": 2,
+      "accuracy": 0.8462,
+      "accuracy_wilson_95_ci": [
+       0.7027,
+       0.9275
+      ],
+      "precision": 0.871,
+      "recall": 0.931,
+      "specificity": 0.6,
+      "f1": 0.9,
+      "balanced_accuracy": 0.7655,
+      "roc_auc": 0.8276
+     },
+     "contextual_minus_surface_accuracy": 0.1282
+    },
+    "dev": {
+     "eligible_items": 17,
+     "contextual": {
+      "items": 17,
+      "true_positive": 11,
+      "true_negative": 6,
+      "false_positive": 0,
+      "false_negative": 0,
+      "accuracy": 1.0,
+      "accuracy_wilson_95_ci": [
+       0.8157,
+       1
+      ],
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "balanced_accuracy": 1.0,
+      "roc_auc": 1.0
+     },
+     "surface_on_same_items": {
+      "items": 17,
+      "true_positive": 10,
+      "true_negative": 2,
+      "false_positive": 4,
+      "false_negative": 1,
+      "accuracy": 0.7059,
+      "accuracy_wilson_95_ci": [
+       0.4687,
+       0.8672
+      ],
+      "precision": 0.7143,
+      "recall": 0.9091,
+      "specificity": 0.3333,
+      "f1": 0.8,
+      "balanced_accuracy": 0.6212,
+      "roc_auc": 0.7273
+     },
+     "contextual_minus_surface_accuracy": 0.2941
+    },
+    "test": {
+     "eligible_items": 22,
+     "contextual": {
+      "items": 22,
+      "true_positive": 18,
+      "true_negative": 3,
+      "false_positive": 1,
+      "false_negative": 0,
+      "accuracy": 0.9545,
+      "accuracy_wilson_95_ci": [
+       0.782,
+       0.9919
+      ],
+      "precision": 0.9474,
+      "recall": 1.0,
+      "specificity": 0.75,
+      "f1": 0.973,
+      "balanced_accuracy": 0.875,
+      "roc_auc": 0.875
+     },
+     "surface_on_same_items": {
+      "items": 22,
+      "true_positive": 17,
+      "true_negative": 4,
+      "false_positive": 0,
+      "false_negative": 1,
+      "accuracy": 0.9545,
+      "accuracy_wilson_95_ci": [
+       0.782,
+       0.9919
+      ],
+      "precision": 1.0,
+      "recall": 0.9444,
+      "specificity": 1.0,
+      "f1": 0.9714,
+      "balanced_accuracy": 0.9722,
+      "roc_auc": 0.9861
+     },
+     "contextual_minus_surface_accuracy": 0.0
+    }
+   },
+   "blind-editor-b_to_blind-editor-a": {
+    "all": {
+     "eligible_items": 39,
+     "contextual": {
+      "items": 39,
+      "true_positive": 29,
+      "true_negative": 9,
+      "false_positive": 0,
+      "false_negative": 1,
+      "accuracy": 0.9744,
+      "accuracy_wilson_95_ci": [
+       0.8682,
+       0.9955
+      ],
+      "precision": 1.0,
+      "recall": 0.9667,
+      "specificity": 1.0,
+      "f1": 0.9831,
+      "balanced_accuracy": 0.9833,
+      "roc_auc": 0.9833
+     },
+     "surface_on_same_items": {
+      "items": 39,
+      "true_positive": 27,
+      "true_negative": 5,
+      "false_positive": 4,
+      "false_negative": 3,
+      "accuracy": 0.8205,
+      "accuracy_wilson_95_ci": [
+       0.6733,
+       0.9102
+      ],
+      "precision": 0.871,
+      "recall": 0.9,
+      "specificity": 0.5556,
+      "f1": 0.8852,
+      "balanced_accuracy": 0.7278,
+      "roc_auc": 0.8019
+     },
+     "contextual_minus_surface_accuracy": 0.1539
+    },
+    "dev": {
+     "eligible_items": 17,
+     "contextual": {
+      "items": 17,
+      "true_positive": 11,
+      "true_negative": 6,
+      "false_positive": 0,
+      "false_negative": 0,
+      "accuracy": 1.0,
+      "accuracy_wilson_95_ci": [
+       0.8157,
+       1
+      ],
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "balanced_accuracy": 1.0,
+      "roc_auc": 1.0
+     },
+     "surface_on_same_items": {
+      "items": 17,
+      "true_positive": 10,
+      "true_negative": 2,
+      "false_positive": 4,
+      "false_negative": 1,
+      "accuracy": 0.7059,
+      "accuracy_wilson_95_ci": [
+       0.4687,
+       0.8672
+      ],
+      "precision": 0.7143,
+      "recall": 0.9091,
+      "specificity": 0.3333,
+      "f1": 0.8,
+      "balanced_accuracy": 0.6212,
+      "roc_auc": 0.7273
+     },
+     "contextual_minus_surface_accuracy": 0.2941
+    },
+    "test": {
+     "eligible_items": 22,
+     "contextual": {
+      "items": 22,
+      "true_positive": 18,
+      "true_negative": 3,
+      "false_positive": 0,
+      "false_negative": 1,
+      "accuracy": 0.9545,
+      "accuracy_wilson_95_ci": [
+       0.782,
+       0.9919
+      ],
+      "precision": 1.0,
+      "recall": 0.9474,
+      "specificity": 1.0,
+      "f1": 0.973,
+      "balanced_accuracy": 0.9737,
+      "roc_auc": 0.9737
+     },
+     "surface_on_same_items": {
+      "items": 22,
+      "true_positive": 17,
+      "true_negative": 3,
+      "false_positive": 0,
+      "false_negative": 2,
+      "accuracy": 0.9091,
+      "accuracy_wilson_95_ci": [
+       0.7218,
+       0.9747
+      ],
+      "precision": 1.0,
+      "recall": 0.8947,
+      "specificity": 1.0,
+      "f1": 0.9444,
+      "balanced_accuracy": 0.9474,
+      "roc_auc": 0.9825
+     },
+     "contextual_minus_surface_accuracy": 0.0454
+    }
+   }
+  },
+  "held_out_test_mean": {
+   "contextual_accuracy": 0.9545,
+   "surface_accuracy_on_same_items": 0.9318,
+   "contextual_minus_surface_accuracy": 0.0227,
+   "contextual_precision": 0.9737,
+   "contextual_recall": 0.9737
+  },
+  "limits": "This estimates reproducibility between two blind LLM editorial reviews. It is not an independent human accuracy estimate, and the two directional samples share texts."
+ },
+ "methods": {
+  "de-slop": {
+   "items": 12,
+   "consensus_clean": 0,
+   "consensus_sloppy": 7,
+   "unresolved": 5,
+   "mean_blind_severity": 4.08,
+   "mean_surface_score": 60.9
+  },
+  "humanizer": {
+   "items": 12,
+   "consensus_clean": 1,
+   "consensus_sloppy": 2,
+   "unresolved": 9,
+   "mean_blind_severity": 2.88,
+   "mean_surface_score": 31.3
+  },
+  "no-ai-slop": {
+   "items": 12,
+   "consensus_clean": 1,
+   "consensus_sloppy": 3,
+   "unresolved": 8,
+   "mean_blind_severity": 3.12,
+   "mean_surface_score": 36.2
+  },
+  "original": {
+   "items": 12,
+   "consensus_clean": 0,
+   "consensus_sloppy": 12,
+   "unresolved": 0,
+   "mean_blind_severity": 4.75,
+   "mean_surface_score": 81.5
+  },
+  "stop-slop": {
+   "items": 12,
+   "consensus_clean": 2,
+   "consensus_sloppy": 4,
+   "unresolved": 6,
+   "mean_blind_severity": 3.21,
+   "mean_surface_score": 28.9
+  },
+  "zero-slop": {
+   "items": 12,
+   "consensus_clean": 5,
+   "consensus_sloppy": 1,
+   "unresolved": 6,
+   "mean_blind_severity": 2.38,
+   "mean_surface_score": 18.1
+  }
+ },
+ "limits": "Blind LLM-as-a-judge labels on a small clustered panel are not independent human field labels. Method rows describe this panel; surface metrics use consensus clean/sloppy items only."
+}

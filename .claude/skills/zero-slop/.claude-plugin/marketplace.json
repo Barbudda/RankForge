@@ -1,0 +1,29 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "zero-slop",
+  "owner": {
+    "name": "Manav Mishra",
+    "url": "https://github.com/manavmishra"
+  },
+  "description": "The Zero Slop skill, installable as a Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "zero-slop",
+      "source": "./",
+      "description": "Zero Slop is a skill for Claude Code, not an AI model. Claude performs distinct interpreting, rewriting, copy-editing, and read-aloud roles; local tools score the writing and protect facts, then Claude and the tools verify the final text. Private learning adapts to later writer edits. The local checks run offline and have zero dependencies.",
+      "category": "Productivity",
+      "license": "MIT",
+      "keywords": [
+        "writing",
+        "editing",
+        "ai-slop",
+        "humanize",
+        "de-slop",
+        "linkedin",
+        "prose",
+        "style",
+        "prose-linter"
+      ]
+    }
+  ]
+}

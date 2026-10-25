@@ -1,0 +1,68 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "zero-slop-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-03",
+  "compatibility_flags": ["nodejs_compat", "enable_request_signal"],
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "mcp.zero-slop.ai",
+      "custom_domain": true
+    }
+  ],
+  "services": [
+    {
+      "binding": "SCORER",
+      "service": "zero-slop-scorer"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "PIPELINE_LIMITER",
+      "namespace_id": "2805",
+      "simple": {
+        "limit": 300,
+        "period": 60
+      }
+    }
+  ],
+  "analytics_engine_datasets": [
+    {
+      "binding": "MCP_ANALYTICS",
+      "dataset": "zero_slop_mcp_events"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MCP_COUNTER",
+        "class_name": "McpCounter"
+      }
+    ]
+  },
+  "exports": {
+    "McpCounter": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "vars": {
+    "SCORER_VERSION": "2.11.5",
+    "EDITOR_DAILY_NEURONS": "8000",
+    "EDITOR_CLIENT_DAILY_CALLS": "5",
+    "EDITOR_CLIENT_MINUTE_CALLS": "2",
+    "EDITOR_ENDPOINT": "https://zero-slop.ai/api/demo-rewrite",
+    "ALLOWED_ORIGINS": "https://zero-slop.ai,https://www.zero-slop.ai,https://chatgpt.com,https://claude.ai"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.05
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+ "result_kind": "local_performance_observation",
+ "measured_at": "2026-09-03T21:53:36+00:00",
+ "environment": {
+  "platform": "Darwin",
+  "architecture": "arm64",
+  "logical_cpus": 10,
+  "python": "3.9.6"
+ },
+ "measurement": {
+  "warmup_runs_per_probe": 1,
+  "default_measured_runs": 5,
+  "summary": "median"
+ },
+ "scorer": {
+  "batch_documents": 1000,
+  "batch_repeats": 5,
+  "batch_seconds": [
+   1.9614,
+   1.971,
+   1.9929,
+   1.9936,
+   2.0945
+  ],
+  "median_batch_seconds": 1.9929,
+  "median_documents_per_second": 501.8,
+  "median_milliseconds_per_document": 1.99,
+  "large_document_words": 15201,
+  "large_document_repeats": 5,
+  "large_document_seconds": [
+   0.3223,
+   0.322,
+   0.3227,
+   0.3234,
+   0.319
+  ],
+  "median_large_document_seconds": 0.3223,
+  "pathological_input_seconds": {
+   "single_character": 0.1117,
+   "repeated_word": 0.2007,
+   "repeated_dash": 0.0318,
+   "newlines": 2.2932
+  }
+ },
+ "register": {
+  "batch_documents": 1000,
+  "batch_repeats": 5,
+  "batch_seconds": [
+   0.7823,
+   0.8311,
+   0.7762,
+   0.7759,
+   0.7864
+  ],
+  "median_batch_seconds": 0.7823,
+  "median_documents_per_second": 1278.3,
+  "large_document_words": 15201,
+  "large_document_seconds": [
+   0.1112,
+   0.11,
+   0.1092,
+   0.1088,
+   0.1065
+  ],
+  "median_large_document_seconds": 0.1092,
+  "pathological_input_seconds": {
+   "single_character": 0.096,
+   "repeated_word": 0.0985,
+   "no_sentence_terminator": 0.3876,
+   "all_sentence_terminators": 0.0398
+  }
+ },
+ "learning": {
+  "reflect_diff_words": 8000,
+  "reflect_seconds": 0.1592,
+  "retrieval_preferences": 5000,
+  "retrieval_seconds": [
+   0.155,
+   0.1544,
+   0.1675,
+   0.1498,
+   0.1475
+  ],
+  "median_retrieval_seconds": 0.1544
+ },
+ "contextual_research": {
+  "paragraphs": 2000,
+  "prepare_seconds": [
+   0.0028,
+   0.0027,
+   0.003,
+   0.0028,
+   0.0026
+  ],
+  "median_prepare_seconds": 0.0028,
+  "validate_seconds": [
+   0.0044,
+   0.0053,
+   0.0043,
+   0.0048,
+   0.0046
+  ],
+  "median_validate_seconds": 0.0046,
+  "host_model_seconds": null
+ },
+ "ci_thresholds": {
+  "batch_1000_seconds_lt": 60,
+  "large_document_seconds_lt": 30,
+  "each_pathological_input_seconds_lt": 15,
+  "register_batch_1000_seconds_lt": 60,
+  "register_large_document_seconds_lt": 30,
+  "reflect_seconds_lt": 30,
+  "retrieval_5000_preferences_seconds_lt": 1,
+  "contextual_2000_paragraph_prepare_seconds_lt": 3,
+  "contextual_2000_paragraph_validate_seconds_lt": 3
+ },
+ "limits": "Local wall-clock observation on one machine; useful for regression and capacity planning, not a universal throughput guarantee. Contextual timings cover local packet preparation and validation only, not host-model review latency."
+}

@@ -1,0 +1,33 @@
+__pycache__/
+*.pyc
+.DS_Store
+# per-user voice profiles are personal — never commit them
+data/voices/
+# reflection evidence is derived from the user's own drafts. It defaults to
+# ~/.zero-slop/ and should never appear in a checkout, but ignore it here too
+# in case ZERO_SLOP_HOME is pointed back at the repo.
+data/reflections.json
+reflections.json
+
+# built single-skill zip — a release artifact, never in the source tree
+# (otherwise the repo download contains a nested zip)
+dist/zero-slop.zip
+
+# Local website/build workspaces are kept separate from the portable skill.
+/ZSWebpage/
+/.next/
+/.quality/
+/.vinext/
+/.vite/
+/.wrangler/
+/dist/.openai/
+/dist/client/
+/dist/server/
+/node_modules/
+/tmp/
+/next-env.d.ts
+
+# Python build artifacts from `python3 -m build`
+*.egg-info/
+build/
+dist/pypi/

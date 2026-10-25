@@ -1,0 +1,176 @@
+name: publish to npm
+
+# The registry version drifted three releases behind main because publishing was
+# a manual step someone had to remember. This makes the version in package.json
+# the trigger: bump it, merge, and the release goes out.
+#
+# A rerun is a no-op only when the exact published commit is also npm latest.
+# Unknown registry failures block publication. An existing version with a stale
+# latest tag needs maintainer authentication, not another OIDC publish attempt.
+
+on:
+  # Dispatched at the immutable tag by sync-release, after all validation jobs.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  # Required for npm provenance: the publish is signed with a short-lived
+  # OIDC token, so the registry can attest which workflow and commit built it.
+  id-token: write
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+
+      - name: Require the exact validated release tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 .github/scripts/publication_guard.py --tag "$RELEASE_TAG" --sha "$(git rev-parse HEAD)"
+
+      # A published version is close to permanent: npm restricts unpublishing
+      # after 72 hours. Everything below runs before the publish, never after.
+      - name: Versions must agree across every manifest
+        run: |
+          set -euo pipefail
+          pkg=$(node -p "require('./package.json').version")
+          skill=$(sed -n 's/^[[:space:]]*version:[[:space:]]*"\{0,1\}\([0-9.]*\)"\{0,1\}.*/\1/p' SKILL.md | head -1)
+          claude=$(node -p "require('./.claude-plugin/plugin.json').version")
+          codex=$(node -p "require('./.codex-plugin/plugin.json').version")
+          agent=$(node -p "require('./plugin.json').version")
+          gemini=$(node -p "require('./gemini-extension.json').version")
+          mcp=$(node -p "require('./server.json').version")
+          echo "package.json=$pkg SKILL.md=$skill claude=$claude codex=$codex agent=$agent gemini=$gemini mcp=$mcp"
+          for other in "$skill" "$claude" "$codex" "$agent" "$gemini" "$mcp"; do
+            if [ "$other" != "$pkg" ]; then
+              echo "::error::version drift: package.json is $pkg but a manifest says $other"
+              exit 1
+            fi
+          done
+          python3 scripts/check_distribution_manifests.py
+
+      - name: Tests must pass
+        run: |
+          node --test tests/cli-deslop.test.mjs
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          python3 scripts/calibrate.py --selftest
+          python3 scripts/register.py --selftest
+
+      # The npm tarball and the Claude Code plugin must ship the same runtime.
+      # If build_plugin.py's mirror has drifted from the files allowlist, the
+      # two install paths would deliver different skills.
+      - name: Plugin mirror must match the npm payload
+        run: |
+          set -euo pipefail
+          python3 scripts/build_plugin.py --check
+          npm pack --dry-run --json > /tmp/pack.json
+          node -e '
+            const pack = require("/tmp/pack.json")[0];
+            const shipped = pack.files
+              .map((f) => f.path)
+              .filter((p) => /^(references|scripts|data)\//.test(p))
+              .sort();
+            const { execSync } = require("node:child_process");
+            const mirrored = execSync(
+              "cd skills/zero-slop && find references scripts data -type f",
+              { encoding: "utf8" },
+            ).trim().split("\n").sort();
+            const only = (a, b) => a.filter((x) => !b.includes(x));
+            const extra = only(shipped, mirrored);
+            const missing = only(mirrored, shipped);
+            if (extra.length || missing.length) {
+              console.error("npm payload differs from the plugin mirror");
+              if (extra.length) console.error("  only on npm:", extra);
+              if (missing.length) console.error("  only in mirror:", missing);
+              process.exit(1);
+            }
+            console.log(`payload matches the plugin mirror (${shipped.length} files)`);
+          '
+
+      # Maintainer-only release tooling must never reach installers. AGENTS.md
+      # makes this a contract; this is the enforcement.
+      - name: Maintainer tooling must not be in the tarball
+        run: |
+          set -euo pipefail
+          npm pack --dry-run --json > /tmp/pack.json
+          node -e '
+            const banned = [
+              "scripts/contextual.py", "scripts/contextual-signals.md",
+              "references/contextual-signals.md", "scripts/build_plugin.py",
+              "scripts/build_bundle.py", "scripts/build_skill_zip.py",
+              "scripts/build_onepager_pdf.py", "scripts/check_svg.py",
+              "scripts/check_distribution_manifests.py",
+              "scripts/check_release_version.py",
+              "scripts/check_release_surfaces.py",
+            ];
+            const files = require("/tmp/pack.json")[0].files.map((f) => f.path);
+            const leaked = banned.filter((b) => files.includes(b));
+            const voices = files.filter((f) => f.includes("voices/"));
+            if (leaked.length || voices.length) {
+              console.error("tarball contains files that must not ship:", [...leaked, ...voices]);
+              process.exit(1);
+            }
+            console.log("tarball is clean");
+          '
+
+      - name: Verify the exact npm record and latest tag
+        id: check
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          python3 .github/scripts/npm_record.py --version "$version" \
+            --sha "$(git rev-parse HEAD)" --github-output "$GITHUB_OUTPUT"
+
+      # Authenticated by npm Trusted Publishing, not a stored token. The OIDC
+      # token minted by id-token: write above is exchanged with the registry,
+      # which checks it against the trusted publisher configured on the package
+      # (repository manavmishra/ZeroSlop, workflow publish-npm.yml, no
+      # environment). Setting NODE_AUTH_TOKEN here would defeat that: setup-node
+      # writes an .npmrc referencing it, and an absent secret expands to an empty
+      # string, so npm fails with ENEEDAUTH before the exchange is attempted.
+      - name: Publish
+        if: steps.check.outputs.already == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python3 .github/scripts/publication_guard.py --tag "$RELEASE_TAG" --sha "$(git rev-parse HEAD)"
+          npm publish --access public --provenance
+
+      - name: Confirm the registry serves it
+        if: steps.check.outputs.already == 'false'
+        run: |
+          set -euo pipefail
+          version="${{ steps.check.outputs.version }}"
+          # npm accepts the upload and processes it asynchronously: the publish
+          # itself prints "your package is being processed and may take a few
+          # minutes to become available". The original 50-second window was
+          # shorter than that, so a completely successful 2.6.1 release reported
+          # itself as a failed run. Wait ten minutes before calling it wrong.
+          for attempt in $(seq 1 20); do
+            if [ "$(npm view zero-slop version 2>/dev/null)" = "$version" ]; then
+              echo "registry now serves zero-slop@$version"
+              exit 0
+            fi
+            echo "attempt $attempt/20: registry has not caught up yet"
+            sleep 30
+          done
+          echo "::error::published but the registry still does not serve $version"
+          exit 1
