@@ -70,7 +70,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-fg-subtle">{BILLING_NOTE}</p>
         <p className="mx-auto mt-2 max-w-2xl text-center text-xs text-fg-subtle">
-          Not available yet, and not included in any plan until it ships: {ROADMAP.join(", ").toLowerCase()}.
+          Not available yet, and not included in any plan until it ships: {ROADMAP.join(", ")}.
         </p>
       </div>
     </section>

@@ -109,11 +109,14 @@ export const PRICING_TIERS: PricingTier[] = [
   },
 ];
 
-/** Planned, not built. Shown as such, never as a plan feature. */
+/**
+ * Planned, not built. Shown as such, never as a plan feature. Written in
+ * mid-sentence case: both places that show it put it after a colon.
+ */
 export const ROADMAP = [
   "Google Search Console data (clicks, impressions, index status) next to each issue",
-  "Scheduled white-label reports emailed to your clients",
-  "Team seats",
+  "scheduled white-label reports emailed to your clients",
+  "team seats",
 ];
 
 export const BILLING_NOTE = BILLING_OPEN
