@@ -15,7 +15,7 @@ export default function MarketingLayout({
       <JsonLd data={siteGraph} />
       <SceneBackdrop />
       <SiteNav />
-      <main className="relative">{children}</main>
+      <main className="marketing relative">{children}</main>
       <SiteFooter />
     </>
   );

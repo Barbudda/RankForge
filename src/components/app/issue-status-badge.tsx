@@ -6,7 +6,7 @@ const ISSUE_STATUS: Record<
   { label: string; tone: React.ComponentProps<typeof Badge>["tone"] }
 > = {
   open: { label: "Open", tone: "amber" },
-  pr_open: { label: "PR open", tone: "electric" },
+  pr_open: { label: "PR open", tone: "molten" },
   pr_merged: { label: "PR merged", tone: "violet" },
   fixed: { label: "Fixed", tone: "signal" },
   ignored: { label: "Ignored", tone: "neutral" },
@@ -22,7 +22,7 @@ const PR_STATUS: Record<
   { label: string; tone: React.ComponentProps<typeof Badge>["tone"] }
 > = {
   draft: { label: "Draft", tone: "neutral" },
-  open: { label: "Open", tone: "electric" },
+  open: { label: "Open", tone: "molten" },
   merged: { label: "Merged", tone: "violet" },
   closed: { label: "Closed", tone: "danger" },
   simulated: { label: "Simulated", tone: "cyan" },

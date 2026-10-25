@@ -10,7 +10,7 @@ import { timeAgo } from "@/lib/utils";
 export function RepoCard({ repo }: { repo: Repository }) {
   return (
     <Link href={`/repositories/${repo.id}`} className="group block">
-      <Card className="h-full p-5 transition-colors group-hover:border-electric/40">
+      <Card className="h-full p-5 transition-colors group-hover:border-molten/40">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex items-center gap-2 text-fg-subtle">

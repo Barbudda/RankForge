@@ -32,7 +32,7 @@ export function FaqSection({
         <div className="mx-auto mt-12 max-w-3xl space-y-3">
           {items.map((item) => (
             <Reveal key={item.q}>
-              <details className="group rounded-xl border border-border bg-surface/60 px-5 open:border-electric/30 open:bg-surface">
+              <details className="group lg rounded-2xl px-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-medium text-fg [&::-webkit-details-marker]:hidden">
                   {item.q}
                   <Plus className="size-5 shrink-0 text-fg-subtle transition-transform group-open:rotate-45" />

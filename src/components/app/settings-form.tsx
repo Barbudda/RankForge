@@ -33,7 +33,7 @@ function Toggle({
         onClick={() => onChange(!checked)}
         className={cn(
           "inline-flex h-6 w-11 shrink-0 items-center rounded-full px-0.5 transition-colors",
-          checked ? "bg-electric" : "bg-border",
+          checked ? "bg-molten" : "bg-border",
         )}
       >
         <span
@@ -104,7 +104,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
         <CardHeader>
           <CardTitle>Modification level</CardTitle>
           <CardDescription>
-            Choose how far RankForge may go by default — from plain advice to
+            Choose how far RankForge may go by default, from plain advice to
             full root autonomy. Each repository can override this.
           </CardDescription>
         </CardHeader>
@@ -145,7 +145,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
                 value={settings.maxPrsPerWeek}
                 onChange={(e) => update("maxPrsPerWeek", Number(e.target.value))}
                 aria-label="Max PRs per week"
-                className="w-40 accent-[var(--color-electric)]"
+                className="w-40 accent-[var(--color-molten)]"
               />
               <span className="w-8 text-right font-mono text-sm font-semibold text-fg">
                 {settings.maxPrsPerWeek}
@@ -174,11 +174,11 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
                 className={cn(
                   "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors",
                   active
-                    ? "border-electric/40 bg-electric/10 text-fg"
+                    ? "border-molten/40 bg-molten/10 text-fg"
                     : "border-border bg-surface/40 text-fg-subtle hover:text-fg",
                 )}
               >
-                {active && <Check className="size-3.5 text-electric-bright" />}
+                {active && <Check className="size-3.5 text-molten-bright" />}
                 {CATEGORY_META[cat].label}
               </button>
             );
@@ -200,7 +200,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
             value={excludedText}
             onChange={(e) => onExcludedChange(e.target.value)}
             placeholder={"e.g.\n/admin/**\n/legacy/**"}
-            className="w-full rounded-lg border border-border bg-code p-3 font-mono text-xs text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric/50"
+            className="w-full rounded-lg border border-border bg-code p-3 font-mono text-xs text-fg outline-none placeholder:text-fg-subtle focus-visible:border-molten/50"
           />
         </div>
       </Card>
@@ -220,7 +220,7 @@ export function SettingsForm({ initial }: { initial: AgentSettings }) {
         <button
           onClick={save}
           disabled={saving}
-          className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+          className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
         >
           {saving && <Loader2 className="size-4 animate-spin" />}
           {saving ? "Saving…" : "Save changes"}

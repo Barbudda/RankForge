@@ -32,7 +32,7 @@ export function PrPreview({
             <PrStatusBadge status={pr.status} />
           </div>
           <div className="flex flex-wrap items-center gap-2 px-5 py-3 text-xs text-fg-muted">
-            <span className="inline-flex items-center gap-1 font-mono text-electric-bright">
+            <span className="inline-flex items-center gap-1 font-mono text-molten-bright">
               <GitBranch className="size-3.5" />
               {pr.branchName}
             </span>

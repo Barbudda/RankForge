@@ -1,4 +1,4 @@
-# RankForge — offline AI asset factory (Volet D)
+# RankForge: offline AI asset factory (Volet D)
 
 > **Status: prepared, awaiting API keys. Nothing here runs at build or runtime.**
 
@@ -13,10 +13,10 @@ needs an API key in its bundle.
 The two tools requested are **not importable into a Next/TS frontend**:
 
 - [`anil-matcha/open-generative-ai`](https://github.com/anil-matcha/open-generative-ai)
-  — a full Next/Electron **application** for generating images/videos across 200+
+  is a full Next/Electron **application** for generating images/videos across 200+
   models. It's an app to *run*, not a library to `import`.
 - [`higgsfield-ai/higgsfield-client`](https://github.com/higgsfield-ai/higgsfield-client)
-  — a **Python SDK** (text→image/video) requiring paid `HF_API_KEY` /
+  is a **Python SDK** (text→image/video) requiring paid `HF_API_KEY` /
   `HF_API_SECRET`. Python + secrets have no place in a front-end runtime.
 
 The correct pattern is therefore an **offline asset factory**: generate a few
@@ -24,21 +24,21 @@ visuals **once**, then commit only the produced files into `public/` (e.g.
 `public/hero/ambient-texture.webp`, particle/glyph sprites, an optional ambient
 hero loop, an OG image). Zero runtime deps, zero keys in the bundle.
 
-## Current state — procedural assets, no keys needed
+## Current state: procedural assets, no keys needed
 
 The signature hero (`code chaos → SEO clarity`) currently uses **100% procedural,
 in-shader assets** (an instanced glyph atlas built at runtime on a canvas + GLSL
 tint/displacement). It needs **no** generated images to look premium, so the
 build is unblocked and this volet is optional polish.
 
-## When you provide keys — exact commands
+## When you provide keys: exact commands
 
 The user has **not** provided `HF_API_KEY` / `HF_API_SECRET`, so **nothing was
 executed**. When keys are available, run the pipeline in an **isolated Python
 venv** (never added to the web project):
 
 ```bash
-# 1. Isolated env — NOT part of the Next app
+# 1. Isolated env, NOT part of the Next app
 cd tools/asset-gen
 python -m venv .venv
 . .venv/Scripts/activate        # Windows (Git Bash);  ".venv/bin/activate" on macOS/Linux
@@ -64,9 +64,10 @@ python generate.py
 
 ## Art direction for any generated asset (must match the @theme palette)
 
-- Deep near-black background `#05060b`; accents **electric blue `#4f7bff`**,
-  **cyan `#22d3ee`**, **signal green `#34e0a1`**; warnings red `#ff6b81` / amber `#ffb454`.
-- Mood: sober, technical, futuristic — *not* glossy or gimmicky. Subtle grain,
+- Warm graphite background `#0a0908`; single accent **molten `#ff7a2f`**;
+  **signal green `#34e0a1`** only for "resolved"; warnings red `#ff6b81` / amber `#ffb454`.
+  Full direction: `docs/DESIGN.md`.
+- Mood: sober, technical, futuristic. Never glossy or gimmicky. Subtle grain,
   faint vector/graph lines, fragments of code resolving into order.
 - Decorative only. **Never** generate factual content, copy, or anything that
   lands in `src/lib/*`. Assets are ambiance behind the real, accessible DOM.

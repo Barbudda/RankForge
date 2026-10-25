@@ -29,7 +29,7 @@ export function GenerateFixButton({
       if (res.ok) router.refresh();
       else setErr(res.error ?? "Fix generation failed.");
     } catch {
-      setErr("Fix generation failed — please try again.");
+      setErr("Fix generation failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ export function GenerateFixButton({
       <button
         onClick={run}
         disabled={loading}
-        className="inline-flex h-9 items-center gap-2 rounded-md border border-border px-3 text-sm font-medium text-fg transition-colors hover:border-electric/50 hover:bg-surface disabled:opacity-60"
+        className="inline-flex h-9 items-center gap-2 rounded-md border border-border px-3 text-sm font-medium text-fg transition-colors hover:border-molten/50 hover:bg-surface disabled:opacity-60"
       >
         {loading ? (
           <Loader2 className="size-4 animate-spin" />

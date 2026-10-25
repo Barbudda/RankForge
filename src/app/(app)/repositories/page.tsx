@@ -19,7 +19,7 @@ export default async function RepositoriesPage() {
         title="Repositories"
         description="Connect a GitHub repository and a production URL to start auditing."
         actions={
-          <ConnectRepoButton className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright">
+          <ConnectRepoButton className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-4 text-sm font-medium text-ink transition-colors hover:bg-molten-bright">
             <Plus className="size-4" />
             Connect repo
           </ConnectRepoButton>
@@ -46,7 +46,7 @@ export default async function RepositoriesPage() {
             Add a repository and its production URL to start auditing. Read-only
             by default.
           </p>
-          <ConnectRepoButton className="mt-5 inline-flex h-10 items-center gap-2 rounded-md border border-border px-4 text-sm font-medium text-fg transition-colors hover:border-electric/50 hover:bg-surface">
+          <ConnectRepoButton className="mt-5 inline-flex h-10 items-center gap-2 rounded-md border border-border px-4 text-sm font-medium text-fg transition-colors hover:border-molten/50 hover:bg-surface">
             <Plus className="size-4" />
             Add repository
           </ConnectRepoButton>
@@ -83,7 +83,7 @@ export default async function RepositoriesPage() {
                   <td className="p-4">
                     <Link
                       href={`/repositories/${repo.id}`}
-                      className="font-medium text-fg hover:text-electric-bright"
+                      className="font-medium text-fg hover:text-molten-bright"
                     >
                       {repo.fullName}
                     </Link>

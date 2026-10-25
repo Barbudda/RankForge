@@ -186,7 +186,7 @@ function render(ctx: CanvasRenderingContext2D, m: Model, cfg: Cfg, env: FieldEnv
     const isCause = m.cause[i]! < 0;
     const dim = hoverCause >= 0 && i !== hoverCause && m.cause[i]! !== hoverCause ? 0.4 : 1;
     if (isCause) {
-      glowDot(ctx, m.px[i]!, m.py[i]!, 2.7, DOT.electric, Math.min(0.85, cfg.alpha + 0.12) * dim, 1.7 * dim);
+      glowDot(ctx, m.px[i]!, m.py[i]!, 2.7, DOT.molten, Math.min(0.85, cfg.alpha + 0.12) * dim, 1.7 * dim);
     } else {
       const b = m.bound[i]!;
       const rgb = b > 0.55 ? DOT.signal : i % 3 === 0 ? DOT.amber : DOT.base;

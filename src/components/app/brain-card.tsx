@@ -28,11 +28,11 @@ export async function BrainCard() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Brain className="size-4 text-electric-bright" />
+          <Brain className="size-4 text-molten-bright" />
           Brain
         </CardTitle>
         <CardDescription>
-          Semantic memory RankForge learns from — recalled to ground every
+          Semantic memory RankForge learns from, recalled to ground every
           audit, fix and chat. Works offline, no API key needed.
         </CardDescription>
       </CardHeader>
@@ -59,7 +59,7 @@ export async function BrainCard() {
           </div>
         ) : (
           <p className="mt-3 text-sm text-fg-muted">
-            Empty for now — run an audit and the brain starts remembering what it
+            Empty for now. Run an audit and the brain starts remembering what it
             finds and fixes, then recalls it next time.
           </p>
         )}

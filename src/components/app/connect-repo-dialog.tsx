@@ -118,7 +118,7 @@ export function ConnectRepoButton({
                   placeholder="acme/acme-saas-web"
                   required
                   autoFocus
-                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 font-mono text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric/50"
+                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 font-mono text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-molten/50"
                 />
               </Field>
 
@@ -129,7 +129,7 @@ export function ConnectRepoButton({
                   onChange={(e) => setProductionUrl(e.target.value)}
                   placeholder="https://acme.com"
                   required
-                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric/50"
+                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-molten/50"
                 />
               </Field>
 
@@ -137,7 +137,7 @@ export function ConnectRepoButton({
                 <select
                   value={framework}
                   onChange={(e) => setFramework(e.target.value as Framework)}
-                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none focus-visible:border-electric/50"
+                  className="h-10 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none focus-visible:border-molten/50"
                 >
                   {FRAMEWORKS.map((f) => (
                     <option key={f.value} value={f.value}>
@@ -164,7 +164,7 @@ export function ConnectRepoButton({
                 <button
                   type="submit"
                   disabled={saving}
-                  className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+                  className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
                 >
                   {saving ? (
                     <Loader2 className="size-4 animate-spin" />

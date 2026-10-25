@@ -215,7 +215,7 @@ type Uniforms = {
   uTurns: { value: number };
   uColorBad: { value: THREE.Color };
   uColorWarn: { value: THREE.Color };
-  uColorElectric: { value: THREE.Color };
+  uColorHeat: { value: THREE.Color };
   uColorCyan: { value: THREE.Color };
   uColorSignal: { value: THREE.Color };
   uColorBg: { value: THREE.Color };
@@ -234,10 +234,10 @@ function makeUniforms(texture: THREE.Texture, tier: GpuTier): Uniforms {
     uTurns: { value: tier === "mobile" ? 2 : 3 },
     uColorBad: { value: new THREE.Color("#ff6b81") },
     uColorWarn: { value: new THREE.Color("#ffb454") },
-    uColorElectric: { value: new THREE.Color("#4f7bff") },
+    uColorHeat: { value: new THREE.Color("#ff7a2f") },
     uColorCyan: { value: new THREE.Color("#22d3ee") },
     uColorSignal: { value: new THREE.Color("#34e0a1") },
-    uColorBg: { value: new THREE.Color("#05060b") },
+    uColorBg: { value: new THREE.Color("#0a0908") },
   };
 }
 

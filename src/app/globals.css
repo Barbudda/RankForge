@@ -1,30 +1,32 @@
 @import "tailwindcss";
 
 /* ───────────────────────────────────────────────────────────────
-   RankForge design tokens — premium, technical, futuristic dark.
-   "code chaos → SEO clarity": deep black canvas, electric accents.
+   RankForge design tokens. Direction: "the forge" (docs/DESIGN.md).
+   Warm graphite neutrals, one strong accent (molten), signal green
+   reserved for "validated / fixed / ready".
    ─────────────────────────────────────────────────────────────── */
 @theme {
   /* Base canvas */
-  --color-bg: #05060b;
-  --color-bg-soft: #090b14;
-  --color-surface: #0c0f1a;
-  --color-surface-2: #11152170;
-  --color-elevated: #141927;
-  --color-border: #1d2334;
-  --color-border-soft: #161b29;
-  --color-code: #070810; /* code/terminal surfaces (diffs, snippets) */
+  --color-bg: #0a0908;
+  --color-bg-soft: #0f0d0c;
+  --color-surface: #141210;
+  --color-surface-2: #1a171470;
+  --color-elevated: #1d1a17;
+  --color-border: #2a2521;
+  --color-border-soft: #1e1a17;
+  --color-code: #0c0a09; /* code/terminal surfaces (diffs, snippets) */
 
   /* Text */
-  --color-fg: #eef1f8;
-  --color-fg-muted: #a7aec4;
-  --color-fg-subtle: #7f87a3;
+  --color-fg: #f3efe9;
+  --color-fg-muted: #b4aca2;
+  --color-fg-subtle: #8f877e;
+  --color-ink: #170b04; /* text set on molten */
 
   /* Brand accents */
-  --color-electric: #4f7bff; /* electric blue */
-  --color-electric-bright: #6f93ff;
+  --color-molten: #ff7a2f; /* the single strong accent */
+  --color-molten-bright: #ff9a5c;
   --color-cyan: #22d3ee;
-  --color-signal: #34e0a1; /* signal green */
+  --color-signal: #34e0a1; /* validated only */
   --color-violet: #a779ff;
   --color-amber: #ffb454;
   --color-danger: #ff6b81;
@@ -36,7 +38,8 @@
   --color-low: #6fd6a8;
 
   /* Fonts (wired by next/font in layout.tsx) */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-mono: var(--font-mono), ui-monospace, "JetBrains Mono", monospace;
 
   /* Radius */
@@ -66,14 +69,13 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv01", "cv02";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-electric) 35%, transparent);
+    background-color: color-mix(in oklab, var(--color-molten) 35%, transparent);
     color: #fff;
   }
 
@@ -95,7 +97,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-electric);
+    outline: 2px solid var(--color-molten);
     outline-offset: 2px;
     border-radius: var(--radius-xs);
   }
@@ -124,25 +126,15 @@
   background-size: 22px 22px;
 }
 
-/* Glassy card surface */
-@utility glass {
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--color-surface) 80%, transparent),
-    color-mix(in oklab, var(--color-bg-soft) 90%, transparent)
-  );
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border);
-}
 
 /* Glow ring on hover */
-@utility glow-electric {
+@utility glow-molten {
   box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--color-electric) 30%, transparent),
-    0 8px 40px -12px color-mix(in oklab, var(--color-electric) 50%, transparent);
+    0 0 0 1px color-mix(in oklab, var(--color-molten) 30%, transparent),
+    0 8px 40px -12px color-mix(in oklab, var(--color-molten) 50%, transparent);
 }
 
-/* Glow ring for validated/green surfaces (matches glow-electric intensity) */
+/* Glow ring for validated/green surfaces (matches glow-molten intensity) */
 @utility glow-signal {
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--color-signal) 30%, transparent),
@@ -153,12 +145,143 @@
 @utility spotlight {
   background: radial-gradient(
     60% 50% at 50% 0%,
-    color-mix(in oklab, var(--color-electric) 18%, transparent) 0%,
+    color-mix(in oklab, var(--color-molten) 18%, transparent) 0%,
     transparent 70%
   );
 }
 
 @layer components {
+  /* ── Liquid glass (docs/DESIGN.md "Verre liquide") ──────────────────
+     One material for every framed surface: cards, nav, tabs, bubbles,
+     tags. Translucent warm tint over a blurred + saturated backdrop, a
+     specular top edge, a gradient rim, and a little molten light pooled
+     at the bottom lip. Chromium additionally gets real edge refraction
+     from useLiquidRefraction (SVG displacement map as backdrop-filter).
+     In @layer components so position/border/radius utilities still win. */
+  .lg {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(
+        180deg,
+        rgb(255 244 232 / 0.085) 0%,
+        rgb(255 244 232 / 0.03) 45%,
+        rgb(255 244 232 / 0.015) 100%
+      ),
+      rgb(18 15 13 / 0.5);
+    -webkit-backdrop-filter: blur(16px) saturate(165%);
+    backdrop-filter: blur(16px) saturate(165%);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 252 247 / 0.26),
+      inset 0 -1px 0 0 rgb(255 168 110 / 0.14),
+      inset 0 -26px 34px -30px rgb(255 122 47 / 0.26),
+      0 22px 48px -32px rgb(0 0 0 / 0.8);
+  }
+  /* Gradient rim: bright where the light hits (top left), warm at the
+     bottom right, clear in between. Drawn as a 1px masked ring. */
+  .lg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      155deg,
+      rgb(255 255 255 / 0.34),
+      rgb(255 255 255 / 0.07) 28%,
+      rgb(255 255 255 / 0.02) 58%,
+      rgb(255 150 90 / 0.24)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  /* Curved sheen across the upper part of the pane. */
+  .lg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      140% 70% at 20% -20%,
+      rgb(255 255 255 / 0.09),
+      transparent 60%
+    );
+  }
+
+  /* Smaller, tighter glass for tags, chips and secondary buttons. */
+  .lg-thin {
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    backdrop-filter: blur(10px) saturate(150%);
+    background:
+      linear-gradient(180deg, rgb(255 244 232 / 0.07), rgb(255 244 232 / 0.02)),
+      rgb(18 15 13 / 0.38);
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 252 247 / 0.2),
+      inset 0 -1px 0 0 rgb(255 168 110 / 0.1);
+  }
+
+  /* Glass chip: keeps its own semantic tint (danger, signal…) and adds
+     the glass edge, for mono tags inside glass panes. */
+  .lg-chip {
+    -webkit-backdrop-filter: blur(6px) saturate(140%);
+    backdrop-filter: blur(6px) saturate(140%);
+    box-shadow: inset 0 1px 0 0 rgb(255 252 247 / 0.12);
+  }
+
+  /* Molten glass: the primary action. Lit from above, deeper at the lip. */
+  .lg-molten {
+    background: linear-gradient(
+      180deg,
+      #ffb07a 0%,
+      #ff8a45 38%,
+      #ff7a2f 62%,
+      #e8641f 100%
+    );
+    color: var(--color-ink);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 240 222 / 0.75),
+      inset 0 -2px 5px 0 rgb(150 45 5 / 0.35),
+      0 10px 22px -14px rgb(0 0 0 / 0.75);
+  }
+  .lg-molten::after {
+    background: linear-gradient(
+      155deg,
+      rgb(255 245 235 / 0.7),
+      rgb(255 255 255 / 0.1) 35%,
+      rgb(120 35 0 / 0.35)
+    );
+  }
+  .lg-molten::before {
+    background: radial-gradient(
+      120% 80% at 30% -30%,
+      rgb(255 255 255 / 0.35),
+      transparent 55%
+    );
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .lg,
+    .lg-thin {
+      background: rgb(24 20 18 / 0.94);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .lg,
+    .lg-thin {
+      background: rgb(24 20 18 / 0.96);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
   .container-rf {
     width: 100%;
     margin-inline: auto;
@@ -200,4 +323,15 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Marketing headings: Fraunces display serif (docs/DESIGN.md "Typographie").
+   Unlayered on purpose so it wins over the font-semibold / tracking-tight
+   utilities already on those headings. */
+.marketing h1,
+.marketing h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  letter-spacing: -0.01em;
 }

@@ -53,7 +53,7 @@ export default async function IssuePrPreviewPage({
           { label: "PR preview" },
         ]}
         title={pr.title}
-        description="Simulated pull request — review the diff, then create it for real."
+        description="Simulated pull request. Review the diff, then create it for real."
       />
       <PrPreview pr={pr} repo={repo} issueId={issue.id} />
     </>

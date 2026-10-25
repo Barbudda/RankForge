@@ -35,7 +35,7 @@ export default async function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        description="Your workspace at a glance — scores, issues and the pull requests RankForge has opened."
+        description="Your workspace at a glance: scores, issues and the pull requests RankForge has opened."
         actions={
           !empty && (
             <Button href="/repositories" size="md">
@@ -47,17 +47,17 @@ export default async function DashboardPage() {
       />
 
       {/* Discoverable: the RankForge agent in your editor (no repo needed). */}
-      <div className="mb-6 flex flex-col gap-3 rounded-xl border border-electric/25 bg-electric/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-6 flex flex-col gap-3 rounded-xl border border-molten/25 bg-molten/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
-          <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-electric/30 bg-electric/[0.08]">
-            <Terminal className="size-4 text-electric-bright" />
+          <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-molten/30 bg-molten/[0.08]">
+            <Terminal className="size-4 text-molten-bright" />
           </span>
           <div>
             <p className="text-sm font-medium text-fg">
               Prefer to work in your editor?
             </p>
             <p className="text-[13px] text-fg-muted">
-              Connect the RankForge agent to Claude Code, Cursor or VS Code — it
+              Connect the RankForge agent to Claude Code, Cursor or VS Code. It
               audits your dev server and fixes issues in your repo. No setup, no
               GitHub App needed.
             </p>
@@ -80,7 +80,7 @@ export default async function DashboardPage() {
               <p className="mt-2 text-fg-muted">
                 Add a repository name and its production URL, then run your first
                 audit. You&apos;ll see scores, prioritized issues and the fixes
-                RankForge prepares — right here.
+                RankForge prepares, right here.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button href="/repositories" size="md">
@@ -162,7 +162,7 @@ export default async function DashboardPage() {
                   ))
                 ) : (
                   <p className="px-5 py-8 text-center text-sm text-fg-subtle">
-                    No open opportunities — nice and clean.
+                    No open opportunities. Nice and clean.
                   </p>
                 )}
               </div>
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
               action={
                 <Link
                   href="/repositories"
-                  className="flex items-center gap-1 text-sm text-electric-bright hover:underline"
+                  className="flex items-center gap-1 text-sm text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
                 >
                   View all
                   <ArrowRight className="size-4" />

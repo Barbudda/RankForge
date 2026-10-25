@@ -19,7 +19,7 @@ function friendlyAuthError(message: string): string {
   if (m.includes("invalid login credentials"))
     return "That email and password don't match.";
   if (m.includes("already registered"))
-    return "An account with this email already exists — sign in instead.";
+    return "An account with this email already exists. Sign in instead.";
   if (m.includes("rate limit"))
     return "Too many attempts. Wait a minute and try again.";
   if (m.includes("password should be"))
@@ -128,7 +128,7 @@ export function AuthForm({
         </p>
         <Link
           href="/login"
-          className="mt-6 inline-block text-sm text-electric-bright hover:underline"
+          className="mt-6 inline-block text-sm text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
         >
           Back to sign in
         </Link>
@@ -213,7 +213,7 @@ export function AuthForm({
         <button
           type="submit"
           disabled={loading}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-electric font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-molten font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
         >
           {loading ? (
             <Loader2 className="size-4 animate-spin" />
@@ -249,7 +249,7 @@ export function AuthForm({
           <button
             type="button"
             onClick={() => setResetMode(false)}
-            className="text-electric-bright hover:underline"
+            className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
           >
             Back to sign in
           </button>
@@ -258,7 +258,7 @@ export function AuthForm({
             {isLogin ? "New to RankForge? " : "Already have an account? "}
             <Link
               href={isLogin ? "/signup" : "/login"}
-              className="text-electric-bright hover:underline"
+              className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
             >
               {isLogin ? "Create an account" : "Sign in"}
             </Link>
@@ -288,7 +288,7 @@ function Field({
         {...rest}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-11 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric focus-visible:ring-2 focus-visible:ring-electric/30"
+        className="h-11 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-molten focus-visible:ring-2 focus-visible:ring-molten/30"
       />
     </label>
   );

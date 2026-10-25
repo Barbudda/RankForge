@@ -129,10 +129,10 @@ export function UseInEditorButton({
 
   const triggerClass =
     variant === "solid"
-      ? "inline-flex h-9 items-center gap-2 rounded-lg bg-electric px-3.5 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+      ? "inline-flex h-9 items-center gap-2 rounded-lg bg-molten px-3.5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright"
       : variant === "ghost"
         ? "inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-surface/60 px-3.5 text-sm font-medium text-fg-muted transition-colors hover:text-fg"
-        : "inline-flex items-center gap-1.5 text-sm font-medium text-electric-bright hover:underline";
+        : "inline-flex items-center gap-1.5 text-sm font-medium text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright";
 
   return (
     <>
@@ -156,8 +156,8 @@ export function UseInEditorButton({
         {open && (
           <div>
             <div className="flex items-start gap-3 border-b border-border px-5 py-4">
-              <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-electric/30 bg-electric/[0.08]">
-                <Terminal className="size-4 text-electric-bright" />
+              <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-molten/30 bg-molten/[0.08]">
+                <Terminal className="size-4 text-molten-bright" />
               </span>
               <div className="flex-1">
                 <h2 id="use-in-editor-title" className="text-sm font-semibold text-fg">
@@ -195,7 +195,7 @@ export function UseInEditorButton({
                     className={cn(
                       "flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors",
                       client === c.id
-                        ? "bg-electric/15 text-electric-bright"
+                        ? "bg-molten/15 text-molten-bright"
                         : "text-fg-subtle hover:text-fg",
                     )}
                   >
@@ -236,7 +236,7 @@ export function UseInEditorButton({
               <div className="mt-4 flex items-center justify-between">
                 <Link
                   href="/docs/agent"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-electric-bright hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
                 >
                   Full guide
                   <ArrowRight className="size-3.5" />
@@ -244,7 +244,7 @@ export function UseInEditorButton({
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-9 items-center rounded-md bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+                  className="inline-flex h-9 items-center rounded-md bg-molten px-4 text-sm font-medium text-ink transition-colors hover:bg-molten-bright"
                 >
                   Done
                 </button>

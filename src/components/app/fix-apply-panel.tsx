@@ -58,7 +58,7 @@ export function FixChangeReport({ report }: { report: PrepareReport }) {
         {report.files.map((file) => (
           <div key={file.path} className="overflow-hidden rounded-lg border border-border">
             <div className="flex items-center gap-2 border-b border-border bg-surface/70 px-4 py-2.5">
-              <FileCode2 className="size-4 text-electric-bright" />
+              <FileCode2 className="size-4 text-molten-bright" />
               <span className="font-mono text-xs text-fg">{file.path}</span>
               <span className="ml-auto text-[11px] text-fg-subtle">
                 {file.changes.length} change{file.changes.length > 1 ? "s" : ""}
@@ -103,10 +103,10 @@ export function FixChangeReport({ report }: { report: PrepareReport }) {
           <ul className="mt-2 space-y-1 text-xs text-fg-subtle">
             {report.skipped.slice(0, 5).map((s) => (
               <li key={s.issueId}>
-                <Link href={`/issues/${s.issueId}`} className="text-electric-bright hover:underline">
+                <Link href={`/issues/${s.issueId}`} className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
                   {s.title}
-                </Link>{" "}
-                — {s.reason}
+                </Link>
+                : {s.reason}
               </li>
             ))}
           </ul>
@@ -132,7 +132,7 @@ function whatChanges(issue: SeoIssue): string {
     "meta-og-image-missing": "Adds a social share image (OpenGraph)",
   };
   const base = map[rule] || issue.suggestedFix.summary || "Applies a reviewed fix";
-  return file ? `${base} — ${file}` : base;
+  return file ? `${base} (${file})` : base;
 }
 
 export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
@@ -172,7 +172,7 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
       setReport(res);
       router.refresh();
     } catch {
-      setError("Could not prepare the fixes — please try again.");
+      setError("Could not prepare the fixes. Please try again.");
     } finally {
       setPreparing(false);
     }
@@ -191,7 +191,7 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
         setError(res.error ?? "Could not open the pull requests.");
       }
     } catch {
-      setError("Could not open the pull requests — please try again.");
+      setError("Could not open the pull requests. Please try again.");
     } finally {
       setOpening(false);
     }
@@ -205,11 +205,11 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
             <Wand2 className="size-4 text-signal" />
           </span>
           <div>
-            <CardTitle>Fix it — instantly, and see exactly what changes</CardTitle>
+            <CardTitle>Fix it now and see exactly what changes</CardTitle>
             <CardDescription>
               {fixable.length} issue{fixable.length > 1 ? "s" : ""} can be fixed
               automatically. Pick what to apply, review the diff, then open a
-              pull request. No AI required — nothing merges without you.
+              pull request. No AI required, and nothing merges without you.
             </CardDescription>
           </div>
         </div>
@@ -275,13 +275,13 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4">
           <span className="inline-flex items-center gap-1.5 text-xs text-fg-subtle">
             <ShieldCheck className="size-3.5 text-signal" />
-            Applied to a RankForge branch as a pull request — never your main branch.
+            Applied to a RankForge branch as a pull request, never to your main branch.
           </span>
           <button
             type="button"
             onClick={prepare}
             disabled={preparing || selected.size === 0}
-            className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+            className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
           >
             {preparing ? <Loader2 className="size-4 animate-spin" /> : <Wand2 className="size-4" />}
             {preparing ? "Preparing…" : `Prepare ${selected.size} fix${selected.size > 1 ? "es" : ""}`}
@@ -316,7 +316,7 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
             {prResult ? (
               <Link
                 href="/pull-requests"
-                className="inline-flex h-10 items-center gap-2 rounded-md border border-border px-4 text-sm font-medium text-fg transition-colors hover:border-electric/50"
+                className="inline-flex h-10 items-center gap-2 rounded-md border border-border px-4 text-sm font-medium text-fg transition-colors hover:border-molten/50"
               >
                 <GitPullRequest className="size-4" />
                 View pull requests
@@ -326,7 +326,7 @@ export function FixApplyPanel({ fixable }: { fixable: SeoIssue[] }) {
                 type="button"
                 onClick={openPr}
                 disabled={opening}
-                className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+                className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
               >
                 {opening ? <Loader2 className="size-4 animate-spin" /> : <GitPullRequest className="size-4" />}
                 {opening

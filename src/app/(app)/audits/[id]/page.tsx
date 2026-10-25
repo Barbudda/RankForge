@@ -100,7 +100,7 @@ export default async function AuditDetailPage({
               </span>
             )}
             <span className="text-fg-subtle">
-              vs previous {audit.previousScore ?? "—"}
+              vs previous {audit.previousScore ?? "n/a"}
             </span>
           </div>
           <Badge tone={audit.crawl.renderMode === "rendered" ? "signal" : "neutral"}>
@@ -154,7 +154,7 @@ export default async function AuditDetailPage({
                 className={`capitalize ${
                   {
                     completed: "text-signal",
-                    running: "text-electric-bright",
+                    running: "text-molten-bright",
                     queued: "text-fg-muted",
                     failed: "text-danger",
                   }[audit.status] ?? "text-fg-muted"

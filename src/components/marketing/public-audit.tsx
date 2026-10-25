@@ -83,7 +83,7 @@ function CopyCmd({ cmd }: { cmd: string }) {
           /* clipboard blocked */
         }
       }}
-      className="group flex w-full items-center gap-2 rounded-lg border border-border bg-code px-3 py-2 text-left font-mono text-xs text-fg-muted transition-colors hover:border-electric/40"
+      className="group flex w-full items-center gap-2 rounded-lg border border-border bg-code px-3 py-2 text-left font-mono text-xs text-fg-muted transition-colors hover:border-molten/40"
       aria-label="Copy command"
     >
       <span className="truncate">{cmd}</span>
@@ -116,7 +116,7 @@ export function PublicAudit() {
       if (!res.ok) setError(data.error ?? "Audit failed.");
       else setReport(data as Report);
     } catch {
-      setError("Couldn't reach the audit service — please try again.");
+      setError("Couldn't reach the audit service. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,7 @@ export function PublicAudit() {
     <div>
       {/* Form */}
       <form onSubmit={run} className="flex flex-col gap-3 sm:flex-row">
-        <label className="flex h-12 flex-1 items-center gap-2.5 rounded-lg border border-border bg-surface/70 px-4 transition-colors focus-within:border-electric">
+        <label className="lg lg-thin flex h-12 flex-1 items-center gap-2.5 rounded-full px-5 focus-within:ring-1 focus-within:ring-molten/60">
           <Search className="size-4 shrink-0 text-fg-subtle" />
           <span className="sr-only">Site URL</span>
           <input
@@ -145,7 +145,7 @@ export function PublicAudit() {
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-electric px-6 font-medium text-white shadow-[0_10px_40px_-10px_var(--color-electric)] transition-colors hover:bg-electric-bright disabled:opacity-60"
+          className="lg lg-molten inline-flex h-12 items-center justify-center gap-2 px-6 font-medium disabled:opacity-60 rounded-full transition-[filter] hover:brightness-110"
         >
           {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowRight className="size-4" />}
           {loading ? "Auditing…" : "Audit for free"}
@@ -169,7 +169,7 @@ export function PublicAudit() {
       {/* Report */}
       {report && (
         <div className="mt-10 space-y-8">
-          <div className="flex flex-col gap-6 rounded-xl border border-border bg-surface/70 p-6 md:flex-row md:items-center md:gap-10">
+          <div className="flex flex-col gap-6 lg rounded-2xl p-6 md:flex-row md:items-center md:gap-10">
             <div className="shrink-0">
               <div className="text-xs text-fg-subtle">Technical SEO score</div>
               <div className={cn("mt-1 font-mono text-6xl font-semibold tabular-nums leading-none", scoreTone(report.overall))}>
@@ -198,17 +198,17 @@ export function PublicAudit() {
               {report.issues.length === 0 ? "No issues detected" : `${report.issues.length} issue${report.issues.length > 1 ? "s" : ""} found`}
               <span className="ml-2 text-sm font-normal text-fg-subtle">every one measured, with evidence</span>
             </h2>
-            <ul className="mt-4 divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface/60">
+            <ul className="mt-4 divide-y divide-border overflow-hidden lg rounded-2xl">
               {report.issues.map((i) => (
                 <li key={i.ruleId} className="p-4">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className={cn("rounded border px-1.5 py-0.5 font-mono text-[11px] font-medium uppercase", IMPACT_CLASS[i.impact])}>
+                    <span className={cn("lg-chip rounded-full border px-1.5 py-0.5 font-mono text-[11px] font-medium uppercase", IMPACT_CLASS[i.impact])}>
                       {i.impact}
                     </span>
                     <span className="font-medium text-fg">{i.title}</span>
                     <span className="text-xs text-fg-subtle">({i.affectedCount})</span>
                     {i.fixTemplate && (
-                      <span className="rounded border border-signal/30 bg-signal/10 px-1.5 py-0.5 font-mono text-[11px] text-signal">ready patch</span>
+                      <span className="lg-chip rounded-full border border-signal/30 bg-signal/10 px-1.5 py-0.5 font-mono text-[11px] text-signal">ready patch</span>
                     )}
                   </div>
                   {i.evidence && <p className="mt-1.5 text-sm text-fg-muted">{i.evidence}</p>}
@@ -239,7 +239,7 @@ export function PublicAudit() {
               </h2>
               <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                 {report.geo.checks.map((g) => (
-                  <li key={g.id} className="rounded-lg border border-border bg-surface/60 p-3">
+                  <li key={g.id} className="lg lg-thin rounded-xl p-3">
                     <div className="flex items-center gap-2 text-sm font-medium text-fg">
                       <span
                         className={cn(
@@ -260,22 +260,22 @@ export function PublicAudit() {
 
           {/* Deeper paths */}
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border border-electric/30 bg-electric/[0.05] p-5">
+            <div className="rounded-xl border border-molten/30 bg-molten/[0.05] p-5">
               <h3 className="font-semibold text-fg">The full audit, free</h3>
               <p className="mt-1.5 text-sm text-fg-muted">Up to 24 pages, audit history, and every fix as a diff grouped by file.</p>
-              <Link href="/signup" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-electric-bright hover:underline">
+              <Link href="/signup" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
                 Create a free account <ArrowRight className="size-4" />
               </Link>
             </div>
-            <div className="rounded-xl border border-border bg-surface/60 p-5">
+            <div className="lg rounded-2xl p-5">
               <h3 className="font-semibold text-fg">Unlimited, in your terminal</h3>
               <p className="mt-1.5 text-sm text-fg-muted">The same engine as an open-source CLI. Audits localhost too.</p>
               <div className="mt-4"><CopyCmd cmd={cliCmd} /></div>
             </div>
-            <div className="rounded-xl border border-border bg-surface/60 p-5">
+            <div className="lg rounded-2xl p-5">
               <h3 className="font-semibold text-fg">Fixed by your editor</h3>
-              <p className="mt-1.5 text-sm text-fg-muted">Connect the agent to Claude Code or Cursor — it audits and patches your repo.</p>
-              <Link href="/docs/agent" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-electric-bright hover:underline">
+              <p className="mt-1.5 text-sm text-fg-muted">Connect the agent to Claude Code or Cursor and it audits and patches your repo.</p>
+              <Link href="/docs/agent" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
                 <Terminal className="size-4" /> Set up the agent
               </Link>
             </div>

@@ -233,9 +233,9 @@ export function useParticleField(
 
 /** SEO-themed palette as "r,g,b" strings for use in `rgba(var, a)`. */
 export const DOT = {
-  base: "120,140,176", // muted slate-blue — neutral crawl signals
+  base: "150,138,124", // warm graphite: neutral crawl signals
   cyan: "34,211,238",
-  electric: "79,123,255",
+  molten: "255,122,47",
   amber: "255,180,84", // issue (warning)
   danger: "255,107,129", // issue (critical)
   signal: "52,224,161", // resolved / validated

@@ -95,7 +95,7 @@ export default async function RepositoryDetailPage({
               {safeSiteUrl ? (
                 <a
                   href={safeSiteUrl}
-                  className="inline-flex items-center gap-1 text-electric-bright hover:underline"
+                  className="inline-flex items-center gap-1 text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
                 >
                   {safeSiteUrl.replace("https://", "")}
                   <ExternalLink className="size-3" />
@@ -184,7 +184,7 @@ export default async function RepositoryDetailPage({
             latest && (
               <Link
                 href={`/audits/${latest.id}`}
-                className="text-sm text-electric-bright hover:underline"
+                className="text-sm text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
               >
                 View full audit
               </Link>

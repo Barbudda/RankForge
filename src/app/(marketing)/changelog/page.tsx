@@ -27,7 +27,7 @@ export default function ChangelogPage() {
         <ol className="space-y-8">
           {CHANGELOG.map((entry) => (
             <li key={entry.date} className="relative border-l border-border pl-6">
-              <span className="absolute -left-[5px] top-1.5 size-2.5 rounded-full border border-electric bg-bg" />
+              <span className="absolute -left-[5px] top-1.5 size-2.5 rounded-full border border-molten bg-bg" />
               <time
                 dateTime={entry.date}
                 className="font-mono text-xs text-fg-subtle"

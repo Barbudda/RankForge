@@ -25,18 +25,18 @@ export default function AppError({
           {error.digest
             ? `The error was logged (ref ${error.digest}).`
             : "The error was logged."}{" "}
-          Your data is safe — try again, or head back to the dashboard.
+          Your data is safe. Try again, or head back to the dashboard.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="inline-flex h-10 items-center rounded-md bg-electric px-5 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+            className="inline-flex h-10 items-center rounded-md bg-molten px-5 text-sm font-medium text-ink transition-colors hover:bg-molten-bright"
           >
             Try again
           </button>
           <Link
             href="/dashboard"
-            className="inline-flex h-10 items-center rounded-md border border-border px-5 text-sm font-medium text-fg transition-colors hover:border-electric/50"
+            className="inline-flex h-10 items-center rounded-md border border-border px-5 text-sm font-medium text-fg transition-colors hover:border-molten/50"
           >
             Dashboard
           </Link>

@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
           <p className="mt-3 text-sm text-fg-muted">
             Waiting for your reset link… Open this page from the link in your
             email. If nothing happens,{" "}
-            <Link href="/login" className="text-electric-bright hover:underline">
+            <Link href="/login" className="text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright">
               request a new link
             </Link>
             .
@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
                 required
                 autoComplete="new-password"
                 placeholder="••••••••"
-                className="h-11 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric focus-visible:ring-2 focus-visible:ring-electric/30"
+                className="h-11 w-full rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-molten focus-visible:ring-2 focus-visible:ring-molten/30"
               />
             </label>
             {error && (
@@ -93,7 +93,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-electric font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-molten font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
             >
               {loading ? (
                 <Loader2 className="size-4 animate-spin" />

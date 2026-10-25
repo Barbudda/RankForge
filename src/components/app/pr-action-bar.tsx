@@ -58,7 +58,7 @@ export function PrActionBar({
           if (state === "idle") void create();
           else if (state === "created" && url) window.open(url, "_blank");
         }}
-        className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-70"
+        className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-molten px-4 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-70"
       >
         {state === "creating" && <Loader2 className="size-4 animate-spin" />}
         {state === "created" && <Check className="size-4" />}

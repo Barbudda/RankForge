@@ -8,11 +8,11 @@ export function Badge({
   tone = "neutral",
   ...props
 }: React.HTMLAttributes<HTMLSpanElement> & {
-  tone?: "neutral" | "electric" | "cyan" | "signal" | "violet" | "amber" | "danger";
+  tone?: "neutral" | "molten" | "cyan" | "signal" | "violet" | "amber" | "danger";
 }) {
   const tones: Record<string, string> = {
     neutral: "border-border bg-surface text-fg-muted",
-    electric: "border-electric/30 bg-electric/10 text-electric-bright",
+    molten: "border-molten/30 bg-molten/10 text-molten-bright",
     cyan: "border-cyan/30 bg-cyan/10 text-cyan",
     signal: "border-signal/30 bg-signal/10 text-signal",
     violet: "border-violet/30 bg-violet/10 text-violet",

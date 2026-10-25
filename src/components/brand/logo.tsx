@@ -10,11 +10,11 @@ export function Logo({
 }) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
-      <span className="grid size-8 place-items-center rounded-lg bg-electric">
+      <span className="grid size-8 place-items-center rounded-lg bg-molten">
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          className="size-5 text-white"
+          className="size-5 text-ink"
           aria-hidden
         >
           <path

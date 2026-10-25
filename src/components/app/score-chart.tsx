@@ -50,15 +50,15 @@ export function ScoreChart({
       >
         <defs>
           <linearGradient id="scoreFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--color-electric)" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="var(--color-electric)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--color-molten)" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="var(--color-molten)" stopOpacity="0" />
           </linearGradient>
         </defs>
         <polygon points={area} fill="url(#scoreFill)" />
         <polyline
           points={line}
           fill="none"
-          stroke="var(--color-electric)"
+          stroke="var(--color-molten)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -71,7 +71,7 @@ export function ScoreChart({
             cy={p.y}
             r="3"
             fill="var(--color-bg)"
-            stroke="var(--color-electric-bright)"
+            stroke="var(--color-molten-bright)"
             strokeWidth="2"
             vectorEffect="non-scaling-stroke"
           />

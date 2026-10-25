@@ -73,7 +73,7 @@ export default async function IssueDetailPage({
           existingPr || hasFix ? (
             <Link
               href={prHref}
-              className="inline-flex h-10 items-center gap-2 rounded-md bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright"
+              className="inline-flex h-10 items-center gap-2 rounded-md bg-molten px-4 text-sm font-medium text-ink transition-colors hover:bg-molten-bright"
             >
               <GitPullRequest className="size-4" />
               {existingPr ? "View pull request" : "Create PR"}
@@ -131,7 +131,7 @@ export default async function IssueDetailPage({
                   <ExternalLink className="size-3.5 shrink-0 text-fg-subtle" />
                   <a
                     href={u.url}
-                    className="truncate font-mono text-xs text-electric-bright hover:underline"
+                    className="truncate font-mono text-xs text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright"
                   >
                     {u.url}
                   </a>
@@ -256,7 +256,7 @@ export default async function IssueDetailPage({
 
           <Link
             href={prHref}
-            className="flex items-center justify-between rounded-xl border border-electric/40 bg-electric/[0.07] p-4 transition-colors hover:bg-electric/10"
+            className="flex items-center justify-between rounded-xl border border-molten/40 bg-molten/[0.07] p-4 transition-colors hover:bg-molten/10"
           >
             <div>
               <div className="text-sm font-medium text-fg">
@@ -268,7 +268,7 @@ export default async function IssueDetailPage({
                   : "Preview the diff & checklist"}
               </div>
             </div>
-            <ArrowRight className="size-4 text-electric-bright" />
+            <ArrowRight className="size-4 text-molten-bright" />
           </Link>
         </div>
       </div>

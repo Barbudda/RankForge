@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 
 // Inlined (not imported from lib/support/knowledge) so the support prompt
 // and knowledge base never ship in the client bundle.
@@ -58,7 +59,7 @@ export function SupportChat() {
           role: "assistant",
           content:
             data.answer ??
-            "Sorry — something went wrong. Please try again in a moment.",
+            "Sorry, something went wrong. Please try again in a moment.",
           sources: Array.isArray(data.sources) ? data.sources.slice(0, 3) : [],
         },
       ]);
@@ -79,11 +80,14 @@ export function SupportChat() {
   return (
     <div className="fixed bottom-4 right-4 z-[90] print:hidden">
       {open && (
-        <div className="mb-3 flex h-[30rem] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-border bg-elevated/95 shadow-2xl shadow-black/50 backdrop-blur-xl">
+        <LiquidGlass
+          refraction={{ bezel: 20, thickness: 22, blur: 22 }}
+          className="mb-3 flex h-[30rem] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-3xl"
+        >
           {/* Header */}
-          <div className="flex items-center gap-2.5 border-b border-border px-4 py-3">
-            <span className="grid size-8 place-items-center rounded-lg border border-border bg-surface">
-              <MessageCircle className="size-4 text-electric" />
+          <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3">
+            <span className="lg lg-thin grid size-8 place-items-center rounded-full">
+              <MessageCircle className="size-4 text-molten" />
             </span>
             <div className="flex-1">
               <div className="text-sm font-semibold text-fg">RankForge support</div>
@@ -93,7 +97,7 @@ export function SupportChat() {
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="grid size-7 place-items-center rounded-md text-fg-subtle hover:text-fg"
+              className="grid size-7 place-items-center rounded-full text-fg-subtle hover:bg-white/[0.07] hover:text-fg"
               aria-label="Close support chat"
             >
               <X className="size-4" />
@@ -112,20 +116,20 @@ export function SupportChat() {
               >
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed",
+                    "lg max-w-[85%] rounded-[20px] px-3.5 py-2 text-sm leading-relaxed",
                     m.role === "user"
-                      ? "bg-electric text-white"
-                      : "border border-border bg-surface text-fg-muted",
+                      ? "lg-molten rounded-br-md"
+                      : "lg-thin rounded-bl-md text-fg-muted",
                   )}
                 >
                   <span className="whitespace-pre-wrap">{m.content}</span>
                   {m.role === "assistant" && !!m.sources?.length && (
-                    <span className="mt-2 flex flex-wrap gap-1.5 border-t border-border pt-2">
+                    <span className="mt-2 flex flex-wrap gap-1.5 border-t border-white/10 pt-2">
                       {m.sources.map((s) => (
                         <a
                           key={s.url}
                           href={s.url}
-                          className="inline-flex max-w-full items-center gap-1 truncate rounded border border-border bg-bg/40 px-1.5 py-0.5 text-[11px] text-electric-bright transition-colors hover:border-electric/40"
+                          className="lg lg-thin inline-flex max-w-full items-center gap-1 truncate rounded-full px-2 py-0.5 text-[11px] text-molten-bright transition-[filter] hover:brightness-125"
                           title={s.title}
                         >
                           {s.title}
@@ -139,7 +143,7 @@ export function SupportChat() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="flex items-center gap-1 rounded-2xl border border-border bg-surface px-3.5 py-3">
+                <div className="lg lg-thin flex items-center gap-1 rounded-[20px] rounded-bl-md px-3.5 py-3">
                   {[0, 1, 2].map((d) => (
                     <span
                       key={d}
@@ -158,7 +162,7 @@ export function SupportChat() {
                   <button
                     key={q}
                     onClick={() => send(q)}
-                    className="block w-full rounded-lg border border-border bg-surface/60 px-3 py-2 text-left text-xs text-fg-muted transition-colors hover:border-electric/40 hover:text-fg"
+                    className="lg lg-thin block w-full rounded-2xl px-3 py-2 text-left text-xs text-fg-muted transition-[filter,color] hover:text-fg hover:brightness-125"
                   >
                     {q}
                   </button>
@@ -173,33 +177,31 @@ export function SupportChat() {
               e.preventDefault();
               send(input);
             }}
-            className="flex items-center gap-2 border-t border-border p-3"
+            className="flex items-center gap-2 border-t border-white/10 p-3"
           >
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about RankForge…"
-              className="h-9 flex-1 rounded-lg border border-border bg-surface/60 px-3 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:border-electric/50"
+              className="lg lg-thin h-9 flex-1 rounded-full px-4 text-sm text-fg outline-none placeholder:text-fg-subtle focus-visible:ring-1 focus-visible:ring-molten/60"
             />
             <button
               type="submit"
               disabled={!input.trim() || loading}
-              className="grid size-9 shrink-0 place-items-center rounded-lg bg-electric text-white transition-colors hover:bg-electric-bright disabled:opacity-50"
+              className="lg lg-molten grid size-9 shrink-0 place-items-center rounded-full transition-[filter] hover:brightness-110 disabled:opacity-50"
               aria-label="Send"
             >
               <Send className="size-4" />
             </button>
           </form>
-        </div>
+        </LiquidGlass>
       )}
 
       <button
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "ml-auto flex size-12 items-center justify-center rounded-full shadow-lg transition-colors",
-          open
-            ? "bg-surface text-fg-muted hover:text-fg"
-            : "bg-electric text-white hover:bg-electric-bright",
+          "lg ml-auto flex size-12 items-center justify-center rounded-full transition-[filter] hover:brightness-110",
+          open ? "lg-thin text-fg-muted hover:text-fg" : "lg-molten",
         )}
         aria-label={open ? "Close support chat" : "Open support chat"}
       >

@@ -6,7 +6,7 @@ import { CATEGORY_META, FRAMEWORK_META } from "@/lib/seo/constants";
 export function Progress({
   value,
   className,
-  color = "var(--color-electric)",
+  color = "var(--color-molten)",
 }: {
   value: number;
   className?: string;

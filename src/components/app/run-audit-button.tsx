@@ -29,7 +29,7 @@ export function RunAuditButton({ repoId }: { repoId: string }) {
         setMsg(res.error ?? "Audit failed.");
       }
     } catch {
-      setMsg("Audit failed — please try again.");
+      setMsg("Audit failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -40,7 +40,7 @@ export function RunAuditButton({ repoId }: { repoId: string }) {
       <button
         onClick={run}
         disabled={loading}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-electric px-4 text-sm font-medium text-white transition-colors hover:bg-electric-bright disabled:opacity-60"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-molten px-4 text-sm font-medium text-ink transition-colors hover:bg-molten-bright disabled:opacity-60"
       >
         {loading ? (
           <Loader2 className="size-4 animate-spin" />

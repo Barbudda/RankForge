@@ -24,7 +24,7 @@ export function DiffView({
     >
       {filename && (
         <div className="flex items-center gap-2 border-b border-border bg-surface/70 px-4 py-2 text-xs text-fg-muted">
-          <span className="size-2 rounded-full bg-electric/70" />
+          <span className="size-2 rounded-full bg-molten/70" />
           {filename}
         </div>
       )}

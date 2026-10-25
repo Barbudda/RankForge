@@ -8,7 +8,7 @@ import type { GpuTier } from "@/hooks/use-can-launch-webgl";
 /**
  * R3F scene root. Default export so next/dynamic can code-split three.js into
  * its own chunk (never in the SSR/initial bundle → LCP unaffected).
- * Transparent canvas: the page background (#05060b) shows through.
+ * Transparent canvas: the page background (#0a0908) shows through.
  */
 export default function GlyphFieldCanvas({
   progress,

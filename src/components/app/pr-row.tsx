@@ -7,7 +7,7 @@ import { timeAgo } from "@/lib/utils";
 /** Status → icon color. Signal green is reserved for merged (validated). */
 export const PR_ICON_COLOR: Record<PullRequestStatus, string> = {
   merged: "text-violet",
-  open: "text-electric-bright",
+  open: "text-molten-bright",
   closed: "text-danger",
   draft: "text-fg-subtle",
   simulated: "text-cyan",
@@ -33,7 +33,7 @@ export function PrRow({
         <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-fg-subtle">
           {pr.number > 0 && <span className="font-mono">#{pr.number}</span>}
           {repoName && <span>{repoName}</span>}
-          <span className="font-mono text-electric-bright/80">{pr.branchName}</span>
+          <span className="font-mono text-molten-bright/80">{pr.branchName}</span>
           <span>· {timeAgo(pr.createdAt)}</span>
         </div>
       </div>

@@ -36,7 +36,7 @@ export function RepoAutonomyControl({
     const res = await setRepoAgentLevel(repoId, m);
     setSaving(false);
     if (res.ok) setSaved(true);
-    else setError(res.error ?? "Not saved — applies to this session only.");
+    else setError(res.error ?? "Not saved. This applies to this session only.");
   };
 
   return (
@@ -83,7 +83,7 @@ export function RepoAutonomyControl({
             <span>
               Autopilot lets RankForge act across every category and path at the
               root. Even here, changes still arrive as pull requests you can
-              review — RankForge never force-pushes to your default branch.
+              review. RankForge never force-pushes to your default branch.
             </span>
           </div>
         )}
