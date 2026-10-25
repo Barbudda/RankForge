@@ -9,7 +9,7 @@ import { PRICING_FAQS } from "@/lib/seo/content";
 
 const TITLE = "Pricing";
 const DESCRIPTION =
-  "Simple, scalable pricing for RankForge — from solo devs to agencies managing many sites.";
+  "RankForge pricing: free audits, CLI and CI gate; paid plans for daily SEO monitoring with alerts when a deploy breaks something.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -44,11 +44,12 @@ export default function PricingPage() {
         <div className="absolute inset-x-0 top-0 h-96 spotlight" />
         <div className="container-rf relative text-center">
           <h1 className="text-balance text-4xl font-semibold tracking-tight md:text-5xl">
-            Pricing that scales from solo to agency
+            Free to audit. Paid to keep watch.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-fg-muted">
-            Start free. Pay only when RankForge is opening more pull requests than
-            you can merge.
+            Everything that runs on your machine is free. Plans pay for RankForge
+            checking your live sites every day and alerting you when a deploy
+            breaks SEO.
           </p>
         </div>
       </section>

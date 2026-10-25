@@ -21,7 +21,7 @@ const FALLBACK_WORKSPACE: Workspace = {
   id: "ws_owner",
   name: process.env.NEXT_PUBLIC_WORKSPACE_NAME || "My workspace",
   slug: "workspace",
-  plan: "growth",
+  plan: "free",
   repoCount: 0,
   seatCount: 1,
 };
@@ -73,7 +73,7 @@ export async function getCurrentWorkspace(): Promise<Workspace> {
     id: `ws_${user.id}`,
     name: profile?.workspace_name || "My workspace",
     slug: "workspace",
-    plan: (profile?.plan as Plan) || "growth",
+    plan: profile?.plan === "pro" || profile?.plan === "studio" ? (profile.plan as Plan) : "free",
     repoCount: count ?? 0,
     seatCount: 1,
   };
