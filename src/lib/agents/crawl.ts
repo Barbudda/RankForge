@@ -96,6 +96,7 @@ function parse(
   const lang = attr(htmlTag, "lang");
 
   const metaRobots = metaContent(html, "name", "robots")?.toLowerCase() ?? null;
+  const metaGooglebot = metaContent(html, "name", "googlebot")?.toLowerCase() ?? null;
   const viewport = metaContent(html, "name", "viewport");
   const twitterCard = metaContent(html, "name", "twitter:card");
 
@@ -210,6 +211,7 @@ function parse(
     renderMs,
     lang,
     metaRobots,
+    metaGooglebot,
     viewport,
     hreflang,
     og,
