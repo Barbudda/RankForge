@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getRepository } from "@/lib/data";
 import { getCurrentWorkspace } from "@/lib/account";
 import { PLAN_LIMITS, effectivePlan } from "@/lib/pricing";
@@ -132,8 +133,12 @@ export async function runMonitorNow(repoId: string): Promise<Result & { summary?
     };
   }
 
+  // Check results (history, last snapshot, next date) are server-managed
+  // since migration 0005: users can't write them, so the check does.
+  const admin = createAdminClient();
+  if (!admin) return { ok: false, error: "Checks need SUPABASE_SECRET_KEY on the server (see DEPLOY.md, section 5)." };
   const res = await processMonitor(
-    s.supabase,
+    admin,
     monitor,
     { name: repo.fullName || repo.name, productionUrl: repo.productionUrl, framework: repo.framework },
     { plan, trigger: "manual", appUrl: config.appUrl, ownerEmail: s.user.email ?? null },
