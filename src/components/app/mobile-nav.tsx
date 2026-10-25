@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  Activity,
   FolderGit2,
   GitPullRequest,
   Settings,
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/dashboard", label: "Home", icon: LayoutDashboard },
   { href: "/repositories", label: "Repos", icon: FolderGit2 },
+  { href: "/monitoring", label: "Watch", icon: Activity },
   { href: "/pull-requests", label: "PRs", icon: GitPullRequest },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/billing", label: "Billing", icon: CreditCard },
@@ -32,7 +34,7 @@ export function MobileNav() {
             href={item.href}
             className={cn(
               "flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px]",
-              active ? "text-electric-bright" : "text-fg-subtle",
+              active ? "text-molten-bright" : "text-fg-subtle",
             )}
           >
             <item.icon className="size-5" />

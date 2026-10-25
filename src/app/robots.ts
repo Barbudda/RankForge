@@ -20,6 +20,7 @@ export default function robots(): MetadataRoute.Robots {
           "/pull-requests",
           "/settings",
           "/billing",
+          "/monitoring",
           "/api/",
         ],
       },

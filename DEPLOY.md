@@ -1,7 +1,7 @@
 # Deploying RankForge to Vercel (for a friend to test)
 
 RankForge runs fully on Vercel. The **deterministic audit, mechanical fixes, and
-the extractive chatbot need no AI key** — a generative LLM only adds nicer
+the extractive chatbot need no AI key**. A generative LLM only adds nicer
 fixes/chat. Follow this once.
 
 ## 1. Push to GitHub + import on Vercel
@@ -10,31 +10,31 @@ fixes/chat. Follow this once.
 
 ## 2. Environment variables (Vercel → Project → Settings → Environment Variables)
 
-**Required — the app needs Supabase for auth + data:**
+**Required (the app needs Supabase for auth + data):**
 
 | Variable | Value |
 |---|---|
 | `NEXT_PUBLIC_APP_URL` | Your Vercel URL, e.g. `https://rankforge-xxxx.vercel.app` (used for canonicals, OG, the MCP endpoint shown in-app). |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API → Project URL |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → API → publishable/anon key. All data access runs through this under row-level security — no service key needed. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → API → publishable/anon key. All of the app's own data access runs through this under row-level security. Only the monitoring cron needs the secret key (section 5). |
 
-**Optional — turn on the agent for your friend (pick one):**
+**Optional: turn on the agent for your friend (pick one).**
 
 | Variable | Effect |
 |---|---|
 | `RANKFORGE_MCP_PUBLIC=1` | Opens the `/api/mcp` agent endpoint so your friend can connect their editor with no token. SSRF protection still blocks internal hosts. Easiest for a demo. |
 | `RANKFORGE_MCP_KEY=<secret>` | Instead requires this as a `Authorization: Bearer <secret>` header. Share the secret with your friend. |
 
-**Optional — generative features (not required):**
+**Optional: generative features (not required).**
 
 | Variable | Effect |
 |---|---|
 | `ANTHROPIC_API_KEY` | Enables AI fixes for judgment-heavy issues, audit content-quality enrichment, and a generative (vs extractive) chatbot. Costs per token. Without it, everything deterministic still works. |
 
-> Do **not** set `RANKFORGE_LLM` (ollama/claude-cli) on Vercel — those are local-only.
+> Do **not** set `RANKFORGE_LLM` (ollama/claude-cli) on Vercel. Those are local-only.
 
 ## 3. Supabase setup (once)
-- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts.
+- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables.
 - **Auth → URL Configuration**: set **Site URL** to your Vercel URL, and add
   `https://your-vercel-url/**` to **Redirect URLs** (so email confirmation and
   password reset land back on the deployed app).
@@ -44,12 +44,33 @@ fixes/chat. Follow this once.
 ## 4. Deploy & share
 - Deploy. Send your friend the Vercel URL. They can:
   - **Sign up** → **Dashboard**.
-  - **Connect a repository** (name + a production URL) and **Run an audit** — the
+  - **Connect a repository** (name + a production URL) and **Run an audit**. The
     deterministic engine crawls that public URL and reports real issues.
   - Open the audit → **Prepare fixes** → review the per-file diffs → **Open PR**.
   - Ask the **support chatbot** (bottom-right) anything about RankForge.
   - **Use in your editor** (top-right button): connect Claude Code / Cursor / VS
     Code to the hosted agent and audit **any public site** from their editor.
+
+## 5. Monitoring (the paid feature)
+
+RankForge checks each monitored site on a schedule, compares the check with the
+previous one and sends alerts. It needs, on top of sections 2 and 3:
+
+| Variable | Value |
+|---|---|
+| `CRON_SECRET` | A long random string (`node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`). Vercel Cron sends it as a Bearer token; `/api/cron/monitor` refuses any other caller. |
+| `SUPABASE_SECRET_KEY` | Supabase → API → secret key. Server-only: the cron reads every monitor across accounts. Never prefix it with `NEXT_PUBLIC_`. |
+| `RESEND_API_KEY` | resend.com → API Keys. Without it, checks still run and are stored, but no email goes out. |
+| `RANKFORGE_ALERT_FROM` | Optional sender, e.g. `RankForge <alerts@your-domain.com>`, on a domain verified in Resend. Until then Resend only delivers to the account owner's address. |
+| `CRUX_API_KEY` | Optional: Core Web Vitals of real users (Google Cloud → APIs → Chrome UX Report API). |
+| `NEXT_PUBLIC_RANKFORGE_BILLING` | Leave unset during the beta (every account gets Pro). Set to `open` once payments work. |
+
+- The schedule lives in `vercel.json` (`/api/cron/monitor` every day at 07:00 UTC).
+  Vercel Hobby allows one run per day, which is what daily plans need.
+- **Vercel Hobby forbids commercial use**: move to Vercel Pro before turning on
+  billing.
+- `/monitoring` shows what is still missing (migration, cron, email) until all of
+  it is in place.
 
 ## What works without any AI key
 Deterministic audit (crawl + rules + link graph + measured images/links + content
@@ -57,6 +78,7 @@ analysis), mechanical fixes (robots, sitemap, viewport, lang, canonical, schema,
 OpenGraph), the change report + PR flow, and the RAG chatbot (extractive).
 
 ## Note on the agent + localhost
-A **hosted** agent audits **public URLs** — it crawls from Vercel and can't reach
-a user's `localhost`. To audit a local dev server, run RankForge locally
-(`npm run dev`) and connect the editor to `http://localhost:3000/api/mcp`.
+A **hosted** agent audits **public URLs**: it crawls from Vercel and can't reach
+a user's `localhost`. To audit a local dev server, use the open-source CLI's MCP
+server on that machine (`claude mcp add rankforge -- npx -y rankforge-cli mcp`)
+or the Claude Code plugin (`/plugin install rankforge@rankforge`).

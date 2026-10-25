@@ -13,6 +13,7 @@ const PROTECTED_PREFIXES = [
   "/pull-requests",
   "/settings",
   "/billing",
+  "/monitoring",
 ];
 
 /**

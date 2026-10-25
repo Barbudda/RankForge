@@ -19,6 +19,7 @@ export const config = {
     "/pull-requests/:path*",
     "/settings/:path*",
     "/billing/:path*",
+    "/monitoring/:path*",
     "/login",
     "/signup",
     "/auth/:path*",
