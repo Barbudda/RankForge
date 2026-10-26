@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo/og";
 import Link from "next/link";
 import { LlmsTxtGenerator } from "@/components/marketing/tools/llms-txt-generator";
 import { FlowField } from "@/components/marketing/dots/flow-field-layer";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     description: "Crawls your site, writes an llms.txt from its pages, checks your current one. Free, no signup.",
     url: "/tools/llms-txt-generator",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

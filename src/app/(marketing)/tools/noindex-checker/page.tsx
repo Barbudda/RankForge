@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo/og";
 import Link from "next/link";
 import { NoindexChecker } from "@/components/marketing/tools/noindex-checker";
 import { FlowField } from "@/components/marketing/dots/flow-field-layer";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     description: "Paste a URL and see what keeps it out of Google, if anything. Free, no signup.",
     url: "/tools/noindex-checker",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

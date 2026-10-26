@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo/og";
 import Link from "next/link";
 import { PublicAudit } from "@/components/marketing/public-audit";
 import { FlowField } from "@/components/marketing/dots/flow-field-layer";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
       "Enter a URL, get a scored technical-SEO report with evidence for every issue. Free, no account, no AI guessing.",
     url: "/audit",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
