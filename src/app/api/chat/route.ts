@@ -4,8 +4,13 @@ import { searchCorpus, type RetrievedChunk } from "@/lib/support/corpus";
 import { recall } from "@/lib/brain";
 import { cliAgentsEnabled, runAgentViaCli } from "@/lib/agents/cli-driver";
 import { localAgentsEnabled, completeViaLocal } from "@/lib/agents/local-driver";
+import { clientIp, createRateLimiter } from "@/lib/net/public-endpoint";
 
 export const runtime = "nodejs";
+
+// Public endpoint: bounded per address, so no one can run up compute or, if a
+// model key is ever set, the API bill. Best-effort (memory of one instance).
+const limited = createRateLimiter(30);
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -43,6 +48,18 @@ function sourcesOf(chunks: RetrievedChunk[]) {
 }
 
 export async function POST(req: Request) {
+  if (limited(clientIp(req))) {
+    // The widget shows `answer` whatever the status, so say it plainly.
+    return NextResponse.json(
+      {
+        answer: "That's a lot of questions for one hour. Please try again a bit later; the docs answer most of them.",
+        sources: [{ title: "Docs", url: "/docs" }],
+        mode: "limited",
+      },
+      { status: 429 },
+    );
+  }
+
   let messages: ChatMessage[] = [];
   try {
     const body = await req.json();

@@ -8,8 +8,14 @@ import { agentsEnabled } from "./client";
 import { runAuditSwarm } from "./audit-swarm";
 import { runFixSwarm } from "./fix-swarm";
 import { generateDeterministicFix } from "@/lib/audit/deterministic-fix";
+import { createRateLimiter } from "@/lib/net/public-endpoint";
 
 type Result = { ok: boolean; error?: string; configured?: boolean };
+
+// In-app audits crawl from our servers, so they're capped per user (best
+// effort, per instance). The CLI and the editor agent run on the user's machine.
+const AUDITS_PER_HOUR = 10;
+const auditLimited = createRateLimiter(AUDITS_PER_HOUR);
 
 async function authedUserId(): Promise<string | null> {
   if (!isSupabaseConfigured) return null;
@@ -40,6 +46,12 @@ export async function runAudit(
   // content-quality enrichment, so we never gate the audit on `agentsEnabled`.
   const userId = await authedUserId();
   if (!userId) return { ok: false, error: "Not signed in." };
+  if (auditLimited(userId)) {
+    return {
+      ok: false,
+      error: `That's ${AUDITS_PER_HOUR} audits in the last hour. Try again a little later, or run as many as you like locally: npx septune audit <url>.`,
+    };
+  }
 
   const repo = await getRepository(repoId);
   if (!repo) return { ok: false, error: "Repository not found." };
@@ -141,7 +153,7 @@ export async function generateFix(issueId: string): Promise<Result> {
         ok: false,
         configured: false,
         error:
-          "This one needs an AI-assisted fix, which isn't enabled on this instance. Mechanical fixes (metadata, robots, sitemap, viewport…) still work — review this issue and apply it by hand.",
+          "Septune writes mechanical fixes itself (metadata, robots.txt, sitemap, viewport…). This one needs judgment: ask your coding assistant to fix it with the Septune agent (see /docs/agent), or apply it by hand.",
       };
     }
     try {

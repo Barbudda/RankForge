@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { handleMessage, rpcError } from "@/lib/mcp/server";
+import { handleMessage, rpcError, rpcResult, type JsonRpcRequest } from "@/lib/mcp/server";
+import { CRAWLS_PER_HOUR, CRAWL_LIMIT_MESSAGE, isCrawlCall } from "@/lib/mcp/hosted-limits";
+import { clientIp, createRateLimiter } from "@/lib/net/public-endpoint";
 import { config } from "@/lib/config";
 
 export const runtime = "nodejs";
@@ -67,6 +69,23 @@ function originAllowed(req: Request): boolean {
 /** Max messages in a JSON-RPC batch (each can trigger an expensive crawl). */
 const MAX_BATCH = 8;
 
+// Best-effort, per instance: enough to stop one address from crawling on our bill.
+const crawlLimited = createRateLimiter(CRAWLS_PER_HOUR);
+
+/**
+ * Over the hourly budget, a crawling tool answers with a tool error (per the
+ * MCP spec, so the calling assistant reads it) instead of running.
+ */
+async function handle(msg: unknown, ip: string): Promise<unknown | null> {
+  if (!IS_DEV && isCrawlCall(msg) && crawlLimited(ip)) {
+    return rpcResult((msg as JsonRpcRequest).id ?? null, {
+      content: [{ type: "text", text: CRAWL_LIMIT_MESSAGE }],
+      isError: true,
+    });
+  }
+  return handleMessage(msg);
+}
+
 export async function POST(req: Request) {
   if (!originAllowed(req)) {
     return NextResponse.json(rpcError(null, -32003, "Origin not allowed."), { status: 403 });
@@ -86,16 +105,17 @@ export async function POST(req: Request) {
     if (body.length === 0 || body.length > MAX_BATCH) {
       return NextResponse.json(rpcError(null, -32600, "Invalid batch size."), { status: 400 });
     }
+    const ip = clientIp(req);
     const responses: unknown[] = [];
     for (const m of body) {
-      const r = await handleMessage(m);
+      const r = await handle(m, ip);
       if (r !== null) responses.push(r);
     }
     if (responses.length === 0) return new Response(null, { status: 202 });
     return NextResponse.json(responses);
   }
 
-  const response = await handleMessage(body);
+  const response = await handle(body, clientIp(req));
   if (response === null) return new Response(null, { status: 202 });
   return NextResponse.json(response);
 }

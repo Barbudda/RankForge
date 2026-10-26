@@ -12,12 +12,13 @@
     "cli:build": "tsup --config cli/tsup.config.ts",
     "cli:test": "npm run cli:build && node --test cli/test/cli.test.mjs cli/test/v3.test.mjs",
     "test:monitor": "node --test tests/monitor.test.mjs",
-    "test": "npm run cli:test && npm run test:monitor && npm run test:billing && npm run test:tools && npm run test:preorder",
+    "test": "npm run cli:test && npm run test:monitor && npm run test:billing && npm run test:tools && npm run test:preorder && npm run test:limits",
     "stripe:setup": "node --env-file-if-exists=.env.local scripts/stripe-setup.ts",
     "test:billing": "node --test tests/billing.test.mjs",
     "test:tools": "node --test tests/tools.test.mjs",
     "preorders:notify": "node --env-file-if-exists=.env.local scripts/notify-preorders.ts",
-    "test:preorder": "node --test tests/preorder.test.mjs"
+    "test:preorder": "node --test tests/preorder.test.mjs",
+    "test:limits": "node --test tests/limits.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
