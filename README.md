@@ -1,6 +1,6 @@
 # Septune
 
-[![npm](https://img.shields.io/npm/v/septune?label=septune&color=34e0a1)](https://www.npmjs.com/package/septune) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A518-green)](https://nodejs.org) [![MCP](https://img.shields.io/badge/MCP-server-708cff)](https://www.rank-forge.dev/docs/agent)
+[![npm](https://img.shields.io/npm/v/septune?label=septune&color=34e0a1)](https://www.npmjs.com/package/septune) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A518-green)](https://nodejs.org) [![MCP](https://img.shields.io/badge/MCP-server-708cff)](https://www.septune.dev/docs/agent)
 
 > **The CLI, the editor agent and the GitHub Action now live in their own public repo: [Barbudda/septune](https://github.com/Barbudda/septune)**, with the full guide. This repo is the hosted web app.
 
@@ -113,11 +113,11 @@ claude mcp add septune -- npx -y septune mcp
 ```
 
 Then: *"Use septune to audit http://localhost:3000 and fix what you find."*
-Setup for every client → [www.rank-forge.dev/docs/agent](https://www.rank-forge.dev/docs/agent)
+Setup for every client → [www.septune.dev/docs/agent](https://www.septune.dev/docs/agent)
 
 ## The hosted app
 
-[www.rank-forge.dev](https://www.rank-forge.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: Septune checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) open soon and can be pre-ordered now. The hosted app audits public URLs; run the CLI to audit `localhost`.
+[www.septune.dev](https://www.septune.dev) is the same engine with an account: audit history, a **change report grouped by file** with every diff, and **monitoring**: Septune checks your production site on a schedule, compares each check with the previous one, and alerts you by email, Slack, Discord or webhook when something critical changes. Free covers one site checked weekly; Pro (5 sites, daily) and Studio (25 sites) open soon and can be pre-ordered now. The hosted app audits public URLs; run the CLI to audit `localhost`.
 
 ## Run it yourself
 

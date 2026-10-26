@@ -38,7 +38,7 @@ async function main() {
     console.error('--plan must be "pro" or "studio".');
     process.exit(1);
   }
-  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://www.rank-forge.dev").replace(/\/$/, "");
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://www.septune.dev").replace(/\/$/, "");
   const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 
   let query = db.from("preorders").select("id, email, plan").is("notified_at", null).order("created_at", { ascending: true });

@@ -2,7 +2,7 @@
  * Sets up Septune's billing in a Stripe account, in one command:
  *
  *   npm run stripe:setup                         (reads .env.local)
- *   npm run stripe:setup -- --webhook-url https://www.rank-forge.dev/api/stripe/webhook
+ *   npm run stripe:setup -- --webhook-url https://www.septune.dev/api/stripe/webhook
  *
  * Creates, or finds when they already exist:
  *   - the Pro (€19) and Studio (€49) products and their monthly prices,
@@ -68,7 +68,7 @@ async function main() {
   }
   const stripe = new Stripe(key);
   const mode = key.includes("_live_") ? "LIVE" : "TEST";
-  const origin = arg("app-url") ?? publicOrigin() ?? "https://www.rank-forge.dev";
+  const origin = arg("app-url") ?? publicOrigin() ?? "https://www.septune.dev";
   console.log(`\nStripe setup for Septune (${mode} mode) · site ${origin}\n`);
 
   // ── Products and prices ──────────────────────────────────────────────

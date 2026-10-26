@@ -5,7 +5,7 @@ import { handleStripeWebhook } from "@/lib/billing/webhook";
 
 /**
  * Stripe → Septune. Configure the endpoint as
- * https://www.rank-forge.dev/api/stripe/webhook (npm run stripe:setup does
+ * https://www.septune.dev/api/stripe/webhook (npm run stripe:setup does
  * it) and set STRIPE_WEBHOOK_SECRET to its signing secret. The signature is
  * checked against the raw body, so the body must not be parsed first.
  */

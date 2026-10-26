@@ -26,7 +26,7 @@ export function integrationChecks(): IntegrationCheck[] {
       id: "app-url",
       label: "Public site URL",
       ok: appUrl.protocol === "https:" && appUrl.hostname !== "localhost",
-      detail: `Canonicals, emails and Stripe redirects use ${config.appUrl}. Set NEXT_PUBLIC_APP_URL to https://www.rank-forge.dev in production.`,
+      detail: `Canonicals, emails and Stripe redirects use ${config.appUrl}. Set NEXT_PUBLIC_APP_URL to https://www.septune.dev in production.`,
       required: true,
     },
     {
@@ -82,7 +82,7 @@ export function integrationChecks(): IntegrationCheck[] {
       id: "email",
       label: "Alert emails",
       ok: set("RESEND_API_KEY"),
-      detail: "RESEND_API_KEY, plus RANKFORGE_ALERT_FROM on a domain verified in Resend (alerts@rank-forge.dev).",
+      detail: "RESEND_API_KEY, plus RANKFORGE_ALERT_FROM on a domain verified in Resend (alerts@septune.dev).",
       required: true,
     },
     {
