@@ -13,8 +13,15 @@ export interface IntegrationCheck {
   ok: boolean;
   /** What it unlocks, and what to set when it's missing. */
   detail: string;
-  /** Needed before taking money (vs. nice to have). */
+  /** Needed for its stage (vs. nice to have). */
   required: boolean;
+  /** "live": the site itself, sign-in, pre-orders, monitoring. "payments": only once billing opens. */
+  stage: "live" | "payments";
+}
+
+/** A required setting missing for the stage the site is in now. */
+export function isBlocking(c: IntegrationCheck): boolean {
+  return c.required && !c.ok && (c.stage === "live" || BILLING_OPEN);
 }
 
 const set = (...names: string[]) => names.every((n) => Boolean(process.env[n]));
@@ -28,6 +35,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: appUrl.protocol === "https:" && appUrl.hostname !== "localhost",
       detail: `Canonicals, emails and Stripe redirects use ${config.appUrl}. Set NEXT_PUBLIC_APP_URL to https://www.septune.dev in production.`,
       required: true,
+      stage: "live",
     },
     {
       id: "supabase",
@@ -35,13 +43,15 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
       detail: "NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY. Without them the app runs on sample data and nobody can sign in.",
       required: true,
+      stage: "live",
     },
     {
       id: "supabase-admin",
       label: "Supabase service key",
       ok: set("SUPABASE_SECRET_KEY"),
-      detail: "SUPABASE_SECRET_KEY: scheduled checks, \"Check now\" and the Stripe webhook write with it. Server-only.",
+      detail: "SUPABASE_SECRET_KEY: pre-orders, scheduled checks, \"Check now\" and the Stripe webhook write with it. Server-only.",
       required: true,
+      stage: "live",
     },
     {
       id: "stripe",
@@ -49,6 +59,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("STRIPE_SECRET_KEY"),
       detail: "STRIPE_SECRET_KEY (sk_live_… in production). Then run npm run stripe:setup to create the prices, portal and webhook.",
       required: true,
+      stage: "payments",
     },
     {
       id: "stripe-webhook",
@@ -56,6 +67,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("STRIPE_WEBHOOK_SECRET"),
       detail: "STRIPE_WEBHOOK_SECRET, printed by npm run stripe:setup. Without it a payment never upgrades the account.",
       required: true,
+      stage: "payments",
     },
     {
       id: "stripe-portal",
@@ -63,13 +75,15 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("STRIPE_PORTAL_CONFIGURATION"),
       detail: "STRIPE_PORTAL_CONFIGURATION, printed by npm run stripe:setup (or activate the portal in the Stripe dashboard).",
       required: false,
+      stage: "payments",
     },
     {
       id: "billing-open",
       label: "Payments open",
       ok: BILLING_OPEN,
-      detail: "NEXT_PUBLIC_RANKFORGE_BILLING=open, once everything above is green. Until then Pro is free for everyone.",
+      detail: "NEXT_PUBLIC_RANKFORGE_BILLING=open, once everything above is green. Until then Pro and Studio take pre-orders.",
       required: false,
+      stage: "payments",
     },
     {
       id: "cron",
@@ -77,6 +91,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("CRON_SECRET"),
       detail: "CRON_SECRET: Vercel Cron calls /api/cron/monitor with it every day (vercel.json).",
       required: true,
+      stage: "live",
     },
     {
       id: "email",
@@ -84,6 +99,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("RESEND_API_KEY"),
       detail: "RESEND_API_KEY, plus RANKFORGE_ALERT_FROM on a domain verified in Resend (alerts@septune.dev).",
       required: true,
+      stage: "live",
     },
     {
       id: "email-from",
@@ -91,6 +107,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("RANKFORGE_ALERT_FROM"),
       detail: "RANKFORGE_ALERT_FROM. Until the domain is verified in Resend, alerts only reach the Resend account owner.",
       required: true,
+      stage: "live",
     },
     {
       id: "crux",
@@ -98,6 +115,7 @@ export function integrationChecks(): IntegrationCheck[] {
       ok: set("CRUX_API_KEY"),
       detail: "CRUX_API_KEY (Google Cloud, Chrome UX Report API). Optional: checks run without it.",
       required: false,
+      stage: "live",
     },
   ];
 }

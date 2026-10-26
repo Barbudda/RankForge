@@ -7,7 +7,8 @@ import { GithubIcon } from "@/components/brand/github-icon";
 import { Badge } from "@/components/ui/badge";
 import { getCurrentUser, getCurrentWorkspace } from "@/lib/account";
 import { getAgentSettings } from "@/lib/data";
-import { integrationChecks, isOperator } from "@/lib/integrations";
+import { integrationChecks, isBlocking, isOperator } from "@/lib/integrations";
+import { BILLING_OPEN } from "@/lib/pricing";
 import { getPreorderStats } from "@/lib/preorder/stats";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
@@ -25,7 +26,7 @@ export default async function SettingsPage() {
   // The operator (RANKFORGE_ADMIN_EMAILS) sees the go-live checklist; so does
   // anyone running the app without Supabase, i.e. locally.
   const checks = isOperator(user.email) || !isSupabaseConfigured ? integrationChecks() : null;
-  const missingRequired = checks?.filter((c) => c.required && !c.ok).length ?? 0;
+  const missingRequired = checks?.filter(isBlocking).length ?? 0;
   const preorders = checks ? await getPreorderStats() : null;
   return (
     <>
@@ -40,8 +41,10 @@ export default async function SettingsPage() {
             <CardTitle>Go-live checklist</CardTitle>
             <CardDescription>
               {missingRequired
-                ? `${missingRequired} setting${missingRequired > 1 ? "s" : ""} still needed before taking payments. Only operators see this card.`
-                : "Everything needed to take payments is set. Only operators see this card."}
+                ? `${missingRequired} setting${missingRequired > 1 ? "s" : ""} still needed ${BILLING_OPEN ? "to take payments" : "for the live site"}. Only operators see this card.`
+                : BILLING_OPEN
+                  ? "Everything needed to take payments is set. Only operators see this card."
+                  : "The live site has what it needs; payment settings come when billing opens. Only operators see this card."}
             </CardDescription>
           </CardHeader>
           <ul className="divide-y divide-border px-5 pb-3">
@@ -51,14 +54,14 @@ export default async function SettingsPage() {
                   aria-hidden
                   className={cn(
                     "mt-1.5 size-2 shrink-0 rounded-full",
-                    c.ok ? "bg-signal" : c.required ? "bg-danger" : "bg-fg-subtle",
+                    c.ok ? "bg-signal" : isBlocking(c) ? "bg-danger" : "bg-fg-subtle",
                   )}
                 />
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-fg">
                     {c.label}
-                    <Badge tone={c.ok ? "signal" : c.required ? "danger" : "neutral"}>
-                      {c.ok ? "Set" : c.required ? "Missing" : "Optional"}
+                    <Badge tone={c.ok ? "signal" : isBlocking(c) ? "danger" : "neutral"}>
+                      {c.ok ? "Set" : isBlocking(c) ? "Missing" : c.required ? "Later" : "Optional"}
                     </Badge>
                   </div>
                   {!c.ok && <p className="mt-1 text-xs text-fg-muted">{c.detail}</p>}
