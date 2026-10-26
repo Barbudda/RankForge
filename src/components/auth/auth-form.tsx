@@ -27,6 +27,10 @@ function friendlyAuthError(message: string): string {
     return "Too many attempts. Wait a minute and try again.";
   if (m.includes("password should be"))
     return "Password must be at least 6 characters.";
+  // The browser couldn't reach Supabase at all (Chrome, Firefox and Safari
+  // word it differently). Nothing the visitor typed is wrong, so say so.
+  if (/failed to fetch|fetch failed|networkerror|load failed|network request failed/.test(m))
+    return "We can't reach the sign-in service right now. Please try again in a few minutes; if it keeps failing, write to hugopoene74@gmail.com.";
   return message;
 }
 

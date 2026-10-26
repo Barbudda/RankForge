@@ -37,9 +37,11 @@ export async function savePreorder(db: SupabaseClient, input: PreorderInput): Pr
   if (!error) return { ok: true, email, plan: input.plan, already: false };
   if (error.code === "23505") return { ok: true, email, plan: input.plan, already: true };
   console.error("[preorder]", error.code, error.message);
-  // No table yet (migration 0006 not run): trying again won't help, so say it isn't open.
-  if (error.code === "42P01" || error.code === "PGRST205") {
-    return { ok: false, unavailable: true, error: "Pre-orders aren't switched on yet." };
+  // No table yet (migration 0006 not run), or no database at all (the client
+  // reports an unreachable project with an empty code): "try again in a
+  // minute" won't help, the caller offers a way in by hand instead.
+  if (error.code === "42P01" || error.code === "PGRST205" || !error.code) {
+    return { ok: false, unavailable: true, error: "Pre-orders can't be saved right now." };
   }
   return { ok: false, error: "Couldn't save your pre-order. Please try again in a minute." };
 }

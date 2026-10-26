@@ -89,12 +89,18 @@ test("a storage failure is reported, not swallowed", async () => {
   assert.match(r.error, /try again/);
 });
 
-test("a missing table means pre-orders aren't open yet, not 'try again'", async () => {
-  for (const code of ["42P01", "PGRST205"]) {
-    const db = fakeDb({ fail: { code, message: "relation \"preorders\" does not exist" } });
+test("a missing table or an unreachable database offers the way in by hand, not 'try again'", async () => {
+  const failures = [
+    { code: "42P01", message: 'relation "preorders" does not exist' },
+    { code: "PGRST205", message: "Could not find the table 'public.preorders' in the schema cache" },
+    // What supabase-js returns when the project's host doesn't resolve.
+    { code: "", message: "TypeError: fetch failed" },
+  ];
+  for (const fail of failures) {
+    const db = fakeDb({ fail });
     const r = await savePreorder(db, { email: "jane@example.com", plan: "pro" });
     assert.equal(r.ok, false);
-    assert.equal(r.unavailable, true);
+    assert.equal(r.unavailable, true, fail.message);
     assert.doesNotMatch(r.error, /try again/);
   }
 });

@@ -14,8 +14,8 @@ export type PreorderState =
   | { status: "error"; error: string; contact?: string };
 
 const CONTACT = "hugopoene74@gmail.com";
-// Secret key or table missing: nobody should be turned away, so offer the way in by hand.
-const UNAVAILABLE: PreorderState = { status: "error", error: "Pre-orders aren't switched on yet.", contact: CONTACT };
+// Secret key, table or database missing: nobody should be turned away, so offer the way in by hand.
+const UNAVAILABLE: PreorderState = { status: "error", error: "Pre-orders can't be saved right now.", contact: CONTACT };
 
 const limited = createRateLimiter(8);
 
