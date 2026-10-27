@@ -10,7 +10,7 @@ import { config } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Noindex checker: can Google index this page?",
   description:
-    "Free noindex checker: one URL, every place Google reads an indexing directive. HTTP status, X-Robots-Tag header, robots and googlebot meta tags, robots.txt and canonical.",
+    "Free noindex checker: one URL, every place Google reads an indexing directive. Status code, X-Robots-Tag, robots and googlebot meta, robots.txt, canonical.",
   alternates: { canonical: "/tools/noindex-checker" },
   openGraph: {
     title: "Noindex checker: can Google index this page?",

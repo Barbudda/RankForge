@@ -8,7 +8,7 @@ import { RULE_CATALOG } from "@/lib/audit/catalog";
 export const metadata: Metadata = {
   title: "Use the Septune agent in your editor (MCP)",
   description:
-    "Connect Septune to Claude Code, Cursor, VS Code or any MCP client: your AI coding assistant audits your site with Septune's engine and fixes the code in your repo.",
+    "Connect Septune to Claude Code, Cursor or VS Code over MCP: your coding assistant audits your site with Septune's engine and fixes the code in your repo.",
   alternates: { canonical: "/docs/agent" },
 };
 

@@ -11,7 +11,7 @@ import { RULE_CATALOG } from "@/lib/audit/catalog";
 export const metadata: Metadata = {
   title: "Free technical SEO audit: measured, no signup",
   description:
-    "Audit any website's technical SEO in seconds, free and without an account. Crawls the rendered pages and measures metadata, indexing, images, structured data, internal links and performance. No AI guessing.",
+    "Free technical SEO audit of any site, no account needed. Measures metadata, indexing, images, structured data, links and speed, with evidence. No AI guessing.",
   alternates: { canonical: "/audit" },
   openGraph: {
     title: "Free technical SEO audit: measured, no signup",

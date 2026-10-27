@@ -27,7 +27,7 @@ export async function generateMetadata({
   if (!fw) return {};
   return {
     title: `Technical SEO for ${fw.name}, checked on every deploy`,
-    description: `Septune audits ${fw.name} sites the way Googlebot reads them, fails the pull request that would drop pages from Google, and gives ready ${fw.name} patches for mechanical fixes.`,
+    description: `Septune audits ${fw.name} sites like Googlebot, fails the pull request that would drop pages from Google, and gives ready ${fw.name} patches for mechanical fixes.`,
     alternates: { canonical: `/frameworks/${slug}` },
   };
 }
