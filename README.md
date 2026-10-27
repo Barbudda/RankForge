@@ -137,7 +137,7 @@ A single Next.js 16 / TypeScript app. The audit engine is plain TypeScript with 
 | | |
 |---|---|
 | `src/lib/agents/crawl.ts` | breadth-first crawler seeded by the sitemap, honours robots.txt (SSRF-guarded when hosted) |
-| `src/lib/audit/engine.ts` | 55 rules over the parsed pages (`catalog.ts` lists them) |
+| `src/lib/audit/engine.ts` | 62 rules over the parsed pages (`catalog.ts` lists them) |
 | `src/lib/audit/indexing-checks.ts` | robots.txt, hreflang, canonical targets, soft 404s, sitemap hygiene, HTTPS certificate |
 | `src/lib/audit/snapshot.ts` | snapshots and diffs: what changed between two versions of a site |
 | `src/lib/audit/link-graph.ts` | orphans, click depth, internal PageRank |
