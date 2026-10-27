@@ -6,15 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { Logo } from "@/components/brand/logo";
-
-/**
- * Only same-origin paths. Blocks open redirects via ?next=//evil.tld and its
- * backslash form /\evil.tld, which browsers read as //evil.tld.
- */
-function sanitizeNext(next: string | undefined): string {
-  if (next && /^\/(?![\\/])/.test(next) && !/[\u0000-\u001f\u007f]/.test(next)) return next;
-  return "/dashboard";
-}
+import { sanitizeNext } from "@/lib/safe-next";
 
 /** Map raw Supabase auth errors to friendly, non-leaky messages. */
 function friendlyAuthError(message: string): string {

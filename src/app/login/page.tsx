@@ -9,11 +9,17 @@ export const metadata: Metadata = {
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; error?: string }>;
 }) {
-  const { next } = await searchParams;
+  const { next, error } = await searchParams;
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-16">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 py-16">
+      {/* Set by /auth/confirm when an email link can't be used. */}
+      {error === "link" && (
+        <p role="alert" className="w-full max-w-sm rounded-lg border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
+          That link has expired or was already used. Sign in, or use &ldquo;Forgot password?&rdquo; to get a new one.
+        </p>
+      )}
       <AuthForm mode="login" next={next || "/dashboard"} />
     </main>
   );
