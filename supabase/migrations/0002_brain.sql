@@ -28,6 +28,7 @@ create index if not exists memories_source_idx on public.memories (user_id, sour
 
 alter table public.memories enable row level security;
 
+drop policy if exists "own memories" on public.memories;
 create policy "own memories" on public.memories
   for all to authenticated
   using ((select auth.uid()) = user_id)

@@ -135,23 +135,29 @@ alter table public.agent_settings enable row level security;
 --     prevents reassigning a row's owner on update.
 
 -- profiles & agent_settings are keyed by the user id directly
+drop policy if exists "own profile" on public.profiles;
 create policy "own profile" on public.profiles
   for all to authenticated
   using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
+drop policy if exists "own settings" on public.agent_settings;
 create policy "own settings" on public.agent_settings
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
 
 -- domain tables are scoped by user_id
+drop policy if exists "own repositories" on public.repositories;
 create policy "own repositories" on public.repositories
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "own audits" on public.audits;
 create policy "own audits" on public.audits
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "own issues" on public.issues;
 create policy "own issues" on public.issues
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "own pull_requests" on public.pull_requests;
 create policy "own pull_requests" on public.pull_requests
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);

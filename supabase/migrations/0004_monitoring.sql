@@ -7,7 +7,7 @@
 --
 -- Scheduled checks run server-side with the service-role key (cron route);
 -- everything a user does goes through RLS like the other tables.
--- Run this once in the Supabase SQL editor.
+-- Run it in the Supabase SQL editor; running it again changes nothing.
 -- ─────────────────────────────────────────────────────────────────────
 
 create table if not exists public.monitors (
@@ -50,12 +50,21 @@ create index if not exists monitor_checks_user_idx on public.monitor_checks (use
 alter table public.monitors       enable row level security;
 alter table public.monitor_checks enable row level security;
 
+drop policy if exists "own monitors" on public.monitors;
 create policy "own monitors" on public.monitors
   for all to authenticated
   using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
-create policy "own monitor checks" on public.monitor_checks
-  for all to authenticated
-  using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+-- Users read and delete their check history, never write it (the cron does,
+-- with the service key). Same policies as 0005, so either order is safe.
+drop policy if exists "own monitor checks" on public.monitor_checks;
+drop policy if exists "read own monitor checks" on public.monitor_checks;
+drop policy if exists "delete own monitor checks" on public.monitor_checks;
+create policy "read own monitor checks" on public.monitor_checks
+  for select to authenticated
+  using ((select auth.uid()) = user_id);
+create policy "delete own monitor checks" on public.monitor_checks
+  for delete to authenticated
+  using ((select auth.uid()) = user_id);
 
 -- ── Plans: starter/growth/agency/enterprise → free/pro/studio ──────────
 alter table public.profiles alter column plan set default 'free';

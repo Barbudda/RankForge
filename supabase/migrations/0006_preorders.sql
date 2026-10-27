@@ -5,7 +5,7 @@
 -- Written only by the server (service-role key) after its own checks: rate
 -- limit, format, a honeypot. No policy at all on purpose, so the list can't
 -- be read, filled or emptied through the public API key.
--- Run this once in the Supabase SQL editor, after 0005.
+-- Run it in the Supabase SQL editor after 0005; running it again changes nothing.
 -- ─────────────────────────────────────────────────────────────────────
 
 create table if not exists public.preorders (

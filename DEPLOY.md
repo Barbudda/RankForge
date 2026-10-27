@@ -41,7 +41,7 @@ end). Follow this once.
 > Do **not** set `RANKFORGE_LLM` (ollama/claude-cli) on Vercel. Those are local-only.
 
 ## 3. Supabase setup (once)
-- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004 → 0005 → 0006`) if you haven't. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables; `0005` adds billing and locks plan, billing and check-result columns against users; `0006` stores pre-orders.
+- **Run the migrations** in `supabase/migrations/` (SQL editor, in order `0001 → 0002 → 0003 → 0004 → 0005 → 0006`). Each one is safe to run again, so when in doubt, run all six. `0003` (hardening/unique indexes) is required for correct upserts; `0004` creates the monitoring tables; `0005` adds billing and locks plan, billing and check-result columns against users; `0006` stores pre-orders.
 - **Auth → URL Configuration**: set **Site URL** to `https://www.septune.dev`,
   and add `https://www.septune.dev/**` to **Redirect URLs** (so email
   confirmation and password reset land back on the site). A Site URL on a

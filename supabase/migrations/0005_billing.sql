@@ -11,7 +11,7 @@
 -- Plan, billing and check-result columns are now written only by the
 -- service role (Stripe webhook, cron, "Check now") or the SQL editor.
 --
--- Run this once in the Supabase SQL editor, after 0004.
+-- Run it in the Supabase SQL editor after 0004; running it again changes nothing.
 -- ─────────────────────────────────────────────────────────────────────
 
 -- ── Billing fields ────────────────────────────────────────────────────
