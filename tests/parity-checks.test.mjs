@@ -10,11 +10,16 @@ import { build } from "esbuild";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 let runIndexingChecks;
+let runDeterministicAudit;
 
 before(async () => {
   const outDir = mkdtempSync(join(tmpdir(), "rf-parity-"));
   await build({
-    entryPoints: [join(ROOT, "src/lib/audit/indexing-checks.ts")],
+    stdin: {
+      contents: 'export { runIndexingChecks } from "./src/lib/audit/indexing-checks.ts"; export { runDeterministicAudit } from "./src/lib/audit/engine.ts";',
+      resolveDir: ROOT,
+      loader: "ts",
+    },
     outfile: join(outDir, "checks.mjs"),
     bundle: true,
     platform: "node",
@@ -23,7 +28,7 @@ before(async () => {
     tsconfig: join(ROOT, "tsconfig.json"),
     logLevel: "silent",
   });
-  ({ runIndexingChecks } = await import(pathToFileURL(join(outDir, "checks.mjs")).href));
+  ({ runIndexingChecks, runDeterministicAudit } = await import(pathToFileURL(join(outDir, "checks.mjs")).href));
 });
 
 const SITE = "https://www.example.com";
@@ -82,6 +87,8 @@ test("a healthy site raises none of the parity checks", () => {
     "indexing-meta-refresh",
     "perf-viewport-no-width",
     "link-malformed",
+    "indexing-sitemap-format",
+    "structure-url-format",
   ]) {
     assert.ok(!found.has(id), `${id} fired on a healthy site`);
   }
@@ -132,4 +139,53 @@ test("malformed hrefs are caught, valid and non-web ones are not", () => {
   ]).find((i) => i.ruleId === "link-malformed");
   assert.ok(issue);
   assert.match(issue.evidence, /^5 malformed links on 1 page/);
+});
+
+test("unreadable sitemaps are reported once the site has or declares one", () => {
+  const errors = [{ file: `${SITE}/sitemap-pages.xml`, reason: "served as an HTML page, not XML" }];
+  const issue = run([page("/")], { sitemapErrors: errors, hasSitemap: true }).find((i) => i.ruleId === "indexing-sitemap-format");
+  assert.ok(issue);
+  assert.equal(issue.affectedUrls[0].url, "/sitemap-pages.xml");
+  // No sitemap anywhere: that's "framework-sitemap-missing", not a format error.
+  const none = run([page("/")], { sitemapErrors: errors, hasSitemap: false, robotsDeclaresSitemap: false });
+  assert.ok(!ids(none).has("indexing-sitemap-format"));
+});
+
+test("URL shape: underscores, many parameters and very long URLs, on indexable pages only", () => {
+  const long = "/" + "a".repeat(220);
+  const issues = run([page("/my_page"), page("/list?a=1&b=2&c=3"), page(long), page("/clean-page")]);
+  const issue = issues.find((i) => i.ruleId === "structure-url-format");
+  assert.deepEqual(issue.affectedUrls.map((u) => u.url).sort(), ["/list?a=1&b=2&c=3", "/my_page", long].sort());
+});
+
+const probe = (url, status, hops = []) => ({ url, status, redirects: hops.length, hops, finalUrl: url, bytes: null, contentType: "", insecure: false });
+const audit = (resources) =>
+  runDeterministicAudit({ framework: "nextjs", productionUrl: SITE }, [page("/"), page("/about")], { hasSitemap: true, hasRobots: true, robotsDeclaresSitemap: true }, resources);
+
+test("broken images and same-site CSS/JS are measured, timeouts aren't counted", () => {
+  const res = {
+    images: new Map([[`${SITE}/a.png`, probe(`${SITE}/a.png`, 404)], [`${SITE}/b.png`, probe(`${SITE}/b.png`, 0)], [`${SITE}/c.png`, probe(`${SITE}/c.png`, 200)]]),
+    links: new Map(),
+    assets: new Map([[`${SITE}/_next/app.js`, probe(`${SITE}/_next/app.js`, 404)], [`${SITE}/style.css`, probe(`${SITE}/style.css`, 200)]]),
+  };
+  const issues = audit(res).issues;
+  const by = (id) => issues.find((i) => i.ruleId === id);
+  assert.deepEqual(by("img-broken").affectedUrls.map((u) => u.url), ["/a.png"]);
+  assert.deepEqual(by("perf-broken-assets").affectedUrls.map((u) => u.url), ["/_next/app.js"]);
+});
+
+test("temporary redirects on internal links are flagged, a sign-in wall and external links are not", () => {
+  const moved = probe(`${SITE}/old`, 200, [302]);
+  moved.finalUrl = `${SITE}/new`;
+  const wall = probe(`${SITE}/dashboard`, 200, [307]);
+  wall.finalUrl = `${SITE}/login`;
+  const external = probe("https://other.example/x", 200, [302]);
+  const res = {
+    images: new Map(),
+    links: new Map([[moved.url, moved], [wall.url, wall], [external.url, external], [`${SITE}/perm`, probe(`${SITE}/perm`, 200, [301])]]),
+    assets: new Map(),
+  };
+  const issue = audit(res).issues.find((i) => i.ruleId === "indexing-temporary-redirect");
+  assert.deepEqual(issue.affectedUrls.map((u) => u.url), ["/old"]);
+  assert.match(issue.affectedUrls[0].note, /302 → \/new/);
 });
