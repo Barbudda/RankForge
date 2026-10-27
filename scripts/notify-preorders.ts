@@ -26,8 +26,8 @@ const mask = (email: string) => email.replace(/^(.).*?(@.*)$/, "$1***$2");
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function main() {
-  const url = process.env.NEXT_PUBLIC_Septune_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.Septune_SUPABASE_SECRET_KEY || process.env.SUPABASE_SECRET_KEY;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_Septune_SUPABASE_URL;
+  const key = process.env.SUPABASE_SECRET_KEY || process.env.Septune_SUPABASE_SECRET_KEY;
   if (!url || !key) {
     console.error("NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY are needed (in .env.local).");
     process.exit(1);
