@@ -1,8 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./env";
+
+const URL = SUPABASE_URL;
+const KEY = SUPABASE_PUBLISHABLE_KEY;
 
 /** Authenticated app routes — unauthenticated users are sent to /login. */
 const PROTECTED_PREFIXES = [

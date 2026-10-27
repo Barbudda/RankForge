@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, supabaseSecretKey } from "./env";
 
 /**
  * Service-role Supabase client, for what RLS keeps from users: the monitoring
@@ -12,8 +13,8 @@ import { createClient } from "@supabase/supabase-js";
  * say they aren't available, and everything else keeps working.
  */
 export function createAdminClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SECRET_KEY;
+  const url = SUPABASE_URL;
+  const key = supabaseSecretKey();
   if (!url || !key || typeof window !== "undefined") return null;
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },

@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { config } from "@/lib/config";
 import { BILLING_OPEN } from "@/lib/pricing";
+import { supabaseSecretKey } from "@/lib/supabase/env";
 import { PRICE_LOOKUP_KEYS, explicitPriceId, type PaidPlan } from "./prices";
 
 /**
@@ -21,7 +22,7 @@ export function getStripe(): Stripe | null {
 
 /** Checkout can run: billing is open, Stripe and the service-role key are set. */
 export function billingReady(): boolean {
-  return BILLING_OPEN && Boolean(process.env.STRIPE_SECRET_KEY && process.env.SUPABASE_SECRET_KEY);
+  return BILLING_OPEN && Boolean(process.env.STRIPE_SECRET_KEY && supabaseSecretKey());
 }
 
 /** The active price for a plan: explicit id from the env, else its lookup key. */

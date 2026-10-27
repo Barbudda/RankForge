@@ -1,5 +1,6 @@
 import { BILLING_OPEN } from "@/lib/pricing";
 import { config } from "@/lib/config";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, supabaseSecretKey } from "@/lib/supabase/env";
 
 /**
  * Go-live checklist: which integrations this deployment has, from the
@@ -40,7 +41,7 @@ export function integrationChecks(): IntegrationCheck[] {
     {
       id: "supabase",
       label: "Supabase (sign-in, data)",
-      ok: set("NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
+      ok: Boolean(SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY),
       detail: "NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY. Without them the app runs on sample data and nobody can sign in.",
       required: true,
       stage: "live",
@@ -48,7 +49,7 @@ export function integrationChecks(): IntegrationCheck[] {
     {
       id: "supabase-admin",
       label: "Supabase service key",
-      ok: set("SUPABASE_SECRET_KEY"),
+      ok: Boolean(supabaseSecretKey()),
       detail: "SUPABASE_SECRET_KEY: pre-orders, scheduled checks, \"Check now\" and the Stripe webhook write with it. Server-only.",
       required: true,
       stage: "live",

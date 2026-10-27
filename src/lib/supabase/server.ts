@@ -1,8 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./env";
+
+const URL = SUPABASE_URL;
+const KEY = SUPABASE_PUBLISHABLE_KEY;
 
 /** True when Supabase env vars are present (app still runs without them). */
 export const isSupabaseConfigured = Boolean(URL && KEY);

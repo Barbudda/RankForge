@@ -1,6 +1,7 @@
 import type { Plan, Repository } from "@/types";
 import type { SiteChange } from "@/lib/audit/snapshot";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { supabaseSecretKey } from "@/lib/supabase/env";
 import { getRepositories } from "@/lib/data";
 import { getCurrentWorkspace } from "@/lib/account";
 import { BILLING_OPEN, PLAN_LIMITS, effectivePlan, type PlanLimits } from "@/lib/pricing";
@@ -62,7 +63,7 @@ export async function getMonitoringOverview(): Promise<MonitoringOverview> {
     plan,
     billingOpen: BILLING_OPEN,
     limits: PLAN_LIMITS[plan],
-    scheduled: Boolean(process.env.CRON_SECRET && process.env.SUPABASE_SECRET_KEY),
+    scheduled: Boolean(process.env.CRON_SECRET && supabaseSecretKey()),
     emailConfigured: Boolean(process.env.RESEND_API_KEY),
     enabledCount: 0,
     sites: [],
