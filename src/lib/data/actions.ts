@@ -221,11 +221,18 @@ export async function connectRepository(input: {
   const ctx = await authed();
   if (!ctx) return { ok: false, error: "Not signed in." };
 
-  const parts = input.fullName.trim().split("/");
+  // Accept what people paste: "owner/repo", the github.com page or a clone URL.
+  const cleaned = input.fullName
+    .trim()
+    .replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, "")
+    .replace(/^git@github\.com:/i, "")
+    .replace(/\.git$/i, "")
+    .replace(/\/+$/, "");
+  const parts = cleaned.split("/");
   const owner = parts[0]?.trim() ?? "";
-  const name = parts.slice(1).join("/").trim();
-  if (!owner || !name) {
-    return { ok: false, error: 'Use the "owner/repo" format.' };
+  const name = parts[1]?.trim() ?? "";
+  if (!owner || !name || parts.length !== 2) {
+    return { ok: false, error: 'Use the "owner/repo" format, or paste the repository\'s GitHub address.' };
   }
 
   // The production URL is later rendered as an anchor href — only allow
