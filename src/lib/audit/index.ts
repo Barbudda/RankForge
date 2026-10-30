@@ -4,7 +4,6 @@ import { agentsEnabled } from "@/lib/agents/client";
 import { SwarmAuditRunner } from "@/lib/agents/swarm-runner";
 
 export type * from "./types";
-export { SEO_RULES, getRule } from "./rules";
 
 /**
  * Returns the active audit runner. When ANTHROPIC_API_KEY is set, the live

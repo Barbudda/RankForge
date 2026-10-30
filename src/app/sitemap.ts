@@ -1,12 +1,8 @@
 import type { MetadataRoute } from "next";
 import { legalNoticeReady } from "@/lib/legal";
 import { config } from "@/lib/config";
-import {
-  CHANGELOG,
-  DOC_RULES,
-  FRAMEWORK_PAGES,
-  ruleSlug,
-} from "@/lib/seo/content";
+import { CHANGELOG, FRAMEWORK_PAGES } from "@/lib/seo/content";
+import { RULE_PAGES } from "@/lib/audit/rule-docs";
 
 /**
  * /sitemap.xml — every public, indexable marketing route. Docs and framework
@@ -39,8 +35,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/pricing", 0.8, "monthly"),
     entry("/docs", 0.7, "weekly"),
     entry("/docs/agent", 0.7, "monthly"),
-    ...DOC_RULES.map((r) => entry(`/docs/issues/${ruleSlug(r.id)}`, 0.6, "monthly")),
-    ...FRAMEWORK_PAGES.map((f) => entry(`/frameworks/${f.slug}`, 0.7, "monthly")),
+    ...RULE_PAGES.map((r) => ({
+      ...entry(`/docs/issues/${r.id}`, 0.6, "monthly"),
+      lastModified: new Date(r.updated),
+    })),
+    ...FRAMEWORK_PAGES.map((f) => ({
+      ...entry(`/frameworks/${f.slug}`, 0.7, "monthly"),
+      lastModified: new Date(f.updated),
+    })),
     entry("/changelog", 0.5, "weekly"),
     entry("/privacy", 0.3, "yearly"),
     entry("/terms", 0.3, "yearly"),

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ProsePage, ProseBlock } from "@/components/marketing/prose-page";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema } from "@/lib/seo/schema";
+import { formatDay } from "@/lib/utils";
+import { breadcrumbSchema, techArticleSchema } from "@/lib/seo/schema";
 import { RULE_CATALOG } from "@/lib/audit/catalog";
 
 export const metadata: Metadata = {
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
     "Connect Septune to Claude Code, Cursor or VS Code over MCP: your coding assistant audits your site with Septune's engine and fixes the code in your repo.",
   alternates: { canonical: "/docs/agent" },
 };
+
+// Dates of the first and the last commit that changed this page.
+const PUBLISHED = "2026-07-06";
+const UPDATED = "2026-10-27";
 
 function CodeBlock({ children }: { children: string }) {
   return (
@@ -30,10 +35,22 @@ export default function AgentDocsPage() {
           { name: "Agent in your editor", path: "/docs/agent" },
         ])}
       />
+      <JsonLd
+        data={techArticleSchema({
+          headline: "The Septune agent, inside your editor",
+          description: "Connect Septune to Claude Code, Cursor or VS Code over MCP and let your coding assistant audit and fix your site.",
+          path: "/docs/agent",
+          datePublished: PUBLISHED,
+          dateModified: UPDATED,
+        })}
+      />
       <ProsePage
         title="The Septune agent, inside your editor"
         intro="Septune ships as an MCP server. Connect it to Claude Code, Cursor, VS Code, Windsurf or any MCP-capable assistant: the assistant measures your site with Septune's deterministic engine, then fixes the code right in the repository it already has open."
       >
+        <p className="text-xs text-fg-subtle">
+          Published <time dateTime={PUBLISHED}>{formatDay(PUBLISHED)}</time> · updated <time dateTime={UPDATED}>{formatDay(UPDATED)}</time>
+        </p>
         <ProseBlock heading="Why this beats a dashboard">
           <p>
             An audit report tells you what&apos;s wrong; your coding assistant can

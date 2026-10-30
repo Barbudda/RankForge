@@ -20,6 +20,13 @@ export function formatDate(iso: string) {
   });
 }
 
+const DAY = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+
+/** A calendar day ("2026-10-30") as "October 30, 2026", whatever the server's time zone. */
+export function formatDay(day: string) {
+  return DAY.format(new Date(`${day}T00:00:00Z`));
+}
+
 /** Relative "time ago" label, e.g. "3 days ago". */
 export function timeAgo(iso: string, now: Date = new Date()) {
   const diff = now.getTime() - new Date(iso).getTime();

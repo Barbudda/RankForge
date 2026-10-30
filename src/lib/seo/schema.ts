@@ -103,6 +103,31 @@ export function faqPageSchema(faqs: ReadonlyArray<{ q: string; a: string }>) {
   };
 }
 
+/**
+ * TechArticle for a documentation page: dated with the real publication and
+ * last-change dates, published by Septune (the organization of siteGraph).
+ */
+export function techArticleSchema(a: {
+  headline: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: a.headline,
+    description: a.description,
+    url: `${APP_URL}${a.path}`,
+    datePublished: a.datePublished,
+    dateModified: a.dateModified,
+    author: { "@id": `${APP_URL}/#organization` },
+    publisher: { "@id": `${APP_URL}/#organization` },
+    isPartOf: { "@id": `${APP_URL}/#website` },
+  };
+}
+
 /** BreadcrumbList for a second-level page (e.g. Home › Pricing). */
 export function breadcrumbSchema(
   items: ReadonlyArray<{ name: string; path: string }>,
