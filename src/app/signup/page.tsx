@@ -6,15 +6,11 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function SignupPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ next?: string }>;
-}) {
-  const { next } = await searchParams;
+// Static, like /login: the ?next= destination is read by the form itself.
+export default function SignupPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
-      <AuthForm mode="signup" next={next || "/dashboard"} />
+      <AuthForm mode="signup" />
     </main>
   );
 }

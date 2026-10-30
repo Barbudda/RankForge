@@ -8,6 +8,10 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { Logo } from "@/components/brand/logo";
 import { sanitizeNext } from "@/lib/safe-next";
 
+function destination(): string {
+  return sanitizeNext(new URLSearchParams(window.location.search).get("next"));
+}
+
 /** Map raw Supabase auth errors to friendly, non-leaky messages. */
 function friendlyAuthError(message: string): string {
   const m = message.toLowerCase();
@@ -26,15 +30,13 @@ function friendlyAuthError(message: string): string {
   return message;
 }
 
-export function AuthForm({
-  mode,
-  next,
-}: {
-  mode: "login" | "signup";
-  next?: string;
-}) {
+/**
+ * The pages that render this form are static (served from the CDN), so the
+ * ?next= destination is read in the browser when the form is sent, not on
+ * the server.
+ */
+export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const router = useRouter();
-  const target = sanitizeNext(next);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -78,7 +80,7 @@ export function AuthForm({
         setLoading(false);
         return;
       }
-      router.push(target);
+      router.push(destination());
       router.refresh();
     } else {
       const { data, error } = await supabase.auth.signUp({
@@ -102,7 +104,7 @@ export function AuthForm({
         setLoading(false);
         return;
       }
-      router.push(target);
+      router.push(destination());
       router.refresh();
     }
   };
