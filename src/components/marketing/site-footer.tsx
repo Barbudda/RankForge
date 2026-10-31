@@ -22,6 +22,7 @@ const COLUMNS = [
       { href: "/frameworks/nuxt", label: "Nuxt SEO" },
       { href: "/frameworks/astro", label: "Astro SEO" },
       { href: "/frameworks/sveltekit", label: "SvelteKit SEO" },
+      { href: "/frameworks/vite-react", label: "Vite + React SEO" },
     ],
   },
   {

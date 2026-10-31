@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { ProsePage, ProseBlock } from "@/components/marketing/prose-page";
+import { GuideBlocks, PROSE_LINK as LINK } from "@/components/marketing/guide-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { formatDay } from "@/lib/utils";
 import { breadcrumbSchema, faqPageSchema, techArticleSchema } from "@/lib/seo/schema";
@@ -11,6 +12,7 @@ import { FRAMEWORK_FILES, type FileKind } from "@/lib/audit/engine";
 import { FIXABLE_RULE_IDS } from "@/lib/audit/deterministic-fix";
 import { RULE_PAGES, fixTemplateFor, getRulePage, patchBody, type DocFramework } from "@/lib/audit/rule-docs";
 import { FRAMEWORK_PAGES, getFramework, type FrameworkPage } from "@/lib/seo/content";
+import { guidesFor } from "@/lib/seo/guides";
 
 export function generateStaticParams() {
   return FRAMEWORK_PAGES.map((f) => ({ slug: f.slug }));
@@ -39,9 +41,6 @@ const FILE_ROWS: { kind: FileKind; label: string }[] = [
   { kind: "robots", label: "robots.txt" },
 ];
 
-const LINK =
-  "text-molten-bright underline decoration-molten-bright/40 underline-offset-2 hover:decoration-molten-bright";
-
 export default async function FrameworkPage({
   params,
 }: {
@@ -63,13 +62,14 @@ export default async function FrameworkPage({
     note: r.frameworks![fw.slug as DocFramework]!,
   }));
   const [near, other] = fw.compare.map((s) => getFramework(s)!) as [FrameworkPage, FrameworkPage];
+  const guides = guidesFor(fw.slug);
   const path = `/frameworks/${fw.slug}`;
   const title = `Technical SEO for ${fw.name}, checked on every deploy`;
 
   const faqs = [
     {
       q: `How does Septune audit a ${fw.name} site?`,
-      a: `It crawls the rendered pages the way Googlebot reads them and runs its ${RULE_CATALOG.length} checks. ${fw.name} metadata comes from ${fw.metaApi}, so a missing tag on every page points at ${files.layout}, and one missing on a single route points at ${files.page}.`,
+      a: `It fetches the HTML each page sends, without running JavaScript, as a crawler does on its first pass, and runs its ${RULE_CATALOG.length} checks. ${fw.name} metadata comes from ${fw.metaApi}, so a missing tag on every page points at ${files.layout}, and one missing on a single route points at ${files.page}.`,
     },
     {
       q: `Where does the sitemap go in a ${fw.name} project?`,
@@ -102,9 +102,35 @@ export default async function FrameworkPage({
       <JsonLd data={faqPageSchema(faqs)} />
       <ProsePage title={title} intro={fw.blurb}>
         <p className="text-xs text-fg-subtle">
-          Published <time dateTime={fw.published}>{formatDay(fw.published)}</time> · updated{" "}
-          <time dateTime={fw.updated}>{formatDay(fw.updated)}</time>
+          Published <time dateTime={fw.published}>{formatDay(fw.published)}</time>
+          {fw.updated !== fw.published && (
+            <>
+              {" "}
+              · updated <time dateTime={fw.updated}>{formatDay(fw.updated)}</time>
+            </>
+          )}
         </p>
+
+        {fw.sections?.map((section) => (
+          <ProseBlock key={section.heading} heading={section.heading}>
+            <GuideBlocks blocks={section.blocks} />
+          </ProseBlock>
+        ))}
+
+        {guides.length > 0 && (
+          <ProseBlock heading={`${fw.name} guides`}>
+            <ul className="space-y-3">
+              {guides.map((g) => (
+                <li key={g.slug}>
+                  <Link href={`/frameworks/${g.framework}/${g.slug}`} className={LINK}>
+                    {g.h1}
+                  </Link>
+                  <span className="text-fg-muted">: {g.description}</span>
+                </li>
+              ))}
+            </ul>
+          </ProseBlock>
+        )}
 
         <ProseBlock heading={`Where findings point in a ${fw.name} project`}>
           <p>

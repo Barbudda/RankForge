@@ -17,7 +17,7 @@ before(async () => {
   await build({
     stdin: {
       contents:
-        'export * from "./src/lib/audit/rule-docs.ts"; export { RULE_CATALOG } from "./src/lib/audit/catalog.ts"; export { RULE_DOC_DATA } from "./src/lib/audit/rule-docs.data.ts"; export { FIXABLE_RULE_IDS } from "./src/lib/audit/deterministic-fix.ts";',
+        'export * from "./src/lib/audit/rule-docs.ts"; export { RULE_CATALOG } from "./src/lib/audit/catalog.ts"; export { RULE_DOC_DATA } from "./src/lib/audit/rule-docs.data.ts"; export { FIXABLE_RULE_IDS } from "./src/lib/audit/deterministic-fix.ts"; export { GUIDES } from "./src/lib/seo/guides.ts"; export { FRAMEWORK_PAGES } from "./src/lib/seo/content.ts";',
       resolveDir: ROOT,
       loader: "ts",
     },
@@ -140,4 +140,46 @@ test("Astro patches use sitemap-index.xml, the file @astrojs/sitemap writes", ()
 
 test("the og:image URL patch sets metadataBase on Next.js", () => {
   assert.match(m.fixTemplateFor("meta-og-image-url", "nextjs").diff, /\+  metadataBase: new URL\("https:\/\/example\.com"\)/);
+});
+
+// Guides (/frameworks/<framework>/<slug>): same bar as the rule pages, plus a
+// dated source for every page and internal links that resolve.
+const guideText = (g) => [
+  g.title, g.h1, g.description, g.answer,
+  ...g.sections.flatMap((s) => [s.heading, ...s.blocks.flatMap((b) => (b.kind === "p" ? [b.text] : b.kind === "list" ? b.items : [b.label]))]),
+];
+
+test("every guide fits Septune's own metadata checks and cites dated sources", () => {
+  const frameworks = new Set(m.FRAMEWORK_PAGES.map((f) => f.slug));
+  const rules = new Set(m.RULE_CATALOG.map((r) => r.id));
+  const keys = new Set();
+  for (const g of m.GUIDES) {
+    const key = `${g.framework}/${g.slug}`;
+    assert.ok(!keys.has(key), `${key} twice`);
+    keys.add(key);
+    assert.ok(frameworks.has(g.framework), `${key}: no framework page`);
+    assert.ok(`${g.title} · Septune`.length <= 65, `${key}: title too long`);
+    assert.ok(g.description.length <= 155, `${key}: description ${g.description.length} chars`);
+    const words = g.answer.split(/\s+/).length;
+    assert.ok(words >= 40 && words <= 70, `${key}: answer has ${words} words`);
+    assert.ok(g.rules.length >= 1 && g.rules.every((r) => rules.has(r)), `${key}: unknown rule`);
+    assert.ok(g.sources.length >= 1 && g.sources.every((x) => /^https:\/\//.test(x.url) && /^\d{4}-\d{2}-\d{2}$/.test(x.read)), `${key}: sources`);
+    for (const t of guideText(g)) {
+      assert.ok(!t.includes("—"), `${key}: em dash in "${t.slice(0, 60)}"`);
+      assert.ok(!/npx\s+septune/.test(t), `${key}: npx septune`);
+    }
+  }
+});
+
+test("internal links in guides and framework sections point at real pages", () => {
+  const pages = new Set([
+    ...m.FRAMEWORK_PAGES.map((f) => `/frameworks/${f.slug}`),
+    ...m.GUIDES.map((g) => `/frameworks/${g.framework}/${g.slug}`),
+    ...m.RULE_CATALOG.map((r) => `/docs/issues/${r.id}`),
+  ]);
+  const blocks = [...m.GUIDES.flatMap((g) => g.sections), ...m.FRAMEWORK_PAGES.flatMap((f) => f.sections ?? [])].flatMap((s) => s.blocks);
+  const text = blocks.flatMap((b) => (b.kind === "p" ? [b.text] : b.kind === "list" ? b.items : [])).join("\n");
+  const links = [...text.matchAll(/\]\((\/[^)]+)\)/g)].map((x) => x[1]);
+  assert.ok(links.length > 0);
+  for (const href of links) assert.ok(pages.has(href), `dead internal link ${href}`);
 });

@@ -3,6 +3,7 @@ import { legalNoticeReady } from "@/lib/legal";
 import { config } from "@/lib/config";
 import { CHANGELOG, FRAMEWORK_PAGES } from "@/lib/seo/content";
 import { RULE_PAGES } from "@/lib/audit/rule-docs";
+import { GUIDES } from "@/lib/seo/guides";
 
 /**
  * /sitemap.xml — every public, indexable marketing route. Docs and framework
@@ -42,6 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...FRAMEWORK_PAGES.map((f) => ({
       ...entry(`/frameworks/${f.slug}`, 0.7, "monthly"),
       lastModified: new Date(f.updated),
+    })),
+    ...GUIDES.map((g) => ({
+      ...entry(`/frameworks/${g.framework}/${g.slug}`, 0.6, "monthly"),
+      lastModified: new Date(g.updated),
     })),
     entry("/changelog", 0.5, "weekly"),
     entry("/privacy", 0.3, "yearly"),
