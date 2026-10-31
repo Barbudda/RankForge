@@ -190,6 +190,45 @@ test("temporary redirects on internal links are flagged, a sign-in wall and exte
   assert.match(issue.affectedUrls[0].note, /302 → \/new/);
 });
 
+const site = (pages, siteFiles = { hasSitemap: true, hasRobots: true, robotsDeclaresSitemap: true }, framework = "nextjs") =>
+  runDeterministicAudit({ framework, productionUrl: SITE }, pages, siteFiles).issues;
+
+test("og:image: relative paths and localhost are flagged, absolute and protocol-relative URLs are not", () => {
+  const withOg = (path, image) => ({ ...page(path), og: { "og:image": image } });
+  const issues = site([
+    withOg("/", "/og.png"),
+    withOg("/a", "http://localhost:3000/opengraph-image.png"),
+    withOg("/b", "https://www.example.com/og.png"),
+    withOg("/c", "//cdn.example.com/og.png"),
+    page("/d"),
+  ]);
+  const issue = issues.find((i) => i.ruleId === "meta-og-image-url");
+  assert.deepEqual(issue.affectedUrls.map((u) => u.url), ["/", "/a"]);
+  assert.match(issue.affectedUrls[0].note, /relative URL/);
+  assert.match(issue.affectedUrls[1].note, /localhost/);
+  // Auditing the dev server itself: a localhost image is the site's own.
+  const local = runDeterministicAudit({ framework: "nextjs", productionUrl: "http://localhost:3000" }, [{ ...withOg("/", "http://localhost:3000/og.png"), url: "http://localhost:3000/" }], {}).issues;
+  assert.ok(!local.some((i) => i.ruleId === "meta-og-image-url"));
+});
+
+test("an empty app shell is reported, a server-rendered page with the same mount id is not", () => {
+  const shell = {
+    ...page("/"),
+    html: '<!doctype html><html lang="en"><head><title>App</title><script type="module" src="/assets/index-a1b2.js"></script></head><body><div id="root"></div></body></html>',
+    textContent: "",
+    wordCount: 0,
+  };
+  const rendered = {
+    ...page("/about"),
+    html: '<!doctype html><html lang="en"><head><title>About</title><script src="/app.js"></script></head><body><div id="root"><main><h1>About</h1><p>Real text</p></main></div></body></html>',
+    wordCount: 400,
+  };
+  const noScript = { ...page("/static"), html: '<html><body><div id="app"></div></body></html>', wordCount: 0 };
+  const issue = site([shell, rendered, noScript]).find((i) => i.ruleId === "framework-js-only-content");
+  assert.deepEqual(issue.affectedUrls.map((u) => u.url), ["/"]);
+  assert.match(issue.evidence, /1 of 3 indexable pages/);
+});
+
 test("page words that are Object.prototype names don't crash the audit", () => {
   const odd = (path, title, text) => ({ ...page(path), title, textContent: text, wordCount: 400 });
   const words = "the URL constructor throws valueof tostring hasownproperty __proto__ ".repeat(40);

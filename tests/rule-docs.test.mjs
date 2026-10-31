@@ -130,3 +130,14 @@ test("the no-sitemap patch adds one line and keeps the existing robots.txt", () 
     assert.ok(!diff.includes("+Allow: /"), `${fw}: adds rules`);
   }
 });
+
+test("Astro patches use sitemap-index.xml, the file @astrojs/sitemap writes", () => {
+  assert.match(m.fixTemplateFor("framework-robots-no-sitemap", "astro").diff, /\+Sitemap: https:\/\/example\.com\/sitemap-index\.xml/);
+  assert.match(m.fixTemplateFor("framework-robots-missing", "astro").diff, /sitemap-index\.xml/);
+  assert.match(m.fixTemplateFor("framework-sitemap-missing", "astro").diff, /\+  integrations: \[sitemap\(\)\]/);
+  assert.match(m.fixTemplateFor("framework-robots-no-sitemap", "nextjs").diff, /sitemap: "https:\/\/example\.com\/sitemap\.xml"/);
+});
+
+test("the og:image URL patch sets metadataBase on Next.js", () => {
+  assert.match(m.fixTemplateFor("meta-og-image-url", "nextjs").diff, /\+  metadataBase: new URL\("https:\/\/example\.com"\)/);
+});
