@@ -1313,7 +1313,8 @@ export function runDeterministicAudit(
 
 // ── helpers ─────────────────────────────────────────────────────────
 function groupBy<T>(arr: T[], key: (x: T) => string): Record<string, T[]> {
-  const out: Record<string, T[]> = {};
+  // No prototype: a page titled "constructor" would otherwise hit Object's.
+  const out: Record<string, T[]> = Object.create(null);
   for (const x of arr) (out[key(x)] ??= []).push(x);
   return out;
 }

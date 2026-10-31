@@ -189,3 +189,12 @@ test("temporary redirects on internal links are flagged, a sign-in wall and exte
   assert.deepEqual(issue.affectedUrls.map((u) => u.url), ["/old"]);
   assert.match(issue.affectedUrls[0].note, /302 → \/new/);
 });
+
+test("page words that are Object.prototype names don't crash the audit", () => {
+  const odd = (path, title, text) => ({ ...page(path), title, textContent: text, wordCount: 400 });
+  const words = "the URL constructor throws valueof tostring hasownproperty __proto__ ".repeat(40);
+  const pages = [odd("/", "constructor", words), odd("/b", "constructor", words), odd("/c", "toString", words)];
+  const { issues } = runDeterministicAudit({ framework: "nextjs", productionUrl: SITE }, pages, { hasSitemap: true, hasRobots: true, robotsDeclaresSitemap: true });
+  const dup = issues.find((i) => i.ruleId === "meta-title-duplicate");
+  assert.deepEqual(dup.affectedUrls.map((u) => u.url).sort(), ["/", "/b"]);
+});
